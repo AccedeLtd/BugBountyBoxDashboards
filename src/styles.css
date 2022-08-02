@@ -1,0 +1,116 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "~animate.css/animate.min";
+@import 'prismjs/themes/prism-okaidia.css';
+@import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
+@import 'prismjs/plugins/line-highlight/prism-line-highlight.css';
+
+:root {
+  --primary: #1f04a3;
+  --accent: #fc007e;
+  --bug-white: #FFFFFF;
+  --bug-midnight-blue: #050041;
+  --bug-blue-pantone: #20169F;
+  --bug-onyx: #444444;
+  --bug-cosmic-cobalt: #322F90;
+  --bug-sonic-silver: #777777;
+  --bug-spanish-gray: #999999;
+  --bug-razzmatazz: #E2006B;
+  --bug-orchid-pink: #F1C7DE;
+  --bug-flikr-pink: #EA1E7E;
+  --bug-french-blue: #0174B0;
+  --bug-cadmium-red: #E70023;
+  --bug-silver-chalice: #AAAAAA;
+  --bug-rebecca-purple: #652D90;
+  --bug-lavender-blue: #C9CDF2;
+  --bug-android-green: #93BE31;
+  --bug-royal-blue-light: #596AD8;
+}
+
+html,
+body {
+  height: 100%;
+  background: #FAFAFA;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	/* border-radius: 10px; */
+}
+
+::-webkit-scrollbar
+{
+	width: 10px;
+	height: 8px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	/* border-radius: 10px; */
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, rgb(122,153,217)),
+									   color-stop(0.72, rgb(73,125,189)),
+									   color-stop(0.86, rgb(28,58,148)));
+}
+
+button,
+.button {
+  @apply px-10 py-3;
+  @apply font-medium;
+  background-color: var(--primary);
+  color: white;
+}
+
+button.stroked,
+.button.stroked {
+  background-color: white;
+  border: 1px solid black !important;
+  color: var(--accent);
+}
+
+.orange-progress .mat-progress-bar-fill::after {
+  background-color: #F29100 !important;
+}
+
+.green-progress .mat-progress-bar-fill::after {
+  background-color: #93C01F !important;
+}
+
+.blue-progress .mat-progress-bar-fill::after {
+  background-color: #35A8E0 !important;
+}
+
+.pink-progress .mat-progress-bar-fill::after {
+  background-color: #FC007E !important;
+}
+
+.dialogsetup{
+  padding:20% 5%;
+}
+
+.mat-menu-panel {
+  max-width: none !important;
+}
+
+.snackbar-center {
+  text-align: center;
+}
+
+.mat-expansion-panel-header.mat-expanded,
+.mat-expansion-panel-header.mat-expanded:hover,
+.mat-expansion-panel-header.mat-expanded:focus {
+  background-color: #F2F4FF !important;
+}

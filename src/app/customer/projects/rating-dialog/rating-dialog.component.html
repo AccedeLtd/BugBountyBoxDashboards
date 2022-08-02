@@ -1,0 +1,59 @@
+<div class="h-full" *ngIf="step == 1">
+    <h1 mat-dialog-title class="text-center">Rating</h1>
+    <br>
+    <form class="mt-5 w-full" [formGroup]="form">
+        <div class="cont">
+            <div class="stars">
+                <ngx-star-rating formControlName="rating" [id]="'rating'"></ngx-star-rating>
+            </div>
+            <div>Rating: {{form.value.rating}}</div>
+            <!-- <p>form is valid: {{ form.valid ? 'true' : 'false' }}</p> -->
+        </div>
+        <br>
+        <div class="h-10 lg:h-10 max-w-full w-full px-4 py-2">
+            <div class="grid gap-2 justify-center">
+                <div class="ml-3 overflow-hidden">
+                    <button *ngIf="!submitting && form.valid" class="px-24 py-2 text-sm text-white rounded-full animate__animated animate__fadeIn animate__delay-1s" (click)="submit()">Continue</button>
+                    <button *ngIf="submitting" class="px-24 py-2 text-sm text-white rounded-full">
+                        <mat-spinner class="ml-4 inline-block" [diameter]="20" color="accent"></mat-spinner>
+                    </button>
+                </div>
+                <div class="ml-3 overflow-hidden">
+                    <button class="px-24 py-2 text-sm text-slate-500 bg-white rounded-full" mat-dialog-close>Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="h-full" *ngIf="step == 2">
+    <div class="max-w-full w-full px-4 py-2">
+        <div class="grid gap-2 justify-center">
+            <div class="ml-3 overflow-hidden">
+                <svg id="icon-check" xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 191.001 191.001">
+                    <g id="icon-check-2" data-name="icon-check" transform="translate(-103.937 -960.948)">
+                        <path id="Path_572" data-name="Path 572" d="M199.436,960.948a95.5,95.5,0,1,0,95.5,95.5A95.5,95.5,0,0,0,199.436,960.948ZM181.48,1097.387l-30.7-33.739,8.824-8.031,22.905,25.175,65.454-56.126,7.765,9.057Z" fill="#999"/>
+                    </g>
+                    <path id="Color_Overlay" data-name="Color Overlay" d="M13286,5979.5a95.5,95.5,0,1,1,95.5,95.5A95.5,95.5,0,0,1,13286,5979.5Zm46.845,7.2,30.7,33.738,74.247-63.661-7.766-9.058-65.454,56.125-22.908-25.174Z" transform="translate(-13285.999 -5884)" fill="#ea1e7e"/>
+                    </svg>              
+            </div>
+        </div>
+    </div>
+    <br>
+    <h1 mat-dialog-title class="text-center">Success</h1>
+    <div class="h-10 lg:h-10 max-w-full w-full px-4 py-2">
+        <div class="grid gap-2 justify-center">
+            <div class="ml-3 overflow-hidden">
+                <p class="text-sm text-center">You have successfully rated Jane Doe {{rating}} stars</p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="h-10 lg:h-10 max-w-full w-full px-4 py-2">
+        <div class="grid gap-2 justify-center">
+            <div class="ml-3 overflow-hidden">
+                <button class="px-24 py-2 text-sm text-white rounded-full" (click)="closeDialog()">Complete</button>
+            </div>
+        </div>
+    </div>
+</div>

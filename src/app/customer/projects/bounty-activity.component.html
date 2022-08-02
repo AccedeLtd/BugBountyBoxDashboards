@@ -1,0 +1,532 @@
+<div class="min-h-full">
+  <app-customer-nav (sideNavToggleEvent)="toggleSideNav()"></app-customer-nav>
+  <main>
+    <mat-sidenav-container>
+      <mat-sidenav [(opened)]="sideNavOpened">
+        <mat-nav-list class="gap-3">
+          <a *ngFor="let section of sections" mat-list-item routerLink="/customer{{ section.id }}" routerLinkActive="active" (click)="toggleSideNav()">
+            {{ section.title }}
+          </a>
+        </mat-nav-list>
+        <div class="sm:hidden border-t border-gray-200 font-medium">
+          <mat-nav-list>
+            <a mat-list-item routerLink="/customer/settings" routerLinkActive="active">Settings</a>
+            <a mat-list-item (click)="logout()">Log out</a>
+          </mat-nav-list>
+        </div>
+      </mat-sidenav>
+    
+      <mat-sidenav-content id="container" class="flex-1 overflow-auto relative" style="scroll-behavior: smooth">
+        <div class="max-w-full mx-auto pt-6 pb-12 px-2 lg:px-20">
+          <div class="flex flex-row flex-wrap flex-1 flex-grow content-start">
+            <div id="main-content" class="w-full flex-1">
+                <main class="w-full">
+                    <div>
+                        <h1 class="my-6 text-xl font-semibold">Bugs</h1>
+                    </div>
+
+                    <mat-tab-group dynamicHeight color="accent">
+                      
+                      <mat-tab label="New">
+                        <div class="mt-10 w-full">
+                          <div class="flex flex-col">
+                            <div class="overflow-x-auto bg-white shadow-xl sm:rounded-lg">
+                              <div class="inline-block min-w-full align-middle">
+                                <div class="p-4">
+                                  Section Title
+                                </div>
+                                <div class="overflow-hidden">
+                                  <table class="min-w-full divide-y divide-gray-200 table-fixed">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Vulnerability Type
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Date
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Reported by
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Status
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Assets
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Assigned to
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- <table mat-table [dataSource]="dataSource" class="w-full mat-elevation-z8">
+                            <ng-container matColumnDef="position">
+                              <th mat-header-cell *matHeaderCellDef> No. </th>
+                              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                              <th mat-header-cell *matHeaderCellDef> Name </th>
+                              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="weight">
+                              <th mat-header-cell *matHeaderCellDef> Weight </th>
+                              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="symbol">
+                              <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                              <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                            </ng-container>
+                          
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                          </table> -->
+                        </div>
+                      </mat-tab>
+
+                      <mat-tab label="Validated">
+                        <div class="mt-10 w-full">
+                          <div class="flex flex-col">
+                            <div class="overflow-x-auto bg-white shadow-xl sm:rounded-lg">
+                              <div class="inline-block min-w-full align-middle">
+                                <div class="p-4">
+                                  Section Title
+                                </div>
+                                <div class="overflow-hidden">
+                                  <table class="min-w-full divide-y divide-gray-200 table-fixed">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Vulnerability Type
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Date
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Reported by
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Status
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Assets
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Assigned to
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- <table mat-table [dataSource]="dataSource" class="w-full mat-elevation-z8">
+                            <ng-container matColumnDef="position">
+                              <th mat-header-cell *matHeaderCellDef> No. </th>
+                              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                              <th mat-header-cell *matHeaderCellDef> Name </th>
+                              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="weight">
+                              <th mat-header-cell *matHeaderCellDef> Weight </th>
+                              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="symbol">
+                              <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                              <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                            </ng-container>
+                          
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                          </table> -->
+                        </div>
+                      </mat-tab>
+
+                      <mat-tab label="Open">
+                        <div class="mt-10 w-full">
+                          <div class="flex flex-col">
+                            <div class="overflow-x-auto bg-white shadow-xl sm:rounded-lg">
+                              <div class="inline-block min-w-full align-middle">
+                                <div class="p-4">
+                                  Section Title
+                                </div>
+                                <div class="overflow-hidden">
+                                  <table class="min-w-full divide-y divide-gray-200 table-fixed">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Vulnerability Type
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Date
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Reported by
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Status
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Assets
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Assigned to
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- <table mat-table [dataSource]="dataSource" class="w-full mat-elevation-z8">
+                            <ng-container matColumnDef="position">
+                              <th mat-header-cell *matHeaderCellDef> No. </th>
+                              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                              <th mat-header-cell *matHeaderCellDef> Name </th>
+                              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="weight">
+                              <th mat-header-cell *matHeaderCellDef> Weight </th>
+                              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="symbol">
+                              <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                              <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                            </ng-container>
+                          
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                          </table> -->
+                        </div>
+                      </mat-tab>
+
+                      <mat-tab label="Closed">
+                        <div class="mt-10 w-full">
+                          <div class="flex flex-col">
+                            <div class="overflow-x-auto bg-white shadow-xl sm:rounded-lg">
+                              <div class="inline-block min-w-full align-middle">
+                                <div class="p-4">
+                                  Section Title
+                                </div>
+                                <div class="overflow-hidden">
+                                  <table class="min-w-full divide-y divide-gray-200 table-fixed">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Vulnerability Type
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Date
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Reported by
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Status
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Assets
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-700">
+                                          Assigned to
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                      <tr class="hover:bg-gray-100 cursor-pointer" routerLink="/customer/bugs/details">
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Cross site scripting</td>
+                                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">1/12/21</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Codebash</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Open</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">Ibm.com</td>
+                                        <td class="py-4 px-6 text-sm text-gray-900 whitespace-nowrap">John Doe</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- <table mat-table [dataSource]="dataSource" class="w-full mat-elevation-z8">
+                            <ng-container matColumnDef="position">
+                              <th mat-header-cell *matHeaderCellDef> No. </th>
+                              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                              <th mat-header-cell *matHeaderCellDef> Name </th>
+                              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="weight">
+                              <th mat-header-cell *matHeaderCellDef> Weight </th>
+                              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="symbol">
+                              <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                              <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                            </ng-container>
+                          
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                          </table> -->
+                        </div>
+                      </mat-tab>
+                    </mat-tab-group>
+                </main>
+            </div>
+    
+        </div>
+          <!-- /End replace -->
+        </div>
+        <footer class="bg-slate-100 grid text-center md:fixed inset-x-0 bottom-0 px-4">
+            <nav class="flex flex-col md:flex-row gap-3 lg:mx-auto lg:w-[calc(90%+2rem)]">
+              <mat-nav-list class="gap-3">
+                <div>
+                  <a mat-button>© BugBountyBox</a>
+                  <span>|</span>
+                  <a mat-button href="#">Privacy Policy</a>
+                  <span>|</span>
+                  <a mat-button href="#">Terms of Sevice</a>
+                </div>
+              </mat-nav-list>
+            </nav>
+          </footer>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </main>
+</div>

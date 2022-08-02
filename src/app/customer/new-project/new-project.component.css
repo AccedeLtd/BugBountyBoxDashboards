@@ -1,0 +1,12 @@
+select {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  .select-wrapper::after {
+    content: "▼";
+    font-size: 1rem;
+    top: 10px;
+    right: 15%;
+    position: absolute;
+  }

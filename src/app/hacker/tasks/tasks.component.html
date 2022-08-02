@@ -1,0 +1,255 @@
+<div class="min-h-full">
+    <app-nav (sideNavToggleEvent)="toggleSideNav()"></app-nav>
+    <main>
+        <mat-sidenav-container>
+            <mat-sidenav [(opened)]="sideNavOpened">
+                <mat-nav-list class="gap-3">
+                    <a *ngFor="let section of sections" mat-list-item routerLink="/hacker{{ section.id }}"
+                        routerLinkActive="active" (click)="toggleSideNav()">
+                        {{ section.title }}
+                    </a>
+                </mat-nav-list>
+                <div class="sm:hidden border-t border-gray-200 font-medium">
+                    <mat-nav-list>
+                        <a mat-list-item routerLink="/hacker/settings" routerLinkActive="active">Settings</a>
+                        <a mat-list-item (click)="logout()">Log out</a>
+                    </mat-nav-list>
+                </div>
+            </mat-sidenav>
+
+            <mat-sidenav-content id="container" class="flex-1 overflow-auto relative" style="scroll-behavior: smooth">
+                <div class="max-w-full mx-auto py-6 sm:px-6 lg:px-8">
+                    <div class="flex flex-row flex-wrap flex-1 flex-grow content-start">
+                        <div id="dash-content" class="py-6 lg:py-0 w-full lg:max-w-md flex flex-wrap content-start">
+                            <div class="lg:w-full  md:w-1/2 w-full">
+                                <div class="bg-white shadow-xl rounded p-6 m-2 md:mx-10">
+                                    <app-user-profile></app-user-profile>
+                                </div>
+                            </div>
+
+                            <div class="lg:w-full  md:w-1/2 w-full">
+                                <div
+                                    class="bg-white shadow-xl rounded m-2 md:mx-10 animate__animated animate__fadeIn animate__delay-1s">
+                                    <app-recent-updates></app-recent-updates>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="main-content" class="w-full flex-1 pb-10">
+                            <main class="w-full">
+                                <ng-container [ngSwitch]="loadingTasks">
+                                    <ng-container *ngSwitchCase="'loading'">
+                                        <div class="flex flex-col items-center">
+                                            <div class="flex-shrink pr-4">
+                                                <div class="p-1 h-48 w-auto min-h-full flex items-center justify-center">
+                                                    <mat-spinner [diameter]="30" class="mx-auto"></mat-spinner>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                
+                                    <ng-container *ngSwitchCase="'error'">
+                                        <div class="relative px-8 text-center rounded-lg">
+                                            <h2>
+                                                Something went wrong. Please check your internet connection and try again.
+                                            </h2>
+                                
+                                            <button class="h-8 px-4 py-1 text-xs text-white rounded-full hover:bg-[#FC007E]" (click)="loadData()">
+                                                Retry
+                                            </button>
+                                        </div>
+                                    </ng-container>
+                                
+                                    <ng-container *ngSwitchCase="'success'">
+                                        <div class="flex justify-end">
+                                            <button class="h-8 px-4 py-1 text-xs text-white rounded-full hover:bg-[#E9347D]" (click)="addNewTask()">Add new task</button>
+                                        </div>
+
+                                        <nav class="mt-2 flex items-center justify-between">
+                                            <div class="flex items-center px-4 py-2 rounded-md space-x-3 w-full">
+                                                <div class="relative w-full">
+                                                    <div class="absolute h-10 mt-1 left-0 top-0 flex items-center pl-6">
+                                                        <svg class="h-4 w-4 fill-current text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                            <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z">
+                                                            </path>
+                                                        </svg>
+                                                    </div>
+                                                
+                                                    <input type="text" [(ngModel)]="tasksQuery" (keyup)="searchTasks()" placeholder="Search" class="block w-full outline-none bg-white shadow-md rounded-full pl-12 pr-4 py-3 animate__animated animate__fadeIn animate__delay-1s">
+                                                
+                                                    <div class="absolute h-10 mt-1 right-0 top-0 flex items-center animate__animated animate__fadeIn animate__delay-2s">
+                                                      <button mat-icon-button [matMenuTriggerFor]="filterMenu" aria-label="Toggle menu">
+                                                        <svg id="Vector_Smart_Object" data-name="Vector Smart Object" xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="36" viewBox="0 0 47 36">
+                                                            <line id="Line_2" data-name="Line 2" x2="47" transform="translate(0 4.835)" fill="none" stroke="#999"
+                                                                stroke-miterlimit="10" stroke-width="2.037" />
+                                                            <line id="Line_3" data-name="Line 3" x2="47" transform="translate(0 18.285)" fill="none" stroke="#999"
+                                                                stroke-miterlimit="10" stroke-width="2.037" />
+                                                            <line id="Line_4" data-name="Line 4" x2="47" transform="translate(0 31.165)" fill="none" stroke="#999"
+                                                                stroke-miterlimit="10" stroke-width="2.037" />
+                                                            <rect id="Rectangle_1" data-name="Rectangle 1" width="9.824" height="9.671"
+                                                                transform="translate(10.157 13.449)" fill="#999" />
+                                                            <rect id="Rectangle_2" data-name="Rectangle 2" width="9.824" height="9.671" transform="translate(22.702)"
+                                                                fill="#999" />
+                                                            <rect id="Rectangle_3" data-name="Rectangle 3" width="9.824" height="9.671"
+                                                                transform="translate(32.526 26.329)" fill="#999" />
+                                                        </svg>
+                                                      </button>
+                                                      <!-- "filterMenu" menu -->
+                                                      <mat-menu #filterMenu="matMenu" [overlapTrigger]="false" class="!text-sm">
+                                                        <form (keydown.tab)="$event.stopPropagation()">
+                                                          <mat-toolbar class="bg-white !text-sm animate__animated animate__fadeIn">
+                                                            <mat-toolbar-row style="justify-content: space-between;" (click)="$event.stopPropagation(); false;">
+                                                                <div class="font-semibold">Status</div>
+                                                                <mat-form-field class="example-form-field px-5">
+                                                                    <mat-select [(ngModel)]="statusQuery" [ngModelOptions]="{standalone: true}" (selectionChange)="statusSelect()">
+                                                                        <mat-option value="None">None</mat-option>
+                                                                        <mat-option *ngFor="let status of statusData" value="{{status.value}}">
+                                                                            {{status.name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </mat-toolbar-row>
+
+                                                            <mat-toolbar-row style="padding: 0px; height: 48px;" (click)="$event.stopPropagation(); false;">
+                                                              <div class="w-full grid grid-cols-3">
+                                                                <div>&nbsp;</div>
+                                                                <div>&nbsp;</div>
+                                                                <div>
+                                                                  <button class="px-1 py-1 text-sm text-slate-500 bg-white" (click)="resetFilters()">Reset</button>
+                                                                </div>
+                                                              </div>
+                                                            </mat-toolbar-row>
+                                                          </mat-toolbar>
+                                                        </form>
+                                                      </mat-menu>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </nav>
+
+                                        <div class="mt-2 w-full" style="height:400px;overflow-y: auto;">
+                                            <ejs-kanban #kanbanObj class="py-4" cssClass='kanban-overview' keyField='status' [dataSource]='tasks' [cardSettings]='taskCardSettings' enableTooltip='true' (actionComplete)='onActionComplete($event)'>
+                                                <e-columns>
+                                                    <e-column *ngFor="let column of taskColumns;" headerText={{column.headerText}} keyField='{{column.keyField}}' allowToggle='{{column.allowToggle}}'>
+                                                      <ng-template #template let-data>
+                                                        <div class="header-template-wrap">
+                                                          <div class="header-icon e-icons {{data.keyField}}"></div>
+                                                          <div class="header-text">{{data.headerText}}</div>
+                                                        </div>
+                                                      </ng-template>
+                                                    </e-column>
+                                                </e-columns>
+                                                
+                                                <ng-template #cardSettingsTemplate let-data>
+                                                    <div class='card-template'>
+                                                      <div class='e-card-header'>
+                                                        <div class='e-card-header-caption'>
+                                                          <div class='e-card-header-title e-tooltip-text'>{{data.title}}</div>
+                                                        </div>
+                                                      </div>
+                                                      <div class='e-card-content e-tooltip-text'>
+                                                        <div class='e-text'>{{data.details}}</div>
+                                                      </div>
+                                                      <div class='e-card-custom-footer gap-2'>
+                                                        <span>
+                                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"
+                                                                stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                                                <circle cx="12" cy="12" r="10"></circle>
+                                                                <polyline points="12 6 12 12 16 14"></polyline>
+                                                            </svg>
+                                                        </span>
+                                                        <div class='e-card-header-title e-tooltip-text'>{{data.dueDate | date}}</div>
+                                                        <!-- <div class="e-card-tag-field e-tooltip-text" *ngFor="let tag of data.Tags.split(',');">{{tag}}</div> -->
+                                                        <!-- <div class='e-card-avatar'>{{getString(data.Assignee)}}</div> -->
+                                                      </div>
+                                                    </div>
+                                                </ng-template>
+
+                                                <ng-template #dialogSettingsTemplate let-data>
+                                                    <table class="items-center">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="e-label">Title</td>
+                                                                <td>
+                                                                    <mat-form-field class="dialogInput">
+                                                                        <mat-label>Please enter title</mat-label>
+                                                                        <input name="title" matInput [(ngModel)]="data.title" required>
+                                                                    </mat-form-field>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="e-label">Details</td>
+                                                                <td>
+                                                                    <mat-form-field class="dialogInput">
+                                                                        <mat-label>Please enter details</mat-label>
+                                                                        <textarea name="details" matInput [(ngModel)]="data.details" rows="6" required></textarea>
+                                                                    </mat-form-field>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="e-label">Status</td>
+                                                                <td>
+                                                                    <mat-form-field class="dialogInput">
+                                                                        <mat-label>Please select status</mat-label>
+                                                                        <select name="status" matNativeControl [(ngModel)]="data.status" required>
+                                                                            <option *ngFor="let status of statusData" value="{{status.value}}">
+                                                                                {{status.name}}
+                                                                            </option>
+                                                                        </select>
+                                                                    </mat-form-field>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="e-label">Project</td>
+                                                                <td>
+                                                                    <mat-form-field class="dialogInput">
+                                                                        <mat-label>Please select project</mat-label>
+                                                                        <select name="projectId" matNativeControl [(ngModel)]="data.projectId" required>
+                                                                            <option *ngFor="let project of projects" value="{{project.id}}">
+                                                                                {{project.title}}
+                                                                            </option>
+                                                                        </select>
+                                                                    </mat-form-field>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="e-label">Due date</td>
+                                                                <td>
+                                                                    <mat-form-field class="dialogInput">
+                                                                        <mat-label>Please select due date</mat-label>
+                                                                        <input class="dialogInput" name="dueDate" matInput type="date" min="2022-01-01" [(ngModel)]="data.dueDate" required>
+                                                                    </mat-form-field>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </ng-template>
+                                            </ejs-kanban>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </main>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <footer class="bg-slate-100 grid text-center md:fixed inset-x-0 bottom-0 px-4">
+                    <nav class="flex flex-col md:flex-row gap-3 lg:mx-auto lg:w-[calc(90%+2rem)]">
+                        <mat-nav-list class="gap-3">
+                            <div>
+                                <a mat-button>© BugBountyBox</a>
+                                <span>|</span>
+                                <a mat-button href="#">Privacy Policy</a>
+                                <span>|</span>
+                                <a mat-button href="#">Terms of Sevice</a>
+                            </div>
+                        </mat-nav-list>
+                    </nav>
+                </footer>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </main>
+</div>

@@ -1,0 +1,85 @@
+<div class="flex flex-col bg-white rounded w-full mx-auto animate__animated animate__fadeIn animate__delay-1s">
+    <div class="bg-[#1F04A3] animate__animated animate__fadeIn animate__delay-1s">
+        <h1 class="text-white !text-base p-2 animate__animated animate__fadeIn animate__delay-1s">
+            Recent Updates
+        </h1>
+    </div>
+
+    <ng-container [ngSwitch]="loadingBountyStats">
+        <ng-container *ngSwitchCase="'loading'">
+            <div class="flex flex-col items-center">
+                <div class="flex-shrink pr-4">
+                    <div class="p-1 h-48 w-auto min-h-full flex items-center justify-center">
+                        <mat-spinner [diameter]="30" class="mx-auto"></mat-spinner>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'error'">
+            <div class="relative p-8 text-center rounded-lg">
+                <h2>
+                    Something went wrong. Please check your internet connection and try again.
+                </h2>
+
+                <button class="h-8 px-4 py-1 text-xs text-white rounded-full hover:bg-[#FC007E]"
+                    (click)="loadBountyStats()">Retry</button>
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'success'">
+            <div class="px-4 divide-y divide-slate-300">
+                <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md hover:bg-gray-100">
+                    <div class="flex flex-col">
+                        <div class="text-xl animate__animated animate__fadeIn animate__delay-1s">
+                            {{bountyStats.resolvedIssues}}
+                        </div>
+                        <div class="text-slate-500 text-lg animate__animated animate__fadeIn animate__delay-1s">
+                            Resolved Issues
+                        </div>
+                        <div class="text-slate-500 text-sm animate__animated animate__fadeIn animate__delay-1s">
+                            Lorem ipsum dolor sit amet
+                        </div>
+                    </div>
+                </div>
+                <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md hover:bg-gray-100">
+                    <div class="flex flex-col">
+                        <div class="text-xl animate__animated animate__fadeIn animate__delay-1s">
+                            {{bountyStats.activeBounties}}
+                        </div>
+                        <div class="text-slate-500 text-lg animate__animated animate__fadeIn animate__delay-1s">
+                            Active Bounties
+                        </div>
+                        <div class="text-slate-500 text-sm animate__animated animate__fadeIn animate__delay-1s">
+                            Lorem ipsum dolor sit amet
+                        </div>
+                    </div>
+                </div>
+                <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md hover:bg-gray-100">
+                    <div class="flex flex-col">
+                        <div class="text-xl animate__animated animate__fadeIn animate__delay-1s">
+                            {{bountyStats.upcomingPayments}} </div>
+                        <div class="text-slate-500 text-lg animate__animated animate__fadeIn animate__delay-1s">
+                            Upcoming Payments
+                        </div>
+                        <div class="text-slate-500 text-sm animate__animated animate__fadeIn animate__delay-1s">
+                            Lorem ipsum dolor sit amet
+                        </div>
+                    </div>
+                </div>
+                <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md hover:bg-gray-100">
+                    <div class="flex flex-col">
+                        <div class="text-xl animate__animated animate__fadeIn animate__delay-1s">
+                            {{bountyStats.incomingPayments}} </div>
+                        <div class="text-slate-500 text-lg animate__animated animate__fadeIn animate__delay-1s">
+                            Upcoming Transfers
+                        </div>
+                        <div class="text-slate-500 text-sm animate__animated animate__fadeIn animate__delay-1s">
+                            Lorem ipsum dolor sit amet
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>

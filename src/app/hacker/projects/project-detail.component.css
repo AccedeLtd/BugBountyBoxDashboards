@@ -1,0 +1,105 @@
+.grid-container {
+  margin: 30px 0;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+
+@media screen(lg) {
+  .grid-container {
+    margin: 30px 90px;
+  }
+}
+
+.project-logo {
+  position: absolute;
+  left: 35%;
+  bottom: 80%;
+}
+
+.scroll {
+  height: 80vh;
+}
+
+.example-header-image {
+  background-size: cover;
+}
+
+.proficiency-details {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  width: 100%;
+  gap: 20px;
+}
+
+.proficiency-detail {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+.proficiency-details .levels {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  margin-bottom: 20px;
+}
+
+.proficiency-details .levels .level {
+  height: 25px;
+  width: 25px;
+  background: var(--bug-lavender-blue);
+  cursor: pointer;
+}
+
+.proficiency-details .levels .level.highlighted {
+  background: var(--bug-royal-blue-light);
+}
+
+.proficiency-details .levels .level.selected {
+  background: var(--bug-royal-blue-light);
+}
+
+.proficiency-details .levels .level.dimmed {
+  opacity: 0.4;
+}
+
+.proficiency-details .levels .status {
+  color: var(--bug-royal-blue-light);
+  margin-left: 10px;
+}
+
+.low {
+  background: green !important;
+}
+.medium {
+  background: yellow !important;
+}
+.high {
+  background: orange !important;
+}
+.critical {
+  background: red !important;
+}
+
+.variable-binding {
+  font-size: 30px;
+}

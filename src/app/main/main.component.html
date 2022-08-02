@@ -1,0 +1,70 @@
+<ng-container *ngIf="loading">
+  <div class="flex flex-col h-full">
+      <app-loading></app-loading>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!loading">
+  <div class="body animate__animated animate__fadeIn animate_delay_2s">
+    <header>
+      <div class="logo">
+        <img src="assets/logo.png" alt="Logo">
+      </div>
+    </header>
+
+    <div class="list-profile">
+
+      <h1 class="list-profile-title">Welcome to BugBountyBox!</h1>
+
+      <h1 class="list-profile-subtitle">Sign in as</h1>
+
+      <div *ngIf="includeHacker" class="card" (click)="hackerLogin()">
+        <div class="profile">
+          <!-- <img class="profile-img" src="https://ui-avatars.com/api/?name=Hacker&length=1"> -->
+          <svg class="profile-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64px"
+            height="64px" viewBox="0 0 64 64" version="1.1">
+            <rect fill="#ddd" cx="32" width="64" height="64" cy="32" r="32"></rect><text x="50%" y="50%"
+              style="color: #222; line-height: 1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;"
+              alignment-baseline="middle" text-anchor="middle" font-size="28" font-weight="400" dy=".1em"
+              dominant-baseline="middle" fill="#222">H</text>
+          </svg>
+        </div>
+        <p>Hacker</p>
+      </div>
+
+      <div *ngIf="includeAdmin" class="card" (click)="adminLogin()">
+        <div class="profile">
+          <!-- <img class="profile-img" src="https://ui-avatars.com/api/?name=Admin&length=1"> -->
+          <svg class="profile-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64px" height="64px"
+            viewBox="0 0 64 64" version="1.1">
+            <rect fill="#ddd" cx="32" width="64" height="64" cy="32" r="32" /><text x="50%" y="50%"
+              style="color: #222; line-height: 1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;"
+              alignment-baseline="middle" text-anchor="middle" font-size="28" font-weight="400" dy=".1em"
+              dominant-baseline="middle" fill="#222">A</text>
+          </svg>
+        </div>
+        <p>Admin</p>
+      </div>
+
+      <div *ngIf="includeCustomer" class="card" (click)="customerLogin()">
+        <div class="profile">
+          <svg class="profile-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64px" height="64px"
+            viewBox="0 0 64 64" version="1.1">
+            <rect fill="#ddd" cx="32" width="64" height="64" cy="32" r="32" /><text x="50%" y="50%"
+              style="color: #222; line-height: 1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;"
+              alignment-baseline="middle" text-anchor="middle" font-size="28" font-weight="400" dy=".1em"
+              dominant-baseline="middle" fill="#222">O</text>
+          </svg>
+        </div>
+        <p>Organization</p>
+      </div>
+      <br>
+      <br>
+      <br>
+      <div class="flex gap-2 justify-center">
+        <a href="https://agitated-goldstine-ff7058.netlify.app" mat-ripple class="button">Go to website</a>
+      </div>
+
+    </div>
+  </div>
+</ng-container>
