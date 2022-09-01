@@ -9,11 +9,13 @@ import { AlertService } from 'src/app/core/_services/alert.service';
 import { PaymentMethodPlatform } from 'src/app/core/_enums/paymentMethodPlatform';
 import { ProfileService } from 'src/app/core/_services/profile.service';
 import { ProfileState } from 'src/app/core/_enums/profileState';
-import { result } from 'lodash';
-import { EncodeService } from 'src/app/core/_services/encode.service';
 import { environment } from 'src/environments/environment';
+import { EncodeService } from 'src/app/core/_services/encode.service';
 import { Router } from '@angular/router';
+import { constants } from 'src/app/core/_utils/const';
+import { ThemePalette } from '@angular/material/core';
 import countries from 'src/app/core/_utils/countries';
+import { EditPaymentMethodDialogComponent } from '../settings/edit-payment-method-dialog/edit-payment-method-dialog.component';
 
 @Component({
   selector: 'app-settings',
@@ -21,37 +23,22 @@ import countries from 'src/app/core/_utils/countries';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsOnlyComponent implements OnInit {
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
-
-  sideNavOpened: boolean = false;
-
-  showUserInfo: boolean = false;
-  showPaymentMethod: boolean = false;
-  showProficiencies: boolean = true;
-
+  sideNavOpened = false;
+  userName: any;
   loadingHacker: boolean = true;
+  showUserInfo = true;
+  PaymentMethodPlatform = PaymentMethodPlatform;
+  showPaymentMethod!: boolean;
   loadingPaymentMethods: boolean = true;
-  loadingProficiencies: boolean = true;
+  paymentMethods: any[] = [];
+  file!: File; 
+  shortLink: string = "";
   uploading: boolean = false;
   updateLoading: boolean = false;
-
+  user: any;
   isChangePassword: boolean = false;
   isChangeEmail: boolean = false;
-
-  user: any;
-  paymentMethods: any[] = [];
-  proficiencies: any[] = [];
-
-  PaymentMethodPlatform = PaymentMethodPlatform;
-  file!: File;
-
-  selectedTabIndex: number = 2;
-  
+  isChangeProficiencies: boolean = false;
   proficiencyLevelMap: { [k: string]: string} = {
     "1": "Intermediate",
     "2": "Intermediate",
@@ -61,6 +48,13 @@ export class SettingsOnlyComponent implements OnInit {
   }
   severity: number | undefined;
   proficiencyRatings: any[] = [];
+  loadingProficiencies: boolean = true;
+  proficiencies: any;
+  showProficiencies: boolean = false;
+  showNotification: boolean = false;
+  showHelp: boolean = false;
+  showDeleteAccount: boolean = false;
+  color: ThemePalette = 'primary';
   readonly countries = countries;
 
   constructor(
@@ -70,8 +64,8 @@ export class SettingsOnlyComponent implements OnInit {
     public alertService: AlertService,
     public profileService: ProfileService,
     public encodeService: EncodeService,
-    public dialog: MatDialog,
     public router: Router,
+    public dialog: MatDialog,
   ) {
 
   }
@@ -79,7 +73,7 @@ export class SettingsOnlyComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.loadHacker();
 		this.loadPaymentMethods();
-		this.loadProficiencies();
+    this.loadProficiencies();
 	}
   
   loadHacker() {
@@ -91,7 +85,7 @@ export class SettingsOnlyComponent implements OnInit {
       },
       error:() => {
         this.loadingHacker = false;
-        this.notifyService.showError("Something went getting profile, please try again", "Error")
+        this.notifyService.showError("Something went wrong, please try again", "Error")
       },
     })
   }
@@ -105,8 +99,8 @@ export class SettingsOnlyComponent implements OnInit {
       },
       error:() => {
         this.updateLoading = false;
-        this.notifyService.showError("Something went wrong updating profile, please try again", "Error")
-      },
+        this.notifyService.showError("Profile update not successful", "Error")
+      }
     })
   }
 
@@ -130,6 +124,11 @@ export class SettingsOnlyComponent implements OnInit {
   
   toggleChangeEmail() {
     this.isChangeEmail = !this.isChangeEmail;
+  }
+  
+  toggleChangeProficiencies() {
+    this.isChangeProficiencies = !this.isChangeProficiencies;
+    this.proficiencyRatings = [];
   }
 
   onChange(event:any) {
@@ -160,6 +159,7 @@ export class SettingsOnlyComponent implements OnInit {
 
   loadPaymentMethods() {
     this.loadingPaymentMethods = true;
+
     this.hackerService.getPaymentMethods().subscribe({
       next: (result) => {
         this.paymentMethods = result.data;
@@ -167,21 +167,6 @@ export class SettingsOnlyComponent implements OnInit {
       },
       error: (error) => {
         this.loadingPaymentMethods = false;
-        this.notifyService.showError("Something went wrong ", "Error");
-      },
-    });
-  }
-  
-  loadProficiencies() {
-    this.loadingProficiencies = true;
-
-    this.hackerService.getProficiencies().subscribe({
-      next: (result) => {
-        this.proficiencies = result.data;
-        this.loadingProficiencies = false;
-      },
-      error: (error) => {
-        this.loadingProficiencies = false;
         this.notifyService.showError("Something went wrong", "Error");
       },
     });
@@ -201,21 +186,70 @@ export class SettingsOnlyComponent implements OnInit {
         this.showUserInfo = true;
         this.showPaymentMethod = false;
         this.showProficiencies = false;
+        this.showNotification = false;
+        this.showHelp = false;
+        this.showDeleteAccount = false;
         break;
       case 1:
         this.showPaymentMethod = true;
         this.showUserInfo = false;
         this.showProficiencies = false;
+        this.showNotification = false;
+        this.showHelp = false;
+        this.showDeleteAccount = false;
         break;
       case 2:
         this.showProficiencies = true;
-        this.showPaymentMethod = false;
         this.showUserInfo = false;
+        this.showPaymentMethod = false;
+        this.showNotification = false;
+        this.showHelp = false;
+        this.showDeleteAccount = false;
+        break;
+      case 3:
+        this.showNotification = true;
+        this.showProficiencies = false;
+        this.showUserInfo = false;
+        this.showPaymentMethod = false;
+        this.showHelp = false;
+        this.showDeleteAccount = false;
+        break;
+      case 4:
+        this.showHelp = true;
+        this.showNotification = false;
+        this.showProficiencies = false;
+        this.showUserInfo = false;
+        this.showPaymentMethod = false;
+        this.showDeleteAccount = false;
+        break;
+      case 5:
+        this.showDeleteAccount = true;
+        this.showHelp = false;
+        this.showNotification = false;
+        this.showProficiencies = false;
+        this.showUserInfo = false;
+        this.showPaymentMethod = false;
         break;
     
       default:
         break;
     }
+  }
+
+  editPaymentMethod(paymentMethod: any) {
+    const dialogRef = this.dialog.open(EditPaymentMethodDialogComponent, {
+      data: paymentMethod,
+      height: '600px',
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(
+      result => {
+        if(result.event == DialogActions.Update) {
+          this.loadPaymentMethods();
+        }
+      }
+    )
   }
 
   removePaymentMethod(id: any) {
@@ -249,6 +283,40 @@ export class SettingsOnlyComponent implements OnInit {
     )
   }
 
+  confirmAccountDelete() {
+    this.alertService.confirmInput(
+      'This is extremely important.',
+      'We will immediately delete all of your reports, along with all of your comments on projects. You will no longer be billed, and after 90 days your username will be available to anyone on BugBountyBox.',
+      'Please add your reason',
+      'Delete this account',
+    ).then((result) => {
+      if (!result) {
+        this.alertService.error('Cancelled', 'Account deletion aborted.');
+      }
+      else if (result) {
+        this.hackerService.deleteAccount(result).subscribe({
+          next:() => this.oidcSecurityService.logoff(constants.HACKER),
+          error:() => this.alertService.error('Something went wrong', 'Account deletion aborted.')
+        });
+      }
+    })
+  }
+
+  loadProficiencies() {
+    this.loadingProficiencies = true;
+
+    this.hackerService.getProficiencies().subscribe({
+      next: (result) => {
+        this.proficiencies = result.data;
+        this.loadingProficiencies = false;
+      },
+      error: (error) => {
+        this.loadingProficiencies = false;
+        this.notifyService.showError("Something went wrong", "Error");
+      },
+    });
+  }
+
   saveProficiency() {
     this.updateLoading = true;
     this.hackerService.updateProficiencies(this.proficiencyRatings).subscribe({
@@ -258,13 +326,7 @@ export class SettingsOnlyComponent implements OnInit {
         localStorage.setItem(environment.me, encodedData);
         this.updateLoading = false;  
         this.notifyService.showSuccess("Proficiency updated successfully", "Success");
-        setTimeout(() => {
-          this.alertService.confirm('Proceed?', 'Would you like to proceed to your dashboard?').then((result) => {
-            if(result.value) {
-              this.router.navigate(['hacker']);
-            }
-          });
-        }, 5000);
+        this.loadHacker();
       },
       error:() => {
         this.updateLoading = false;

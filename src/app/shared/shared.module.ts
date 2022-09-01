@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavComponent } from '../components/nav/nav.component';
+import { NavComponent } from '../hacker/nav/nav.component';
 import { MaterialModule } from '../material.module';
 import { FormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -11,11 +11,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 import { FilterPipePipe } from './pipes/filter-pipe.pipe';
+import { FooterComponent } from '../components/footer/footer.component';
 
 @NgModule({
   declarations: [
+    FooterComponent,
     // NavComponent
-  
     // FilterPipePipe
   ],
   imports: [
@@ -28,9 +29,10 @@ import { FilterPipePipe } from './pipes/filter-pipe.pipe';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    LayoutModule
+    LayoutModule,
   ],
   exports: [
+    FooterComponent,
     // NavComponent,
     // FilterPipePipe
   ]

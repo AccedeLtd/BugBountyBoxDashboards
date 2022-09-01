@@ -131,8 +131,8 @@ export class CustomerService {
     return response;
   }
 
-  closProjectByCustomer(req: CloseProjectJson): Observable<HTTPResultWrapper> {
-    let response = this.http.put<HTTPResultWrapper>(`${environment.customerPortalApiUrl}/v1/Projects/close`, req);
+  closeProject(projectId: any): Observable<HTTPResultWrapper> {
+    let response = this.http.put<HTTPResultWrapper>(`${environment.customerPortalApiUrl}/v1/Projects/close/${projectId}`, null);
     return response;
   }
 

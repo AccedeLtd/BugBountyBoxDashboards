@@ -5,7 +5,8 @@ import { HackerService } from 'src/app/core/_services/hacker.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TestAndRequirementJson } from 'src/app/core/_models/TestAndRequirementJson';
 import { PaymentStatus } from 'src/app/core/_enums/paymentStatus';
-import { PaginationInstance } from 'ngx-pagination/dist/ngx-pagination.module';
+import { forkJoin } from 'rxjs';
+import LoadStatus from 'src/app/core/_utils/LoadStatus';
 
 @Component({
   selector: 'app-projects',
@@ -13,16 +14,9 @@ import { PaginationInstance } from 'ngx-pagination/dist/ngx-pagination.module';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent {
+  loadStatus: LoadStatus = 'loading';
   searchInput!: string;
   sideNavOpened = false;
-
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
-
   user: any;
   authUser: any;
   userName: any;
@@ -57,37 +51,40 @@ export class ProjectsComponent {
   }
 
   async ngOnInit(): Promise<void> {
-    this.loading = true;
-		this.getProjects();
-    this.getTestTypes();
-    this.getRequirementLevels();
+    this.loadData();
 	}
-
-  getProjects() {
-    this.loadingProjects = true;
-
-    this.hackerService.getProjects().subscribe(
-      result => {
-        this.projects = result.data;
-        this.totalCount = result.data.totalCount;
-        this.loadingProjects = false;
+  
+  loadData() {
+    forkJoin({
+      userProfile: this.hackerService.getProfile(),
+      testingTypes: this.hackerService.getTestingTypes(),
+      requirementLevels: this.hackerService.getRequirementLevels(),
+    }).subscribe({
+      next: ({userProfile, testingTypes, requirementLevels}) => {
+        this.testTypes = testingTypes;
+        this.requirementLevels = requirementLevels;
+        const level = this.requirementLevels?.find(i => i.name.includes(userProfile.level));
+        this.getProjects(level!.id);
+        // this.loadStatus = 'success';
+      },
+      error: () => {
+        this.loadStatus = 'error';
       }
-    )
-  }
-
-  getTestTypes() {
-    this.hackerService.getTestingTypes().subscribe({
-      next: (data: TestAndRequirementJson[]) => this.testTypes = data,
-      error: (err) => console.error(err),
-      complete: () => "the testtypes have been retreived successfully"
     })
   }
 
-  getRequirementLevels() {
-    this.hackerService.getRequirementLevels().subscribe({
-      next: (data: TestAndRequirementJson[]) => this.requirementLevels = data,
-      error: (err) => console.error(err),
-      complete: () => "the requirement levels have been retreived successfully"
+  getProjects(level: number) {
+    this.hackerService.getProjects({
+      requirementLevelId: level
+    }).subscribe({
+      next: (result) => {
+        this.projects = result.data;
+        this.totalCount = result.data.totalCount;
+        this.loadStatus = 'success';
+      },
+      error: () => {
+        this.loadStatus = 'error';
+      }
     })
   }
 

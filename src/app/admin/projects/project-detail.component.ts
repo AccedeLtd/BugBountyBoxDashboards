@@ -35,15 +35,7 @@ export class ProjectDetailComponent {
   bugLoading:boolean = false;
   projectBugReviews:BugReviews[] = [];
   authAdmin?:AuthenticatedAdminJson;
-  bugReportId:number = 0;
-
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
-  
+  bugReportId:number = 0;  
   showReportForm: boolean = false;
   user: any;
   authUser: any;
@@ -122,6 +114,7 @@ export class ProjectDetailComponent {
       }
     )
   }
+
   getAuthenticatedAdmin(){
     this.adminService.getAuthAdmin().subscribe(
       results => {
@@ -130,6 +123,7 @@ export class ProjectDetailComponent {
       }
     )
   }
+  
   addActiveReviewToProject(review:AddBugReviewJSON){
     this.activeReviewLoading = true;
     review.comment = this.activeReviewComment; 
@@ -162,11 +156,11 @@ export class ProjectDetailComponent {
         this.activeLoading = false;
         setTimeout(() => {
           if(result.success){ 
-            this.showToasterSuccess("this project has been marked active successfully.");
+            this.showToasterSuccess("Approval successful.");
             this.router.navigateByUrl('/admin/projects');
           }
           if(!result.success){ 
-            this.showToasterError("this project could not be marked active successfully.");
+            this.showToasterError("Something went wrong. Please try again.");
             // this.router.navigateByUrl('/projects/details');
           }
           
@@ -185,6 +179,7 @@ export class ProjectDetailComponent {
       }
     )
   }
+  
   logout() {
     this.oidcSecurityService.logoff();
   }

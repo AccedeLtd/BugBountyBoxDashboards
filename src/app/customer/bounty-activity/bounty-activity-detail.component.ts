@@ -21,15 +21,7 @@ import { DialogActions } from 'src/app/core/_enums/dialoagActions';
 })
 export class BountyActivityDetailComponent {
   searchInput!: string;
-  sideNavOpened = false;
-
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
-  
+  sideNavOpened = false;  
   showReportForm: boolean = false;
   user: any;
   authUser: any;

@@ -3,11 +3,6 @@
   <main>
     <mat-sidenav-container>
       <mat-sidenav [(opened)]="sideNavOpened">
-        <mat-nav-list class="gap-3">
-          <a *ngFor="let section of sections" mat-list-item routerLink="/hacker{{ section.id }}" routerLinkActive="active" (click)="toggleSideNav()">
-            {{ section.title }}
-          </a>
-        </mat-nav-list>
         <div class="sm:hidden border-t border-gray-200 font-medium">
           <mat-nav-list>
             <a mat-list-item routerLink="/hacker/settings" routerLinkActive="active">Settings</a>
@@ -27,7 +22,7 @@
 
                     <div class="h-80 bg-white shadow-xl rounded m-2 lg:mx-10 animate__animated animate__fadeIn">
                         <div class="flex flex-col animate__animated animate__fadeIn">
-                          <mat-tab-group [@.disabled]="true" [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="toggle($event)">
+                          <mat-tab-group [@.disabled]="true" (selectedTabChange)="toggle($event)">
                             <mat-tab>
                                 <ng-template mat-tab-label>
                                     User Information
@@ -79,99 +74,108 @@
                         </ng-container>
 
                         <ng-container *ngIf="!loadingHacker">
-                          <div class="bg-white shadow-xl rounded m-2 animate__animated animate__fadeIn">
-                            <div class="flex flex-col bg-white rounded w-full mx-auto p-6">
-                              <div>
-                                <h1 class="text-xl font-semibold animate__animated animate__fadeIn">User Information</h1>
-                              </div>
-
-                              <ng-container *ngIf="!user">
-                                <div class="relative p-8 text-center rounded-lg">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-name="Layer 1" class="mx-auto" width="150"
-                                      height="100" viewBox="0 0 567.1704 517.30967">
-                                      <rect x="326.03543" y="307.38928" width="495" height="45"
-                                        transform="translate(-385.45426 -17.88532) rotate(-16.24392)" fill="#3f3d56" />
-                                      <path
-                                        d="M386.40028,575.96948,316.35377,335.55639a7.0001,7.0001,0,0,1,4.76257-8.67871L784.8346,191.76928a7.00645,7.00645,0,0,1,8.67871,4.76221l62.05591,212.98877-1.92016.55957L791.59315,197.09106a5.00865,5.00865,0,0,0-6.19922-3.40186L321.67579,328.7976a5.00029,5.00029,0,0,0-3.40186,6.19922l70.04651,240.41309Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#3f3d56" />
-                                      <path
-                                        d="M752.93324,410.51a6.51233,6.51233,0,0,1-6.24341-4.6831l-11.74854-40.32324a6.50734,6.50734,0,0,1,4.42212-8.0586l40.32349-11.74853a6.50722,6.50722,0,0,1,8.05859,4.42285L799.494,390.44262a6.50733,6.50733,0,0,1-4.42212,8.05859l-40.32349,11.74854A6.47854,6.47854,0,0,1,752.93324,410.51Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M385.31751,336.3a11.691,11.691,0,0,0-.43017-1.22,11.99972,11.99972,0,0,0-22.90967,6.67,11.37989,11.37989,0,0,0,.29,1.26,12.01924,12.01924,0,0,0,11.52978,8.64,11.74908,11.74908,0,0,0,3.3501-.48A12.01262,12.01262,0,0,0,385.31751,336.3Zm-8.73,12.95a10.01322,10.01322,0,0,1-12.3999-6.8,11.435,11.435,0,0,1-.28027-1.26,9.99681,9.99681,0,0,1,19.04-5.54,8.33837,8.33837,0,0,1,.45019,1.21A10.00446,10.00446,0,0,1,376.58753,349.25006Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M355.88508,344.87a11.00221,11.00221,0,0,1,4.20834-12.0571,11,11,0,1,0,5.81753,19.96694A11.00221,11.00221,0,0,1,355.88508,344.87Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M666.7472,394.43005a6.04249,6.04249,0,0,0-7.44971-4.2L592.90736,408.8l-7.14991,2h44.89991l7.1499-2,24.75-6.92A6.04864,6.04864,0,0,0,666.7472,394.43005Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#ccc" />
-                                      <path
-                                        d="M619.77747,380.56005a6.04513,6.04513,0,0,0-7.45019-4.19l-99.61963,27.86a6.06838,6.06838,0,0,0-4.37012,6.57h25.79l7.15967-2,74.30029-20.78A6.05544,6.05544,0,0,0,619.77747,380.56005Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#ccc" />
-                                      <path
-                                        d="M876.24147,408.79777H393.241a7.00787,7.00787,0,0,0-7,7v286a7.00755,7.00755,0,0,0,7,7H876.24147a7.00786,7.00786,0,0,0,7-7v-286A7.00818,7.00818,0,0,0,876.24147,408.79777Zm5,293a5.00181,5.00181,0,0,1-5,5H393.241a5.0018,5.0018,0,0,1-5-5v-286a5.00213,5.00213,0,0,1,5-5H876.24147a5.00213,5.00213,0,0,1,5,5Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#3f3d56" />
-                                      <path
-                                        d="M440.23744,447.8a12,12,0,1,1,12-12A12.01375,12.01375,0,0,1,440.23744,447.8Zm0-22a10,10,0,1,0,10,10A10.0113,10.0113,0,0,0,440.23744,425.8Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M421.58526,435.8a11.00221,11.00221,0,0,1,7.413-10.39858,11,11,0,1,0,0,20.79717A11.00222,11.00222,0,0,1,421.58526,435.8Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M488.88112,577.57805a9.01031,9.01031,0,0,1-9-9v-27a9,9,0,0,1,18,0v27A9.01032,9.01032,0,0,1,488.88112,577.57805Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M512.88112,577.57805a9.01031,9.01031,0,0,1-9-9v-27a9,9,0,0,1,18,0v27A9.01032,9.01032,0,0,1,512.88112,577.57805Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M536.88112,577.57805a9.01031,9.01031,0,0,1-9-9v-27a9,9,0,0,1,18,0v27A9.01032,9.01032,0,0,1,536.88112,577.57805Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M573.88112,577.57805a9.01031,9.01031,0,0,1-9-9v-27a9,9,0,0,1,18,0v27A9.01032,9.01032,0,0,1,573.88112,577.57805Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M597.88112,577.57805a9.01031,9.01031,0,0,1-9-9v-27a9,9,0,0,1,18,0v27A9.01032,9.01032,0,0,1,597.88112,577.57805Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M621.88112,577.57805a9.01031,9.01031,0,0,1-9-9v-27a9,9,0,0,1,18,0v27A9.01032,9.01032,0,0,1,621.88112,577.57805Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M658.88112,577.57805a9.01031,9.01031,0,0,1-9-9v-27a9,9,0,0,1,18,0v27A9.01032,9.01032,0,0,1,658.88112,577.57805Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M682.88112,577.57805a9.01031,9.01031,0,0,1-9-9v-27a9,9,0,0,1,18,0v27A9.01032,9.01032,0,0,1,682.88112,577.57805Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M706.88112,577.57805a9.01031,9.01031,0,0,1-9-9v-27a9,9,0,0,1,18,0v27A9.01032,9.01032,0,0,1,706.88112,577.57805Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M743.88112,577.57805a9.01031,9.01031,0,0,1-9-9v-27a9,9,0,0,1,18,0v27A9.01032,9.01032,0,0,1,743.88112,577.57805Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M767.88112,577.57805a9.01031,9.01031,0,0,1-9-9v-27a9,9,0,0,1,18,0v27A9.01032,9.01032,0,0,1,767.88112,577.57805Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path
-                                        d="M791.88112,577.57805a9.01031,9.01031,0,0,1-9-9v-27a9,9,0,0,1,18,0v27A9.01032,9.01032,0,0,1,791.88112,577.57805Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#1f04a3" />
-                                      <path d="M549.89914,677.745H420.45883a6.04736,6.04736,0,1,1,0-12.09472H549.89914a6.04736,6.04736,0,1,1,0,12.09472Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#e6e6e6" />
-                                      <path d="M508.39914,651.745H461.95883a6.04736,6.04736,0,1,1,0-12.09472h46.44031a6.04736,6.04736,0,1,1,0,12.09472Z"
-                                        transform="translate(-316.07106 -191.48811)" fill="#e6e6e6" />
-                                      <rect x="71.81005" y="277.08994" width="493" height="2" fill="#3f3d56" />
-                                    </svg>
-                      
-                                    <h2 class="text-2xl font-medium">
-                                        There's nothing here...
-                                    </h2>
-                                
-                                    <p class="mt-4 text-sm text-gray-500">
-                                        User information will appear here.
-                                    </p>
+                          <ng-container *ngIf="!user">
+                            <div class="relative p-8 text-center rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-name="Layer 1" class="mx-auto" width="150"
+                                height="100" viewBox="0 0 538.0218 520.24984">
+                                <path
+                                  d="M821.82762,687.5884a2.80741,2.80741,0,0,1-2.03464-4.86593l.19237-.76476q-.038-.09189-.07644-.18358a7.53909,7.53909,0,0,0-13.90673.05167c-2.27452,5.4781-5.17038,10.96553-5.88341,16.75771a22.30362,22.30362,0,0,0,.39153,7.67061,89.41943,89.41943,0,0,1-8.13413-37.13874,86.307,86.307,0,0,1,.53535-9.6283q.44349-3.93128,1.23055-7.80653a90.45559,90.45559,0,0,1,17.93812-38.3373A24.07278,24.07278,0,0,0,822.092,602.9559a18.3625,18.3625,0,0,0,1.67-5.01791c-.48738.06393-1.83778-7.35909-1.47017-7.81452-.67924-1.03071-1.895-1.54307-2.63681-2.54885-3.68943-5.0021-8.77253-4.12872-11.42612,2.66876-5.6687,2.861-5.72357,7.60577-2.24528,12.16916,2.2129,2.90325,2.51695,6.83168,4.45862,9.93984-.19981.25572-.40756.50344-.6073.75916a91.04046,91.04046,0,0,0-9.50223,15.05378,37.84589,37.84589,0,0,0-2.25945-17.5787c-2.16269-5.21725-6.21632-9.61123-9.786-14.12153-4.2878-5.41757-13.08033-3.05324-13.83575,3.81439q-.011.09973-.02142.19941.79533.44867,1.55706.95247a3.808,3.808,0,0,1-1.53532,6.92992l-.07765.012a37.88961,37.88961,0,0,0,.99876,5.66515c-4.57949,17.71009,5.30731,24.16047,19.42432,24.45023.31163.15979.61531.31958.92694.47145a92.92537,92.92537,0,0,0-5.00193,23.5393,88.13663,88.13663,0,0,0,.06393,14.23066l-.024-.16777a23.28922,23.28922,0,0,0-7.95036-13.44764c-6.11822-5.02589-14.76211-6.87666-21.36259-10.9165a4.37072,4.37072,0,0,0-6.69422,4.252q.01327.0882.027.17642a25.5799,25.5799,0,0,1,2.86849,1.38225q.79532.44877,1.55706.95247a3.8081,3.8081,0,0,1-1.53533,6.93l-.07772.01193c-.05591.008-.10387.016-.15972.024a37.92271,37.92271,0,0,0,6.97545,10.92264c2.86344,15.46022,15.162,16.927,28.31753,12.42488h.008a92.89716,92.89716,0,0,0,6.24043,18.21781H821.269c.08-.24769.15184-.50341.22379-.75113a25.329,25.329,0,0,1-6.16856-.36745c1.654-2.02957,3.308-4.07513,4.962-6.10463a1.384,1.384,0,0,0,.10388-.11987c.839-1.03867,1.68595-2.06945,2.52491-3.10816l.00045-.00126a37.10118,37.10118,0,0,0-1.08711-9.45127Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#f2f2f2" />
+                                <path
+                                  d="M784.68188,489.35329c5.90814-21.45223,16.9292-39.72273,34.72329-53.77843a4.89248,4.89248,0,0,1,6.75634-1.45469l40.61465,26.2238a4.89245,4.89245,0,0,1,1.45468,6.75632l-34.72329,53.77843a4.89246,4.89246,0,0,1-6.75632,1.45471l-40.61465-26.22379A4.89247,4.89247,0,0,1,784.68188,489.35329Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#f2f2f2" />
+                                <path
+                                  d="M798.28516,475.12149c1.52248-11.3345,10.89894-22.92117,22.32328-34.57366a4.58185,4.58185,0,0,1,6.32752-1.36236l34.90487,22.53714a4.58206,4.58206,0,0,1,1.36257,6.32764l-30.899,47.85549a4.58205,4.58205,0,0,1-6.32771,1.36224l-21.62285-13.96129A20.40975,20.40975,0,0,1,798.28516,475.12149Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#fff" />
+                                <path
+                                  d="M801.39977,521.3357c-5.15377-21.64585-4.29431-42.9657,4.53083-63.85372a4.89248,4.89248,0,0,1,5.22058-4.52878l48.22374,3.42179a4.89246,4.89246,0,0,1,4.52876,5.22056l-4.53084,63.85372a4.89247,4.89247,0,0,1-5.22054,4.5288l-48.22374-3.42179A4.89248,4.89248,0,0,1,801.39977,521.3357Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#f2f2f2" />
+                                <path
+                                  d="M806.46733,502.31169c-4.12451-10.66664-1.48736-25.33683,2.91283-41.051a4.58187,4.58187,0,0,1,4.88923-4.24135l41.44424,2.94074a4.58205,4.58205,0,0,1,4.24158,4.88924l-4.03183,56.82112a4.582,4.582,0,0,1-4.88945,4.24133l-25.67385-1.82172A20.40974,20.40974,0,0,1,806.46733,502.31169Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#fff" />
+                                <path
+                                  d="M805.558,387.709l-20.65947-76.46688A12.785,12.785,0,0,0,769.3901,302.229l0,0a12.785,12.785,0,0,0-9.02253,16.21244l23.89523,78.77245,12.50192,48.47714a11.15676,11.15676,0,1,0,14.30444.63831Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#ffb6b6" />
+                                <path
+                                  d="M656.56436,400.93746l21.18655-76.32252a12.785,12.785,0,0,0-8.75169-15.65748l0,0a12.785,12.785,0,0,0-16.02429,9.35261l-19.57713,79.95509L619.454,446.34739a11.15677,11.15677,0,1,0,11.983,7.83792Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#ffb6b6" />
+                                <polygon points="446.816 504.239 433.315 504.238 426.893 452.165 446.818 452.166 446.816 504.239" fill="#ffb6b6" />
+                                <path
+                                  d="M778.28,708.19791l-41.5155-.00158v-.525a16.15988,16.15988,0,0,1,16.159-16.15874h.001l7.58332-5.75307,14.14881,5.754,3.62405.00009Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#2f2e41" />
+                                <polygon points="351.81 504.375 338.519 502.004 341.337 449.611 360.953 453.11 351.81 504.375" fill="#ffb6b6" />
+                                <path
+                                  d="M680.79465,708.19791,639.924,700.90914l.09215-.51682a16.15988,16.15988,0,0,1,18.74445-13.07148l.001.00018,8.47541-4.33265,12.91914,8.14819,3.56777.63621Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#2f2e41" />
+                                <path
+                                  d="M684.1149,454.68878S671.533,472.51,672.04585,478.49051s4.95628,1.20962.51287,5.98048-7.03249,1.57014-4.84927,7.46428,3.07191,2.07745,2.18322,5.89414.88869,149.80512.88869,149.80512h23.13691s13.04781-84.65063,11.39607-88.60269-1.61387-2.23155.14456-6.43141,3.41329-9.19612,3.41329-9.19612l18.288-51.46886,14.107,72.46739L757.87262,650.515h22.17212s3.79668-126.62986,5.47535-128.20763-.32961-5.12377-2.43586-7.16746-1.6864-4.11877-1.00764-8.32918,3.54219-6.55872,3.4435-9.20125,6.12208-44.62614-3.65343-51.30535S684.1149,454.68878,684.1149,454.68878Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#2f2e41" />
+                                <path
+                                  d="M761.47653,277.1745l-25.88066-6.70645L723.515,253.80572l-28.6905,3.527-6.10734,22.72759L668.29182,291.9164c36.61419.21884,16.89656,106.2934,22.27807,113.13715,4.37946,5.56948-21.85839,18.81883-13.63532,27.27064s5.18276,5.06989,3.27462,14.27147-15.81778,18.93956,0,18.84293,111.265-1.46016,108.538-12.36842-2.68412-8.13825-6.79619-14.97738-6.87956-3.01732-5.49582-13.10942-3.1106-17.89788.02026-22.3639c4.80557-6.85486-.03728-56.33733-4.56872-55.01654Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#1f04a3" />
+                                <path
+                                  d="M754.08714,277.52823s18.9315-8.04275,25.74916,6.9561c2.17752,4.79055,4.011,16.82332,5.77769,14.155s.06211,3.18135,1.15575,3.18859c.97613.00645,2.47689-1.57243,1.34256,3.86689a10.77325,10.77325,0,0,0,3.14761,9.9166l-32.90372,19.70629Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#1f04a3" />
+                                <path
+                                  d="M682.95747,291.16355s-18.93151-8.04275-25.74917,6.95611c-1.9174,4.21827-1.44033,13.5912-5.17412,12.53891s-1.08315,2.9125-1.57576,4.28986c-.54906,1.53518,1.848,5.87959-1.51854,4.35932s-3.15519,9.939-3.15519,9.939L678.68842,348.953Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#1f04a3" />
+                                <path
+                                  d="M691.93342,268.70032l-5.45413,9.54473s-14.99885,8.18119-14.99885,9.54472,2.72706,12.49726,0,21.24749,5.20554,25.20618,6.81766,38.74793c6.81766,57.26836-13.4564,78.07668-17.72592,114.53672l43.268,12.63683s7.1827-95.8123,7.1827-117.62882S691.93342,268.70032,691.93342,268.70032Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#2f2e41" />
+                                <path
+                                  d="M731.47586,264.60972l11.14636,6.33981s14.58658,3.21609,14.76075,4.56845.226,15.72546,4.04844,24.05567,2.76922,12.7597,13.06359,37.38552c5.25977,12.58224,17.33492,113.25015,17.33492,113.25015L750.5305,468.26941s-19.36232-94.11-22.149-115.74779S731.47586,264.60972,731.47586,264.60972Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#2f2e41" />
+                                <circle cx="372.61606" cy="33.54069" r="28.19388" fill="#ffb6b6" />
+                                <path
+                                  d="M722.15989,245.32132c-6.6646-5.20939,2.44572-28.12577-8.56-23.23433,0,0-13.45145-8.56-16.154-2.93489-3.1293,6.51338-14.25851,3.55856-21.09433,1.25958a16.60841,16.60841,0,0,0,1.13726-3.90093,31.22909,31.22909,0,0,1-3.9987,2.67807,8.11676,8.11676,0,0,1-2.44572-2.00551,4.96705,4.96705,0,0,1-.62367-5.63736c1.13725-1.74868,3.48512-2.28674,4.86695-3.8398a1.672,1.672,0,0,0,.2295-1.5362,4.39444,4.39444,0,0,1,3.93738-5.50333,1.58022,1.58022,0,0,0,.749-.16313,17.13328,17.13328,0,0,0,3.19165-2.51909c-1.60195.07337.357-9.73249,16.23961-7.87522,3.9987-.14673,6.08693,4.26336,10.0245,4.9604,9.54473-5.45413,18.06454,2.41348,22.21006,9.934C736.01491,212.52422,740.50278,236.7613,722.15989,245.32132Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#2f2e41" />
+                                <path
+                                  d="M601.85909,204.87508h-252.73a18.15513,18.15513,0,0,0-18.14,18.13V450.73513a18.16363,18.16363,0,0,0,18.14,18.14h252.73a18.15509,18.15509,0,0,0,18.13-18.13995V223.00508A18.14658,18.14658,0,0,0,601.85909,204.87508Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#fff" />
+                                <path d="M486.3832,257.1428h-27a5,5,0,1,1,0-10h27a5,5,0,0,1,0,10Z" transform="translate(-330.9891 -189.87508)"
+                                  fill="#1f04a3" />
+                                <path d="M844.3832,486.87508h-27a5,5,0,0,1,0-10h27a5,5,0,0,1,0,10Z" transform="translate(-330.9891 -189.87508)"
+                                  fill="#1f04a3" />
+                                <path d="M556.3832,361.87508h-167a5,5,0,0,1,0-10h167a5,5,0,0,1,0,10Z" transform="translate(-330.9891 -189.87508)"
+                                  fill="#e6e6e6" />
+                                <path d="M556.3832,394.87508h-167a5,5,0,0,1,0-10h167a5,5,0,0,1,0,10Z" transform="translate(-330.9891 -189.87508)"
+                                  fill="#e6e6e6" />
+                                <path d="M556.3832,427.87508h-167a5,5,0,0,1,0-10h167a5,5,0,0,1,0,10Z" transform="translate(-330.9891 -189.87508)"
+                                  fill="#e6e6e6" />
+                                <path
+                                  d="M522.24911,272.145h-98.73a18.15514,18.15514,0,0,0-18.14,18.13v29.73a18.16365,18.16365,0,0,0,18.14,18.14h98.73a18.15509,18.15509,0,0,0,18.13-18.14v-29.73A18.14657,18.14657,0,0,0,522.24911,272.145Zm16.13,47.86a16.14,16.14,0,0,1-16.13995,16.14H451.36633a43.98722,43.98722,0,0,1-43.98722-43.98722V290.275a16.15571,16.15571,0,0,1,16.14-16.13h98.73a16.14718,16.14718,0,0,1,16.13,16.13Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#e6e6e6" />
+                                <circle cx="143" cy="109" r="17" fill="#e6e6e6" />
+                                <polygon
+                                  points="182.11 148.27 106 148 130 142 132.99 132.13 156 132 162.89 141.76 180.29 146.27 181.87 146.68 182.11 148.27"
+                                  fill="#e6e6e6" />
+                                <path
+                                  d="M464.32753,309.72917c3.648-2.8515-1.33872-15.39537,4.68555-12.71791,0,0,7.363-4.68555,8.84232-1.60649,1.7129,3.56527,7.80476,1.94787,11.54653.68946a9.09074,9.09074,0,0,1-.62251-2.13527,17.09573,17.09573,0,0,0,2.18879,1.46591,4.44311,4.44311,0,0,0,1.33873-1.09777,2.71885,2.71885,0,0,0,.34138-3.08576c-.6225-.95719-1.90767-1.25171-2.66405-2.10181a.91524.91524,0,0,1-.12562-.84088,2.40541,2.40541,0,0,0-2.15523-3.01239.86493.86493,0,0,1-.41-.0893,9.37792,9.37792,0,0,1-1.747-1.37889c.87687.04017-.19541-5.32733-8.88917-4.3107-2.1888-.08032-3.33184,2.33366-5.48718,2.7152-5.22455-2.98546-9.8881,1.32108-12.15725,5.43765S454.28707,305.04362,464.32753,309.72917Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#e6e6e6" />
+                                <path
+                                  d="M601.85909,204.87508h-252.73a18.15513,18.15513,0,0,0-18.14,18.13V450.73513a18.16363,18.16363,0,0,0,18.14,18.14h252.73a18.15509,18.15509,0,0,0,18.13-18.13995V223.00508A18.14658,18.14658,0,0,0,601.85909,204.87508Zm16.13,245.86005a16.14,16.14,0,0,1-16.14,16.14H463.18989A130.20079,130.20079,0,0,1,332.9891,336.67429V223.00508a16.15571,16.15571,0,0,1,16.14-16.13h252.73a16.14719,16.14719,0,0,1,16.13,16.13Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#e6e6e6" />
+                                <path
+                                  d="M865.89621,709.81761l-315.3575.30731a1.19069,1.19069,0,0,1,0-2.38135l315.3575-.30731a1.19069,1.19069,0,0,1,0,2.38135Z"
+                                  transform="translate(-330.9891 -189.87508)" fill="#cacaca" />
+                                </svg>
+                  
+                                <h2 class="text-2xl font-medium">
+                                    There's nothing here...
+                                </h2>
+                            
+                                <p class="mt-4 text-sm text-gray-500">
+                                    User profile will appear here.
+                                </p>
+                            </div>
+                          </ng-container>
+                  
+                          <ng-container *ngIf="user">
+                            <div class="bg-white shadow-xl rounded m-2 animate__animated animate__fadeIn">
+                              <div class="flex flex-col bg-white rounded w-full mx-auto p-6">
+                                <div>
+                                  <h1 class="text-xl font-semibold animate__animated animate__fadeIn">User Information</h1>
                                 </div>
-                              </ng-container>
-
-                              <ng-container *ngIf="user">
                                 <div  *ngIf="uploading" class="relative h-24 w-24">
                                   <div class="h-24 w-auto bg-gray-100 rounded-full flex items-center justify-center animate__animated animate__fadeIn">
                                     <mat-spinner [diameter]="30" class="mx-auto"></mat-spinner>
@@ -180,7 +184,7 @@
 
                                 <div *ngIf="!uploading" class="relative h-24 w-24">
                                   <input class="form-control hidden" type="file" #fileupload (change)="onChange($event)">
-                                  <img class="h-24 w-auto rounded-full animate__animated animate__fadeIn" [src]="user.image != null ? user.image : 'https://ui-avatars.com/api/?name='+ user.fullName" alt="Avatar">
+                                  <img class="h-24 w-24 bg-gray-300 rounded-full animate__animated animate__fadeIn" [src]="user?.image ?? 'assets/default_profile.jpg'" alt="Avatar">
                                   <button for="fileupload" type="file" (click)="fileupload.click()"
                                     class="absolute bottom-0 right-0 bg-green-500 text-white p-2 rounded-full animate__animated animate__fadeIn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 29.001 27">
@@ -205,36 +209,42 @@
                                 <br>
                                 <p class="animate__animated animate__fadeIn">Full name</p>
                                 <div class="lg:w-1/2">
-                                  <input type="text" [(ngModel)]="user.fullName" class="block w-full outline outline-slate-500 outline-1 rounded-full pl-12 pr-4 py-3 animate__animated animate__fadeIn">
+                                  <input type="text" [(ngModel)]="user.fullName" class="block w-full outline outline-slate-500 outline-1 rounded-full px-4 py-3 animate__animated animate__fadeIn">
                                 </div>
                                 <br>
 
                                 <!-- <p class="animate__animated animate__fadeIn">First name</p>
                                 <div class="lg:w-1/3">
-                                  <input type="text" [(ngModel)]="user.firstName" class="block w-full outline outline-slate-500 outline-1 rounded-full pl-12 pr-4 py-3 animate__animated animate__fadeIn">
+                                  <input type="text" [(ngModel)]="user.firstName" class="block w-full outline outline-slate-500 outline-1 rounded-full px-4 py-3 animate__animated animate__fadeIn">
                                 </div>
                                 <br> -->
 
                                 <!-- <p class="animate__animated animate__fadeIn">Last name</p>
                                 <div class="lg:w-1/3">
-                                  <input type="text" [(ngModel)]="user.lastName" class="block w-full outline outline-slate-500 outline-1 rounded-full pl-12 pr-4 py-3 animate__animated animate__fadeIn">
+                                  <input type="text" [(ngModel)]="user.lastName" class="block w-full outline outline-slate-500 outline-1 rounded-full px-4 py-3 animate__animated animate__fadeIn">
                                 </div>
                                 <br> -->
 
                                 <!-- <p class="animate__animated animate__fadeIn">Country</p>
                                 <div class="lg:w-1/3">
-                                  <input type="text" [(ngModel)]="user.country" class="block w-full outline outline-slate-500 outline-1 rounded-full pl-12 pr-4 py-3 animate__animated animate__fadeIn">
+                                  <input type="text" [(ngModel)]="user.country" class="block w-full outline outline-slate-500 outline-1 rounded-full px-4 py-3 animate__animated animate__fadeIn">
                                 </div>
                                 <br> -->
 
                                 <p class="animate__animated animate__fadeIn">Username</p>
                                 <div class="lg:w-1/2">
-                                  <input  [(ngModel)]="user.userName" class="block w-full outline outline-slate-500 outline-1 rounded-full pl-12 pr-4 py-3 animate__animated animate__fadeIn">
+                                  <input  [(ngModel)]="user.userName" class="block w-full outline outline-slate-500 outline-1 rounded-full px-4 py-3 animate__animated animate__fadeIn">
                                 </div>
                                 <br>
                                 <p class="animate__animated animate__fadeIn">Country</p>
-                                <div class="lg:w-1/2">
-                                  <select [(ngModel)]="user.country" class="block w-full outline outline-slate-500 outline-1 rounded-full pl-12 pr-4 py-3 animate__animated animate__fadeIn">
+                                <!-- <div class="select-wrapper">
+                                  <select name="requirementLevelId" ngModel (ngModelChange)="onAssetChanged($event,domain)" class="block outline outline-slate-500 outline-1 rounded-full px-10 py-3 animate__animated animate__fadeIn animate__delay-2s" required>
+                                    <option *ngFor="let asset of allTheAssetTypes" [ngValue]="asset.id">{{asset.type}}</option>
+                                  </select>  
+                                </div> -->
+
+                                <div class="relative lg:w-1/2 select-wrapper">
+                                  <select [(ngModel)]="user.country" class="block w-full outline outline-slate-500 outline-1 rounded-full px-4 py-3 animate__animated animate__fadeIn">
                                     <option *ngFor="let country of countries" [value]="country.name">
                                       {{ country.name }}
                                     </option>
@@ -251,7 +261,7 @@
                                         <p class="animate__animated animate__fadeIn">Your email address is {{user.email}}</p>
                                       </div>
                                       <div *ngIf="isChangeEmail">
-                                        <input  [(ngModel)]="user.email" class="block w-full outline outline-slate-500 outline-1 rounded-full pl-12 pr-4 py-3 animate__animated animate__fadeIn">
+                                        <input  [(ngModel)]="user.email" class="block w-full outline outline-slate-500 outline-1 rounded-full px-4 py-3 animate__animated animate__fadeIn">
                                       </div>
                                       <div class="ml-3 overflow-hidden justify-self-end">
                                         <div class="text-pink-500 text-sm animate__animated animate__fadeIn">
@@ -273,11 +283,11 @@
                                       </div>
                                       <div *ngIf="isChangePassword">
                                         <form #passwordForm="ngForm" autocomplete="off">
-                                          <input type="password" name="currentPassword" placeholder="Old password" class="block w-full outline outline-slate-500 outline-1 rounded-full pl-12 pr-4 py-3 animate__animated animate__fadeIn" ngModel required>
+                                          <input type="password" name="currentPassword" placeholder="Old password" class="block w-full outline outline-slate-500 outline-1 rounded-full px-4 py-3 animate__animated animate__fadeIn" ngModel required>
                                           <br>
-                                          <input type="password" name="newPassword" placeholder="New password" class="block w-full outline outline-slate-500 outline-1 rounded-full pl-12 pr-4 py-3 animate__animated animate__fadeIn" ngModel required>
+                                          <input type="password" name="newPassword" placeholder="New password" class="block w-full outline outline-slate-500 outline-1 rounded-full px-4 py-3 animate__animated animate__fadeIn" ngModel required>
                                           <br>
-                                          <input type="password" name="confirmPassword" placeholder="Confirm new password" class="block w-full outline outline-slate-500 outline-1 rounded-full pl-12 pr-4 py-3 animate__animated animate__fadeIn" ngModel required>
+                                          <input type="password" name="confirmPassword" placeholder="Confirm new password" class="block w-full outline outline-slate-500 outline-1 rounded-full px-4 py-3 animate__animated animate__fadeIn" ngModel required>
                                           <br>
                                           <button *ngIf="passwordForm.form.valid" class="px-4 py-2 text-sm text-white rounded-full flex items-center animate__animated animate__fadeIn hover:bg-[#FC007E]" (click)="changePassword(passwordForm.value)" [disabled]="updateLoading">
                                             <span class="mr-[5px]">{{updateLoading ? 'Saving' : 'Save'}}</span>
@@ -305,7 +315,7 @@
                                 <br>
                                 <mat-divider></mat-divider>
                                 <br>
-                                <div>
+                                <!-- <div>
                                   <p class=" animate__animated animate__fadeIn">Verification</p>
                                   <p class="animate__animated animate__fadeIn">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -313,9 +323,6 @@
                                   <br>
                                   <div class="max-w-full w-full py-2">
                                     <div class="grid grid-cols-2 gap-2">
-                                      <div>
-                                        <!-- <p>High</p> -->
-                                      </div>
                                       <div class="ml-3 overflow-hidden justify-self-end">
                                         <div class="flex items-center text-pink-500 text-sm animate__animated animate__fadeIn">
                                           <a id="login" mat-button href="javascript:;">Begin verification process</a>
@@ -335,8 +342,8 @@
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                                <mat-divider></mat-divider>
+                                </div> -->
+                                <!-- <mat-divider></mat-divider> -->
                                 <br>
                                 <div class="max-w-full w-full">
                                   <div class="overflow-hidden justify-self-start">
@@ -355,9 +362,9 @@
                                     </button>
                                   </div>
                                 </div>
-                              </ng-container>
+                              </div>
                             </div>
-                          </div>
+                          </ng-container>
                         </ng-container>
                       </ng-container>
 
@@ -470,84 +477,134 @@
                       
                               <ng-container *ngIf="paymentMethods.length >  0">
                                 <ng-container *ngFor="let paymentMethod of paymentMethods">
-                                  <div *ngIf="paymentMethod.platform == PaymentMethodPlatform.Mpesa" class="max-w-full w-full py-2">
-                                    <div class="grid grid-cols-4 gap-2 px-4 items-center">
-                                      <div>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="50" viewBox="0 0 167 83.999">
-                                          <g id="Group_192" data-name="Group 192" transform="translate(-93.684 -378.718)">
-                                            <path id="Path_338" data-name="Path 338" d="M141.188,394.525H154.01a7.45,7.45,0,0,1,7.415,7.439v21.389a7.449,7.449,0,0,1-7.415,7.438H141.188a7.448,7.448,0,0,1-7.415-7.438V401.965a7.449,7.449,0,0,1,7.415-7.439Z" fill="#fff" fill-rule="evenodd"/>
-                                            <path id="Path_339" data-name="Path 339" d="M158.645,462.717H136.554a5.9,5.9,0,0,1-5.871-5.89V391.891a5.9,5.9,0,0,1,5.871-5.89h22.091a5.882,5.882,0,0,1,.772.051v-4.778a2.561,2.561,0,0,1,2.55-2.556h0a2.561,2.561,0,0,1,2.55,2.556v8.059a2.548,2.548,0,0,1-.208,1.008,5.872,5.872,0,0,1,.208,1.549v64.936a5.9,5.9,0,0,1-5.871,5.89Zm-17.457-68.192H154.01a7.45,7.45,0,0,1,7.415,7.439v21.389a7.449,7.449,0,0,1-7.415,7.438H141.188a7.448,7.448,0,0,1-7.415-7.438V401.965a7.449,7.449,0,0,1,7.415-7.439Z" fill="#d1e187" fill-rule="evenodd"/>
-                                            <path id="Path_340" data-name="Path 340" d="M169.709,395.887l14.1-.054c5.14.654,7.515,4.514,7.3,10.129-.392,5.658-3.59,8.424-8.931,8.909l-5.118-.1.144,15.524h-7.492V395.887Zm7.571,3.53c3.48-.5,6.152.469,6.334,5.966-.116,4.907-2.716,6.149-6.334,5.89V399.416Z" fill="#8bc53f" fill-rule="evenodd"/>
-                                            <path id="Path_341" data-name="Path 341" d="M204.2,395.461l8.925-.041-.067,3.843-6.991-.032c-4.034.752-3.131,5.069-3.326,8.188l9.405-.177.033,4.718-9.114-.1-.043,11.422c.357,2.962,1.911,4.452,4.535,4.624l5.005-.056,1.527.035-.048,3.564-1.563.06-9.515-.1c-3.279-.111-5.927-1.742-7.146-6.814l-.233-22.162c.135-4.543,3.125-6.771,8.614-6.975Z" fill="#8bc53f" fill-rule="evenodd"/>
-                                            <path id="Path_342" data-name="Path 342" d="M216.4,405.185c-.563-7.423,3.561-9.1,8.575-9.685,5.868-.35,9.554,2.106,10.273,8.37l-6.927-.019c-.439-3.159-2.89-4.374-5.132-2.869-3.195,3.922,6.778,10.824,9.768,13.385,5.169,4.1,4.294,15.467-3.667,17.574l-4.855.173c-4.931.116-7.866-3.008-8.716-8.8l6.979-.122c.381,2.473,1.433,4.011,3.667,3.9,3.475-.663,4.432-3.733,1.96-7.649-5.175-4.409-11.3-8.545-11.925-14.258Z" fill="#8bc53f" fill-rule="evenodd"/>
-                                            <path id="Path_343" data-name="Path 343" d="M93.684,394.338h7.338l.076,2.286c4.433-1.921,7.777-3.28,11.279-.116,6.261-2.966,11-2.629,13.345,2.877l.327,30.908h-7.4V400.81c-.549-2.523-2.54-2.955-4.944-2.788v32.271h-7.569V400.81c-.549-2.523-2.54-2.955-4.944-2.788v32.271H93.684V394.338Z" fill="#8bc53f" fill-rule="evenodd"/>
-                                            <path id="Path_344" data-name="Path 344" d="M239.364,431.2h7.609V412.211h6.334V431.2h7.377V404.075c-.147-5.511-4.371-8.966-10.352-8.988-6.821-.06-10.712,3.184-10.969,8.678V431.2Zm7.609-29.058c.252-2.026.909-2.842,3.128-3.06,2.251.057,3.054,1.362,3.206,3.37v5.5h-6.334v-5.812Z" fill="#8bc53f" fill-rule="evenodd"/>
-                                            <path id="Path_345" data-name="Path 345" d="M139.68,409c1.27,2.976,3,4.346,5.088,4.428A29.281,29.281,0,0,1,134.3,418.3a33.248,33.248,0,0,1-6.666-1.327c5.421-1.074,9.462-3.706,12.05-7.982Z" fill="#81211c" fill-rule="evenodd"/>
-                                            <path id="Path_346" data-name="Path 346" d="M153.894,401.325l15.294,7.749c-7.79,10.28-20.924,10.55-34.915,9.221,9.353-2.313,15.828-8.045,19.621-16.97Z" fill="#eb2026" fill-rule="evenodd"/>
-                                          </g>
-                                        </svg>
+                                  <ng-container *ngIf="paymentMethod.platform == PaymentMethodPlatform.Mpesa; else paypalMethod">
+                                    <div class="max-w-full w-full py-2">
+                                      <div class="grid grid-cols-4 gap-2 px-4 items-center">
+                                        <div>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="100" height="50" viewBox="0 0 167 83.999">
+                                            <g id="Group_192" data-name="Group 192" transform="translate(-93.684 -378.718)">
+                                              <path id="Path_338" data-name="Path 338" d="M141.188,394.525H154.01a7.45,7.45,0,0,1,7.415,7.439v21.389a7.449,7.449,0,0,1-7.415,7.438H141.188a7.448,7.448,0,0,1-7.415-7.438V401.965a7.449,7.449,0,0,1,7.415-7.439Z" fill="#fff" fill-rule="evenodd"/>
+                                              <path id="Path_339" data-name="Path 339" d="M158.645,462.717H136.554a5.9,5.9,0,0,1-5.871-5.89V391.891a5.9,5.9,0,0,1,5.871-5.89h22.091a5.882,5.882,0,0,1,.772.051v-4.778a2.561,2.561,0,0,1,2.55-2.556h0a2.561,2.561,0,0,1,2.55,2.556v8.059a2.548,2.548,0,0,1-.208,1.008,5.872,5.872,0,0,1,.208,1.549v64.936a5.9,5.9,0,0,1-5.871,5.89Zm-17.457-68.192H154.01a7.45,7.45,0,0,1,7.415,7.439v21.389a7.449,7.449,0,0,1-7.415,7.438H141.188a7.448,7.448,0,0,1-7.415-7.438V401.965a7.449,7.449,0,0,1,7.415-7.439Z" fill="#d1e187" fill-rule="evenodd"/>
+                                              <path id="Path_340" data-name="Path 340" d="M169.709,395.887l14.1-.054c5.14.654,7.515,4.514,7.3,10.129-.392,5.658-3.59,8.424-8.931,8.909l-5.118-.1.144,15.524h-7.492V395.887Zm7.571,3.53c3.48-.5,6.152.469,6.334,5.966-.116,4.907-2.716,6.149-6.334,5.89V399.416Z" fill="#8bc53f" fill-rule="evenodd"/>
+                                              <path id="Path_341" data-name="Path 341" d="M204.2,395.461l8.925-.041-.067,3.843-6.991-.032c-4.034.752-3.131,5.069-3.326,8.188l9.405-.177.033,4.718-9.114-.1-.043,11.422c.357,2.962,1.911,4.452,4.535,4.624l5.005-.056,1.527.035-.048,3.564-1.563.06-9.515-.1c-3.279-.111-5.927-1.742-7.146-6.814l-.233-22.162c.135-4.543,3.125-6.771,8.614-6.975Z" fill="#8bc53f" fill-rule="evenodd"/>
+                                              <path id="Path_342" data-name="Path 342" d="M216.4,405.185c-.563-7.423,3.561-9.1,8.575-9.685,5.868-.35,9.554,2.106,10.273,8.37l-6.927-.019c-.439-3.159-2.89-4.374-5.132-2.869-3.195,3.922,6.778,10.824,9.768,13.385,5.169,4.1,4.294,15.467-3.667,17.574l-4.855.173c-4.931.116-7.866-3.008-8.716-8.8l6.979-.122c.381,2.473,1.433,4.011,3.667,3.9,3.475-.663,4.432-3.733,1.96-7.649-5.175-4.409-11.3-8.545-11.925-14.258Z" fill="#8bc53f" fill-rule="evenodd"/>
+                                              <path id="Path_343" data-name="Path 343" d="M93.684,394.338h7.338l.076,2.286c4.433-1.921,7.777-3.28,11.279-.116,6.261-2.966,11-2.629,13.345,2.877l.327,30.908h-7.4V400.81c-.549-2.523-2.54-2.955-4.944-2.788v32.271h-7.569V400.81c-.549-2.523-2.54-2.955-4.944-2.788v32.271H93.684V394.338Z" fill="#8bc53f" fill-rule="evenodd"/>
+                                              <path id="Path_344" data-name="Path 344" d="M239.364,431.2h7.609V412.211h6.334V431.2h7.377V404.075c-.147-5.511-4.371-8.966-10.352-8.988-6.821-.06-10.712,3.184-10.969,8.678V431.2Zm7.609-29.058c.252-2.026.909-2.842,3.128-3.06,2.251.057,3.054,1.362,3.206,3.37v5.5h-6.334v-5.812Z" fill="#8bc53f" fill-rule="evenodd"/>
+                                              <path id="Path_345" data-name="Path 345" d="M139.68,409c1.27,2.976,3,4.346,5.088,4.428A29.281,29.281,0,0,1,134.3,418.3a33.248,33.248,0,0,1-6.666-1.327c5.421-1.074,9.462-3.706,12.05-7.982Z" fill="#81211c" fill-rule="evenodd"/>
+                                              <path id="Path_346" data-name="Path 346" d="M153.894,401.325l15.294,7.749c-7.79,10.28-20.924,10.55-34.915,9.221,9.353-2.313,15.828-8.045,19.621-16.97Z" fill="#eb2026" fill-rule="evenodd"/>
+                                            </g>
+                                          </svg>
+                                        </div>
+                                        <div>
+                                          <p class="truncate animate__animated animate__fadeIn">+{{paymentMethod.phone | slice:0:3}} {{paymentMethod.phone | slice:3:6}} {{paymentMethod.phone | slice:6:12}}</p>
+                                        </div>
+                                        <div>
+                                          <p class="truncate animate__animated animate__fadeIn">Added on {{paymentMethod.createdAt ? (paymentMethod.createdAt | date: 'dd/MM/yyyy') : '- -'}}</p>
+                                        </div>
+                                        <div class="ml-3 overflow-hidden justify-self-end">
+                                          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                                            <mat-icon>more_vert</mat-icon>
+                                          </button>
+                                          <mat-menu #menu="matMenu" xPosition="before">
+                                            <button mat-menu-item (click)="editPaymentMethod(paymentMethod)">Edit</button>
+                                            <button mat-menu-item (click)="removePaymentMethod(paymentMethod.id)">Remove</button>
+                                          </mat-menu>
+                                        </div>
                                       </div>
-                                      <div>
-                                        <p class="truncate animate__animated animate__fadeIn">+{{paymentMethod.phone | slice:0:3}} {{paymentMethod.phone | slice:3:6}} {{paymentMethod.phone | slice:6:12}}</p>
-                                      </div>
-                                      <div>
-                                        <p class="truncate animate__animated animate__fadeIn">Added on {{paymentMethod.createdAt ? (paymentMethod.createdAt | date: 'dd/MM/yyyy') : '- -'}}</p>
-                                      </div>
-                                      <div class="ml-3 overflow-hidden justify-self-end">
-                                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                                          <mat-icon>more_vert</mat-icon>
-                                        </button>
-                                        <mat-menu #menu="matMenu" xPosition="before">
-                                          <button mat-menu-item (click)="removePaymentMethod(paymentMethod.id)">Remove</button>
-                                        </mat-menu>
-                                      </div>
-                                      <!-- <div class="ml-3 overflow-hidden justify-self-end animate__animated animate__fadeIn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 35.099 35.101">
-                                          <path id="Path_446" data-name="Path 446"
-                                            d="M453.146,979.009A17.55,17.55,0,1,0,470.7,996.56,17.55,17.55,0,0,0,453.146,979.009Zm-2.053,25.441-7.773-6.925,2.2-2.469,5.27,4.695,10.461-12.076,2.5,2.165Z"
-                                            transform="translate(-435.596 -979.009)" fill="#93be31" />
-                                        </svg>
-                                      </div> -->
                                     </div>
-                                  </div>
+                                  </ng-container>
 
-                                  <div *ngIf="paymentMethod.platform == PaymentMethodPlatform.Paypal" class="max-w-full w-full py-2">
-                                    <div class="grid grid-cols-4 gap-2 px-4 items-center">
-                                      <div>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="50" viewBox="0 0 194 47.001">
-                                          <g id="Group_193" data-name="Group 193" transform="translate(-416.523 -497.291)">
-                                            <path id="Path_347" data-name="Path 347" d="M433.45,508.352h13.258c7.118,0,9.8,3.6,9.384,8.9-.682,8.742-5.966,13.575-12.976,13.575h-3.54c-.961,0-1.606.634-1.869,2.36l-1.518,10.019c-.1.652-.441,1.035-.955,1.081h-8.313c-.782,0-1.061-.6-.856-1.9l5.076-32.143A2.028,2.028,0,0,1,433.45,508.352Z" fill="#009de2" fill-rule="evenodd"/>
-                                            <path id="Path_348" data-name="Path 348" d="M491,507.759c4.474,0,8.6,2.425,8.036,8.473-.67,7.171-4.534,11.164-10.611,11.18h-5.3c-.764,0-1.131.622-1.332,1.9l-1.025,6.526c-.154.985-.658,1.472-1.408,1.472h-4.937c-.786,0-1.061-.5-.886-1.63l4.081-26.157c.2-1.287.694-1.765,1.566-1.765Zm-8.042,14h4.021c2.515-.094,4.187-1.835,4.356-4.977a3.037,3.037,0,0,0-3.293-3.319l-3.786.016-1.3,8.28Zm29.5,13.545c.451-.409.91-.624.844-.118l-.16,1.213c-.084.63.168.969.758.969h4.386c.738,0,1.1-.3,1.281-1.442l2.7-16.966c.134-.852-.072-1.269-.72-1.269h-4.821c-.435,0-.646.243-.76.909l-.179,1.043c-.094.545-.343.64-.576.092-.818-1.939-2.906-2.808-5.832-2.747-6.767.14-11.329,5.276-11.816,11.86a8.154,8.154,0,0,0,8.082,9.093,8.72,8.72,0,0,0,6.809-2.635Zm-3.67-2.607a4.406,4.406,0,0,1-4.52-5.17,6.3,6.3,0,0,1,6.059-5.172,4.407,4.407,0,0,1,4.518,5.172,6.3,6.3,0,0,1-6.057,5.17Zm22.072-15.063h-4.432c-.919,0-1.292.674-1,1.528l5.521,16.172-5.441,7.693c-.455.642-.1,1.229.537,1.229h5a1.53,1.53,0,0,0,1.486-.73l16.984-24.364c.523-.752.277-1.536-.58-1.536l-4.729-.006c-.81,0-1.137.321-1.6,1L535.525,528.9l-3.151-10.3A1.362,1.362,0,0,0,530.864,517.635Z" fill="#113984" fill-rule="evenodd"/>
-                                            <path id="Path_349" data-name="Path 349" d="M567.2,507.759c4.474,0,8.6,2.425,8.036,8.473-.67,7.171-4.534,11.164-10.613,11.18h-5.3c-.764,0-1.131.622-1.332,1.9l-1.023,6.526c-.154.985-.66,1.472-1.408,1.472H550.62c-.788,0-1.063-.5-.886-1.63l4.081-26.157c.2-1.287.692-1.765,1.564-1.765Zm-8.044,14h4.023c2.515-.094,4.185-1.835,4.354-4.977a3.035,3.035,0,0,0-3.293-3.319l-3.786.016-1.3,8.28Zm29.5,13.545c.451-.409.912-.624.846-.118l-.16,1.213c-.084.63.166.969.756.969h4.388c.738,0,1.1-.3,1.279-1.442l2.7-16.966c.136-.852-.07-1.269-.718-1.269h-4.823c-.435,0-.646.243-.76.909l-.178,1.043c-.092.545-.343.64-.574.092-.82-1.939-2.906-2.808-5.834-2.747-6.766.14-11.327,5.276-11.816,11.86a8.154,8.154,0,0,0,8.082,9.093,8.717,8.717,0,0,0,6.809-2.635Zm-3.67-2.607a4.406,4.406,0,0,1-4.518-5.17,6.3,6.3,0,0,1,6.057-5.172,4.4,4.4,0,0,1,4.518,5.172,6.3,6.3,0,0,1-6.057,5.17Zm20.233,4.7h-5.062a.6.6,0,0,1-.622-.7l4.454-28.18a.874.874,0,0,1,.84-.7h5.064a.6.6,0,0,1,.62.7l-4.452,28.18A.872.872,0,0,1,605.22,537.4Z" fill="#009de2" fill-rule="evenodd"/>
-                                            <path id="Path_350" data-name="Path 350" d="M425.161,497.291h13.272c3.738,0,8.17.122,11.136,2.737a8.978,8.978,0,0,1,2.78,7.518c-.812,10.133-6.875,15.809-15,15.809H430.8c-1.113,0-1.851.738-2.166,2.737l-1.827,11.619c-.118.754-.445,1.2-1.041,1.251h-8.176c-.906,0-1.229-.694-.993-2.2l5.888-37.271A2.35,2.35,0,0,1,425.161,497.291Z" fill="#113984" fill-rule="evenodd"/>
-                                            <path id="Path_351" data-name="Path 351" d="M428.825,524.921l2.316-14.668a2.028,2.028,0,0,1,2.308-1.9h13.258a12.946,12.946,0,0,1,5.359.975c-1.332,9.018-7.166,14.028-14.8,14.028h-6.546C429.854,523.355,429.212,523.8,428.825,524.921Z" fill="#172c70" fill-rule="evenodd"/>
-                                          </g>
-                                        </svg>                                        
+                                  <ng-template #paypalMethod>
+                                    <ng-container  *ngIf="paymentMethod.platform == PaymentMethodPlatform.Paypal; else otherMethod">
+                                      <div class="max-w-full w-full py-2">
+                                        <div class="grid grid-cols-4 gap-2 px-4 items-center">
+                                          <div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="50" viewBox="0 0 194 47.001">
+                                              <g id="Group_193" data-name="Group 193" transform="translate(-416.523 -497.291)">
+                                                <path id="Path_347" data-name="Path 347" d="M433.45,508.352h13.258c7.118,0,9.8,3.6,9.384,8.9-.682,8.742-5.966,13.575-12.976,13.575h-3.54c-.961,0-1.606.634-1.869,2.36l-1.518,10.019c-.1.652-.441,1.035-.955,1.081h-8.313c-.782,0-1.061-.6-.856-1.9l5.076-32.143A2.028,2.028,0,0,1,433.45,508.352Z" fill="#009de2" fill-rule="evenodd"/>
+                                                <path id="Path_348" data-name="Path 348" d="M491,507.759c4.474,0,8.6,2.425,8.036,8.473-.67,7.171-4.534,11.164-10.611,11.18h-5.3c-.764,0-1.131.622-1.332,1.9l-1.025,6.526c-.154.985-.658,1.472-1.408,1.472h-4.937c-.786,0-1.061-.5-.886-1.63l4.081-26.157c.2-1.287.694-1.765,1.566-1.765Zm-8.042,14h4.021c2.515-.094,4.187-1.835,4.356-4.977a3.037,3.037,0,0,0-3.293-3.319l-3.786.016-1.3,8.28Zm29.5,13.545c.451-.409.91-.624.844-.118l-.16,1.213c-.084.63.168.969.758.969h4.386c.738,0,1.1-.3,1.281-1.442l2.7-16.966c.134-.852-.072-1.269-.72-1.269h-4.821c-.435,0-.646.243-.76.909l-.179,1.043c-.094.545-.343.64-.576.092-.818-1.939-2.906-2.808-5.832-2.747-6.767.14-11.329,5.276-11.816,11.86a8.154,8.154,0,0,0,8.082,9.093,8.72,8.72,0,0,0,6.809-2.635Zm-3.67-2.607a4.406,4.406,0,0,1-4.52-5.17,6.3,6.3,0,0,1,6.059-5.172,4.407,4.407,0,0,1,4.518,5.172,6.3,6.3,0,0,1-6.057,5.17Zm22.072-15.063h-4.432c-.919,0-1.292.674-1,1.528l5.521,16.172-5.441,7.693c-.455.642-.1,1.229.537,1.229h5a1.53,1.53,0,0,0,1.486-.73l16.984-24.364c.523-.752.277-1.536-.58-1.536l-4.729-.006c-.81,0-1.137.321-1.6,1L535.525,528.9l-3.151-10.3A1.362,1.362,0,0,0,530.864,517.635Z" fill="#113984" fill-rule="evenodd"/>
+                                                <path id="Path_349" data-name="Path 349" d="M567.2,507.759c4.474,0,8.6,2.425,8.036,8.473-.67,7.171-4.534,11.164-10.613,11.18h-5.3c-.764,0-1.131.622-1.332,1.9l-1.023,6.526c-.154.985-.66,1.472-1.408,1.472H550.62c-.788,0-1.063-.5-.886-1.63l4.081-26.157c.2-1.287.692-1.765,1.564-1.765Zm-8.044,14h4.023c2.515-.094,4.185-1.835,4.354-4.977a3.035,3.035,0,0,0-3.293-3.319l-3.786.016-1.3,8.28Zm29.5,13.545c.451-.409.912-.624.846-.118l-.16,1.213c-.084.63.166.969.756.969h4.388c.738,0,1.1-.3,1.279-1.442l2.7-16.966c.136-.852-.07-1.269-.718-1.269h-4.823c-.435,0-.646.243-.76.909l-.178,1.043c-.092.545-.343.64-.574.092-.82-1.939-2.906-2.808-5.834-2.747-6.766.14-11.327,5.276-11.816,11.86a8.154,8.154,0,0,0,8.082,9.093,8.717,8.717,0,0,0,6.809-2.635Zm-3.67-2.607a4.406,4.406,0,0,1-4.518-5.17,6.3,6.3,0,0,1,6.057-5.172,4.4,4.4,0,0,1,4.518,5.172,6.3,6.3,0,0,1-6.057,5.17Zm20.233,4.7h-5.062a.6.6,0,0,1-.622-.7l4.454-28.18a.874.874,0,0,1,.84-.7h5.064a.6.6,0,0,1,.62.7l-4.452,28.18A.872.872,0,0,1,605.22,537.4Z" fill="#009de2" fill-rule="evenodd"/>
+                                                <path id="Path_350" data-name="Path 350" d="M425.161,497.291h13.272c3.738,0,8.17.122,11.136,2.737a8.978,8.978,0,0,1,2.78,7.518c-.812,10.133-6.875,15.809-15,15.809H430.8c-1.113,0-1.851.738-2.166,2.737l-1.827,11.619c-.118.754-.445,1.2-1.041,1.251h-8.176c-.906,0-1.229-.694-.993-2.2l5.888-37.271A2.35,2.35,0,0,1,425.161,497.291Z" fill="#113984" fill-rule="evenodd"/>
+                                                <path id="Path_351" data-name="Path 351" d="M428.825,524.921l2.316-14.668a2.028,2.028,0,0,1,2.308-1.9h13.258a12.946,12.946,0,0,1,5.359.975c-1.332,9.018-7.166,14.028-14.8,14.028h-6.546C429.854,523.355,429.212,523.8,428.825,524.921Z" fill="#172c70" fill-rule="evenodd"/>
+                                              </g>
+                                            </svg>                                        
+                                          </div>
+                                          <div>
+                                            <p class="truncate animate__animated animate__fadeIn">{{paymentMethod.email}}</p>
+                                          </div>
+                                          <div>
+                                            <p class="truncate animate__animated animate__fadeIn">Added on {{paymentMethod.createdAt ? (paymentMethod.createdAt | date: 'dd/MM/yyyy') : '- -'}}</p>
+                                          </div>
+                                          <div class="ml-3 overflow-hidden justify-self-end">
+                                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                                              <mat-icon>more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #menu="matMenu" xPosition="before">
+                                              <button mat-menu-item (click)="editPaymentMethod(paymentMethod)">Edit</button>
+                                              <button mat-menu-item (click)="removePaymentMethod(paymentMethod.id)">Remove</button>
+                                            </mat-menu>
+                                          </div>
+                                        </div>
                                       </div>
-                                      <div>
-                                        <p class="truncate animate__animated animate__fadeIn">{{paymentMethod.email}}</p>
+                                    </ng-container>
+                                  </ng-template>
+
+                                  <ng-template #otherMethod>
+                                    <div class="max-w-full w-full py-2">
+                                      <div class="grid grid-cols-4 gap-2 px-4 items-center">
+                                        <div>
+                                          <svg width="100" height="50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                                            id="Layer_1" x="0px" y="0px" viewBox="0 0 487.29 487.29" style="enable-background:new 0 0 487.29 487.29;"
+                                            xml:space="preserve">
+                                            <g>
+                                              <rect x="85.865" y="199.03" style="fill:#1E81CE;" width="78.52" height="198.26" />
+                                              <rect x="204.385" y="199.03" style="fill:#1E81CE;" width="39.26" height="198.26" />
+                                              <rect x="243.645" y="199.03" style="fill:#165C92;" width="39.26" height="198.26" />
+                                              <rect x="322.905" y="199.03" style="fill:#165C92;" width="78.52" height="198.26" />
+                                              <polygon style="fill:#A7ADF0;"
+                                                points="401.425,199.03 401.425,397.29 322.905,397.29 322.905,199.03 282.905,199.03    282.905,397.29 243.645,397.29 243.645,487.29 462.215,487.29 462.215,397.29 441.425,397.29 441.425,199.03  " />
+                                              <rect x="243.645" y="117.06" style="fill:#FF9811;" width="218.57" height="81.97" />
+                                              <polygon style="fill:#A7ADF0;" points="462.215,117.06 243.645,0 243.645,117.06  " />
+                                              <polygon style="fill:#C4C8F5;"
+                                                points="243.645,397.29 204.385,397.29 204.385,199.03 164.385,199.03 164.385,397.29    85.865,397.29 85.865,199.03 45.865,199.03 45.865,397.29 25.075,397.29 25.075,487.29 243.645,487.29  " />
+                                              <rect x="25.075" y="117.06" style="fill:#FFB655;" width="218.57" height="81.97" />
+                                              <polygon style="fill:#C4C8F5;" points="243.645,0 25.075,117.06 243.645,117.06  " />
+                                            </g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                          </svg>
+                                        </div>
+                                        <div>
+                                          <p class="truncate animate__animated animate__fadeIn">{{paymentMethod.accountNumber}}</p>
+                                        </div>
+                                        <div>
+                                          <p class="truncate animate__animated animate__fadeIn">Added on {{paymentMethod.createdAt ? (paymentMethod.createdAt | date: 'dd/MM/yyyy') : '- -'}}</p>
+                                        </div>
+                                        <div class="ml-3 overflow-hidden justify-self-end">
+                                          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                                            <mat-icon>more_vert</mat-icon>
+                                          </button>
+                                          <mat-menu #menu="matMenu" xPosition="before">
+                                            <button mat-menu-item (click)="editPaymentMethod(paymentMethod)">Edit</button>
+                                            <button mat-menu-item (click)="removePaymentMethod(paymentMethod.id)">Remove</button>
+                                          </mat-menu>
+                                        </div>
                                       </div>
-                                      <div>
-                                        <p class="truncate animate__animated animate__fadeIn">Added on {{paymentMethod.createdAt ? (paymentMethod.createdAt | date: 'dd/MM/yyyy') : '- -'}}</p>
-                                      </div>
-                                      <div class="ml-3 overflow-hidden justify-self-end">
-                                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                                          <mat-icon>more_vert</mat-icon>
-                                        </button>
-                                        <mat-menu #menu="matMenu" xPosition="before">
-                                          <button mat-menu-item (click)="removePaymentMethod(paymentMethod.id)">Remove</button>
-                                        </mat-menu>
-                                      </div>
-                                      <!-- <div class="ml-3 overflow-hidden justify-self-end">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 36 36">
-                                          <g id="icon-radial" transform="translate(1.287 1.287)">
-                                            <circle id="Ellipse_26" data-name="Ellipse 26" cx="16.713" cy="16.713" r="16.713" fill="none"
-                                              stroke="#b1b1b1" stroke-miterlimit="10" stroke-width="2.575" />
-                                          </g>
-                                        </svg>
-                                      </div> -->
                                     </div>
-                                  </div>
+                                  </ng-template>
                                   
                                   <mat-divider></mat-divider>
                                   <br>
@@ -569,6 +626,265 @@
                       </ng-container>
 
                       <ng-container *ngIf="showProficiencies">
+
+                        <ng-container *ngIf="!isChangeProficiencies">
+                          <ng-container *ngIf="loadingProficiencies">
+                            <div class="flex flex-col items-center">
+                              <div class="flex-shrink pr-4">
+                                  <div class="p-1 h-48 w-auto min-h-full flex items-center justify-center">
+                                      <mat-spinner [diameter]="30" class="mx-auto"></mat-spinner>
+                                  </div>
+                              </div>
+                            </div>
+                          </ng-container>
+
+                          <ng-container *ngIf="!loadingProficiencies">                        
+                            <div class="bg-white shadow-xl rounded m-2">
+                              <div class="flex flex-col bg-white rounded w-full mx-auto p-6">
+                                <div class="flex justify-between">
+                                  <h1 class="text-xl font-semibold animate__animated animate__fadeIn">Proficiency</h1>
+                                  <div class="ml-3 overflow-hidden justify-self-end">
+                                    <div class="text-pink-500 text-sm animate__animated animate__fadeIn">
+                                      <a id="login" mat-button href="javascript:;" (click)="toggleChangeProficiencies()">{{isChangeProficiencies ? 'Cancel' : 'Change'}}</a>
+                                    </div>
+                                  </div>
+                                </div>
+                                <br>
+                                <ng-container *ngIf="user.proficiencyLevels.length ==  0">
+                                  <div class="relative p-8 text-center rounded-lg">
+                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-name="Layer 1" class="mx-auto" width="150"
+                                        height="100" viewBox="0 0 649.67538 516.23162">
+                                        <path
+                                          d="M759.79588,701.91485c-8.99256-7.59865-14.45479-19.60227-13.02232-31.28789s10.30472-22.42829,21.81332-24.90978,24.62761,4.38768,28.12315,15.62987c1.92376-21.6745,4.14055-44.25714,15.66409-62.715,10.43429-16.71314,28.50667-28.672,48.09305-30.81147s40.20832,5.941,52.42363,21.40027,15.20618,37.93388,6.6509,55.68241c-6.30238,13.07474-17.91359,22.80511-30.07923,30.72128a194.12948,194.12948,0,0,1-132.77224,29.04621"
+                                          transform="translate(-275.16231 -191.88419)" fill="#f2f2f2" />
+                                        <path
+                                          d="M893.52217,574.20948a317.62446,317.62446,0,0,0-44.26411,43.95415,318.55051,318.55051,0,0,0-49.85571,83.314c-.89774,2.19991,2.67454,3.15752,3.56229.98208a316.7584,316.7584,0,0,1,93.16976-125.638c1.8443-1.5018-.78314-4.10164-2.61223-2.61223Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#fff" />
+                                        <path
+                                          d="M434,707.11581H383a6.50745,6.50745,0,0,1-6.5-6.5v-106a6.50745,6.50745,0,0,1,6.5-6.5h51a6.50745,6.50745,0,0,1,6.5,6.5v106A6.50745,6.50745,0,0,1,434,707.11581Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#1f04a3" />
+                                        <path
+                                          d="M555.00008,708.11581h-51a7.50836,7.50836,0,0,1-7.5-7.5v-206a7.50836,7.50836,0,0,1,7.5-7.5h51a7.50836,7.50836,0,0,1,7.5,7.5v206A7.50836,7.50836,0,0,1,555.00008,708.11581Zm-51-219a5.50623,5.50623,0,0,0-5.5,5.5v206a5.50622,5.50622,0,0,0,5.5,5.5h51a5.50622,5.50622,0,0,0,5.5-5.5v-206a5.50622,5.50622,0,0,0-5.5-5.5Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#3f3d56" />
+                                        <path
+                                          d="M676.00008,708.11581h-51a7.50836,7.50836,0,0,1-7.5-7.5v-337a7.50836,7.50836,0,0,1,7.5-7.5h51a7.50836,7.50836,0,0,1,7.5,7.5v337A7.50836,7.50836,0,0,1,676.00008,708.11581Zm-51-350a5.50623,5.50623,0,0,0-5.5,5.5v337a5.50622,5.50622,0,0,0,5.5,5.5h51a5.50622,5.50622,0,0,0,5.5-5.5v-337a5.50622,5.50622,0,0,0-5.5-5.5Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#3f3d56" />
+                                        <path
+                                          d="M798.12948,707.61581h-51a6.50753,6.50753,0,0,1-6.5-6.5v-475a6.50753,6.50753,0,0,1,6.5-6.5h51a6.50753,6.50753,0,0,1,6.5,6.5v475A6.50753,6.50753,0,0,1,798.12948,707.61581Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#1f04a3" />
+                                        <path
+                                          d="M480.94169,414.24247a10.05581,10.05581,0,0,0-10.48188-11.30867L452.6832,370.32469l-4,14,12.17889,29.88574a10.11027,10.11027,0,0,0,20.0796.032Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#a0616a" />
+                                        <polygon points="68.816 351.113 78.717 358.342 111.312 323.589 96.698 312.92 68.816 351.113" fill="#a0616a" />
+                                        <path
+                                          d="M335.82708,548.54689H374.3578a0,0,0,0,1,0,0v14.88687a0,0,0,0,1,0,0H350.71393a14.88686,14.88686,0,0,1-14.88686-14.88686v0A0,0,0,0,1,335.82708,548.54689Z"
+                                          transform="translate(38.89227 1022.53744) rotate(-143.86855)" fill="#2f2e41" />
+                                        <polygon points="121.201 389.377 133.461 389.376 139.293 342.088 121.199 342.089 121.201 389.377" fill="#a0616a" />
+                                        <path
+                                          d="M393.73673,577.75756h38.53073a0,0,0,0,1,0,0v14.88687a0,0,0,0,1,0,0H408.62359a14.88686,14.88686,0,0,1-14.88686-14.88686v0A0,0,0,0,1,393.73673,577.75756Z"
+                                          transform="translate(550.8686 978.49895) rotate(179.99738)" fill="#2f2e41" />
+                                        <path d="M433.1832,396.82469s6,58-9,98l-11,76h-19l2-90-7-80S403.1832,364.82469,433.1832,396.82469Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#2f2e41" />
+                                        <polygon points="93.021 208.94 113.021 277.94 74.021 339.94 93.521 356.44 138.021 286.94 125.021 201.94 93.021 208.94"
+                                          fill="#2f2e41" />
+                                        <circle cx="144.02483" cy="29.6531" r="24.56103" fill="#a0616a" />
+                                        <path d="M398.6832,255.32469s15-10,32,12l4.5,138.5s-13-18-40-1-33-2-33-2S343.1832,259.82469,398.6832,255.32469Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#ccc" />
+                                        <path
+                                          d="M429.47327,266.9755h0a17.50586,17.50586,0,0,1,16.53679,16.56026l3.1731,60.28892,21,57-12,10-39-68-7.98473-55.89313A17.50587,17.50587,0,0,1,429.47327,266.9755Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#ccc" />
+                                        <path
+                                          d="M401.14009,239.96055c4.01526,4.27712,11.47215,1.98106,11.99535-3.86208a7.05905,7.05905,0,0,0-.00889-1.36328c-.27013-2.58827-1.76543-4.9381-1.40725-7.67094a4.02264,4.02264,0,0,1,.7362-1.88313c3.19965-4.28461,10.71059,1.9164,13.73032-1.96233,1.85163-2.37835-.32494-6.12294,1.096-8.78115,1.87537-3.5084,7.43013-1.7777,10.91355-3.69907,3.87574-2.13777,3.64392-8.08425,1.09265-11.7012-3.11139-4.411-8.56664-6.76475-13.95392-7.104s-10.73745,1.11709-15.767,3.07715c-5.71454,2.227-11.38133,5.3048-14.898,10.32961-4.27662,6.11072-4.68817,14.326-2.54936,21.47132C393.42083,231.15805,397.8612,236.46783,401.14009,239.96055Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#2f2e41" />
+                                        <path d="M923.647,707.69147H276.353a1.19069,1.19069,0,0,1,0-2.38137H923.647a1.19069,1.19069,0,0,1,0,2.38137Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#3f3d56" />
+                                      </svg>
+                        
+                                      <h2 class="text-2xl font-medium">
+                                          There's nothing here...
+                                      </h2>
+                                  
+                                      <p class="mt-4 text-sm text-gray-500">
+                                          Proficiencies will appear here.
+                                      </p>
+                                  </div>
+                                </ng-container>
+                        
+                                <ng-container *ngIf="user.proficiencyLevels.length >  0">
+                                  <br>
+                                  <ng-container *ngFor="let proficiency of user.proficiencyLevels; let i = index;">
+                                    <p class="animate__animated animate__fadeIn">{{proficiency.type}}</p>
+                                    <div class="max-w-full w-full py-2">
+                                      <div class="grid grid-cols-2 gap-2">
+                                        <div>
+                                          <div class="proficiency-details">
+                                            <div class="proficiency-detail">
+                                              <div class="levels" id="{{proficiency.type}}">
+                                                <div class="level" #refEl1 id="{{proficiency.type}}-1" data-value="1" [attr.data-proficiency-type]="proficiency.type" [class.selected]="proficiency.level == 1 || proficiency.level > 1"></div>
+                                                <div class="level" #refEl2 id="{{proficiency.type}}-2" data-value="2" [attr.data-proficiency-type]="proficiency.type" [class.selected]="proficiency.level == 2 || proficiency.level > 2"></div>
+                                                <div class="level" #refEl3 id="{{proficiency.type}}-3" data-value="3" [attr.data-proficiency-type]="proficiency.type" [class.selected]="proficiency.level == 3 || proficiency.level > 3"></div>
+                                                <div class="level" #refEl4 id="{{proficiency.type}}-4" data-value="4" [attr.data-proficiency-type]="proficiency.type" [class.selected]="proficiency.level == 4 || proficiency.level > 4"></div>
+                                                <div class="level" #refEl5 id="{{proficiency.type}}-5" data-value="5" [attr.data-proficiency-type]="proficiency.type" [class.selected]="proficiency.level == 5 || proficiency.level > 5"></div>
+                                                
+                                                <div class="status">{{proficiencyLevelMap[proficiency.level]}}</div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    
+                                    <mat-divider></mat-divider>
+                                    <br>
+                                  </ng-container>
+                                  <br>
+                                </ng-container>
+                              </div>
+                            </div>
+                          </ng-container>
+                        </ng-container>
+
+                        <ng-container *ngIf="isChangeProficiencies">
+                          <ng-container *ngIf="loadingProficiencies">
+                            <div class="flex flex-col items-center">
+                              <div class="flex-shrink pr-4">
+                                  <div class="p-1 h-48 w-auto min-h-full flex items-center justify-center">
+                                      <mat-spinner [diameter]="30" class="mx-auto"></mat-spinner>
+                                  </div>
+                              </div>
+                            </div>
+                          </ng-container>
+
+                          <ng-container *ngIf="!loadingProficiencies">                        
+                            <div class="bg-white shadow-xl rounded m-2">
+                              <div class="flex flex-col bg-white rounded w-full mx-auto p-6">
+                                <div class="flex justify-between">
+                                  <h1 class="text-xl font-semibold animate__animated animate__fadeIn">Proficiency</h1>
+                                  <div class="ml-3 overflow-hidden justify-self-end">
+                                    <div class="text-pink-500 text-sm animate__animated animate__fadeIn">
+                                      <a id="login" mat-button href="javascript:;" (click)="toggleChangeProficiencies()">{{isChangeProficiencies ? 'Cancel' : 'Change'}}</a>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                <ng-container *ngIf="proficiencies.length ==  0">
+                                  <br>
+                                  <div class="relative p-8 text-center rounded-lg">
+                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-name="Layer 1" class="mx-auto" width="150"
+                                        height="100" viewBox="0 0 649.67538 516.23162">
+                                        <path
+                                          d="M759.79588,701.91485c-8.99256-7.59865-14.45479-19.60227-13.02232-31.28789s10.30472-22.42829,21.81332-24.90978,24.62761,4.38768,28.12315,15.62987c1.92376-21.6745,4.14055-44.25714,15.66409-62.715,10.43429-16.71314,28.50667-28.672,48.09305-30.81147s40.20832,5.941,52.42363,21.40027,15.20618,37.93388,6.6509,55.68241c-6.30238,13.07474-17.91359,22.80511-30.07923,30.72128a194.12948,194.12948,0,0,1-132.77224,29.04621"
+                                          transform="translate(-275.16231 -191.88419)" fill="#f2f2f2" />
+                                        <path
+                                          d="M893.52217,574.20948a317.62446,317.62446,0,0,0-44.26411,43.95415,318.55051,318.55051,0,0,0-49.85571,83.314c-.89774,2.19991,2.67454,3.15752,3.56229.98208a316.7584,316.7584,0,0,1,93.16976-125.638c1.8443-1.5018-.78314-4.10164-2.61223-2.61223Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#fff" />
+                                        <path
+                                          d="M434,707.11581H383a6.50745,6.50745,0,0,1-6.5-6.5v-106a6.50745,6.50745,0,0,1,6.5-6.5h51a6.50745,6.50745,0,0,1,6.5,6.5v106A6.50745,6.50745,0,0,1,434,707.11581Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#1f04a3" />
+                                        <path
+                                          d="M555.00008,708.11581h-51a7.50836,7.50836,0,0,1-7.5-7.5v-206a7.50836,7.50836,0,0,1,7.5-7.5h51a7.50836,7.50836,0,0,1,7.5,7.5v206A7.50836,7.50836,0,0,1,555.00008,708.11581Zm-51-219a5.50623,5.50623,0,0,0-5.5,5.5v206a5.50622,5.50622,0,0,0,5.5,5.5h51a5.50622,5.50622,0,0,0,5.5-5.5v-206a5.50622,5.50622,0,0,0-5.5-5.5Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#3f3d56" />
+                                        <path
+                                          d="M676.00008,708.11581h-51a7.50836,7.50836,0,0,1-7.5-7.5v-337a7.50836,7.50836,0,0,1,7.5-7.5h51a7.50836,7.50836,0,0,1,7.5,7.5v337A7.50836,7.50836,0,0,1,676.00008,708.11581Zm-51-350a5.50623,5.50623,0,0,0-5.5,5.5v337a5.50622,5.50622,0,0,0,5.5,5.5h51a5.50622,5.50622,0,0,0,5.5-5.5v-337a5.50622,5.50622,0,0,0-5.5-5.5Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#3f3d56" />
+                                        <path
+                                          d="M798.12948,707.61581h-51a6.50753,6.50753,0,0,1-6.5-6.5v-475a6.50753,6.50753,0,0,1,6.5-6.5h51a6.50753,6.50753,0,0,1,6.5,6.5v475A6.50753,6.50753,0,0,1,798.12948,707.61581Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#1f04a3" />
+                                        <path
+                                          d="M480.94169,414.24247a10.05581,10.05581,0,0,0-10.48188-11.30867L452.6832,370.32469l-4,14,12.17889,29.88574a10.11027,10.11027,0,0,0,20.0796.032Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#a0616a" />
+                                        <polygon points="68.816 351.113 78.717 358.342 111.312 323.589 96.698 312.92 68.816 351.113" fill="#a0616a" />
+                                        <path
+                                          d="M335.82708,548.54689H374.3578a0,0,0,0,1,0,0v14.88687a0,0,0,0,1,0,0H350.71393a14.88686,14.88686,0,0,1-14.88686-14.88686v0A0,0,0,0,1,335.82708,548.54689Z"
+                                          transform="translate(38.89227 1022.53744) rotate(-143.86855)" fill="#2f2e41" />
+                                        <polygon points="121.201 389.377 133.461 389.376 139.293 342.088 121.199 342.089 121.201 389.377" fill="#a0616a" />
+                                        <path
+                                          d="M393.73673,577.75756h38.53073a0,0,0,0,1,0,0v14.88687a0,0,0,0,1,0,0H408.62359a14.88686,14.88686,0,0,1-14.88686-14.88686v0A0,0,0,0,1,393.73673,577.75756Z"
+                                          transform="translate(550.8686 978.49895) rotate(179.99738)" fill="#2f2e41" />
+                                        <path d="M433.1832,396.82469s6,58-9,98l-11,76h-19l2-90-7-80S403.1832,364.82469,433.1832,396.82469Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#2f2e41" />
+                                        <polygon points="93.021 208.94 113.021 277.94 74.021 339.94 93.521 356.44 138.021 286.94 125.021 201.94 93.021 208.94"
+                                          fill="#2f2e41" />
+                                        <circle cx="144.02483" cy="29.6531" r="24.56103" fill="#a0616a" />
+                                        <path d="M398.6832,255.32469s15-10,32,12l4.5,138.5s-13-18-40-1-33-2-33-2S343.1832,259.82469,398.6832,255.32469Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#ccc" />
+                                        <path
+                                          d="M429.47327,266.9755h0a17.50586,17.50586,0,0,1,16.53679,16.56026l3.1731,60.28892,21,57-12,10-39-68-7.98473-55.89313A17.50587,17.50587,0,0,1,429.47327,266.9755Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#ccc" />
+                                        <path
+                                          d="M401.14009,239.96055c4.01526,4.27712,11.47215,1.98106,11.99535-3.86208a7.05905,7.05905,0,0,0-.00889-1.36328c-.27013-2.58827-1.76543-4.9381-1.40725-7.67094a4.02264,4.02264,0,0,1,.7362-1.88313c3.19965-4.28461,10.71059,1.9164,13.73032-1.96233,1.85163-2.37835-.32494-6.12294,1.096-8.78115,1.87537-3.5084,7.43013-1.7777,10.91355-3.69907,3.87574-2.13777,3.64392-8.08425,1.09265-11.7012-3.11139-4.411-8.56664-6.76475-13.95392-7.104s-10.73745,1.11709-15.767,3.07715c-5.71454,2.227-11.38133,5.3048-14.898,10.32961-4.27662,6.11072-4.68817,14.326-2.54936,21.47132C393.42083,231.15805,397.8612,236.46783,401.14009,239.96055Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#2f2e41" />
+                                        <path d="M923.647,707.69147H276.353a1.19069,1.19069,0,0,1,0-2.38137H923.647a1.19069,1.19069,0,0,1,0,2.38137Z"
+                                          transform="translate(-275.16231 -191.88419)" fill="#3f3d56" />
+                                      </svg>
+                        
+                                      <h2 class="text-2xl font-medium">
+                                          There's nothing here...
+                                      </h2>
+                                  
+                                      <p class="mt-4 text-sm text-gray-500">
+                                          Proficiencies will appear here.
+                                      </p>
+                                  </div>
+                                </ng-container>
+                        
+                                <ng-container *ngIf="proficiencies.length >  0">
+                                  <p class="animate__animated animate__fadeIn">Please  select your proficiency level from the list below</p>
+                                  <br>
+                                  <ng-container *ngFor="let proficiency of proficiencies; let i = index;">
+                                    <p class="animate__animated animate__fadeIn">{{proficiency.type}}</p>
+                                    <div class="max-w-full w-full py-2">
+                                      <div class="grid grid-cols-2 gap-2">
+                                        <div>
+                                          <div class="proficiency-details">
+                                            <div class="proficiency-detail">
+                                              <div class="levels" id="{{proficiency.type}}">
+                                                <div class="level" #refEl1 id="{{proficiency.type}}-1" data-value="1" [attr.data-proficiency-type]="proficiency.type" (mouseover)="handleMouseOver(refEl1, i)" (mouseout)="handleMouseLeave(refEl1, i)" (click)="handleLevelClick(refEl1, i)"></div>
+                                                <div class="level" #refEl2 id="{{proficiency.type}}-2" data-value="2" [attr.data-proficiency-type]="proficiency.type" (mouseover)="handleMouseOver(refEl2, i)" (mouseout)="handleMouseLeave(refEl2, i)" (click)="handleLevelClick(refEl2, i)"></div>
+                                                <div class="level" #refEl3 id="{{proficiency.type}}-3" data-value="3" [attr.data-proficiency-type]="proficiency.type" (mouseover)="handleMouseOver(refEl3, i)" (mouseout)="handleMouseLeave(refEl3, i)" (click)="handleLevelClick(refEl3, i)"></div>
+                                                <div class="level" #refEl4 id="{{proficiency.type}}-4" data-value="4" [attr.data-proficiency-type]="proficiency.type" (mouseover)="handleMouseOver(refEl4, i)" (mouseout)="handleMouseLeave(refEl4, i)" (click)="handleLevelClick(refEl4, i)"></div>
+                                                <div class="level" #refEl5 id="{{proficiency.type}}-5" data-value="5" [attr.data-proficiency-type]="proficiency.type" (mouseover)="handleMouseOver(refEl5, i)" (mouseout)="handleMouseLeave(refEl5, i)" (click)="handleLevelClick(refEl5, i)"></div>
+                                    
+                                                <div class="status">Intermediate</div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    
+                                    <mat-divider></mat-divider>
+                                    <br>
+                                  </ng-container>
+                                  <br>
+                                  <div class="max-w-full w-full">
+                                    <div class="grid gap-2">
+                                      <div class="overflow-hidden justify-self-start">
+                                        <button *ngIf="proficiencyRatings.length > 0" class="hover:bg-[#FC007E] px-8 py-2 text-sm text-white rounded-full animate__animated animate__fadeIn" (click)="saveProficiency()" [disabled]="updateLoading">
+                                          Save
+                                          <svg *ngIf="updateLoading" role="status"
+                                              class="inline w-[8px] h-[8px] text-[#F1F1F1] animate-spin dark:text-[#F1F1F1] fill-[#FFFFFF]"
+                                              viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                              <path
+                                                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                                fill="currentColor" />
+                                              <path
+                                                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                                fill="currentFill" />
+                                          </svg>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </ng-container>
+                              </div>
+                            </div>
+                          </ng-container>
+                        </ng-container>
+
+                      </ng-container>
+
+                      <ng-container *ngIf="showNotification">
                         <ng-container *ngIf="loadingProficiencies">
                           <div class="flex flex-col items-center">
                             <div class="flex-shrink pr-4">
@@ -583,118 +899,136 @@
                           <div class="bg-white shadow-xl rounded m-2">
                             <div class="flex flex-col bg-white rounded w-full mx-auto p-6">
                               <div>
-                                <h1 class="text-xl font-semibold animate__animated animate__fadeIn">Proficiency</h1>
+                                <h1 class="text-xl font-semibold animate__animated animate__fadeIn">Notifications</h1>
                               </div>
                               <br>
-                              <ng-container *ngIf="proficiencies.length ==  0">
-                                <div class="relative p-8 text-center rounded-lg">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-name="Layer 1" class="mx-auto" width="150"
-                                      height="100" viewBox="0 0 649.67538 516.23162">
-                                      <path
-                                        d="M759.79588,701.91485c-8.99256-7.59865-14.45479-19.60227-13.02232-31.28789s10.30472-22.42829,21.81332-24.90978,24.62761,4.38768,28.12315,15.62987c1.92376-21.6745,4.14055-44.25714,15.66409-62.715,10.43429-16.71314,28.50667-28.672,48.09305-30.81147s40.20832,5.941,52.42363,21.40027,15.20618,37.93388,6.6509,55.68241c-6.30238,13.07474-17.91359,22.80511-30.07923,30.72128a194.12948,194.12948,0,0,1-132.77224,29.04621"
-                                        transform="translate(-275.16231 -191.88419)" fill="#f2f2f2" />
-                                      <path
-                                        d="M893.52217,574.20948a317.62446,317.62446,0,0,0-44.26411,43.95415,318.55051,318.55051,0,0,0-49.85571,83.314c-.89774,2.19991,2.67454,3.15752,3.56229.98208a316.7584,316.7584,0,0,1,93.16976-125.638c1.8443-1.5018-.78314-4.10164-2.61223-2.61223Z"
-                                        transform="translate(-275.16231 -191.88419)" fill="#fff" />
-                                      <path
-                                        d="M434,707.11581H383a6.50745,6.50745,0,0,1-6.5-6.5v-106a6.50745,6.50745,0,0,1,6.5-6.5h51a6.50745,6.50745,0,0,1,6.5,6.5v106A6.50745,6.50745,0,0,1,434,707.11581Z"
-                                        transform="translate(-275.16231 -191.88419)" fill="#1f04a3" />
-                                      <path
-                                        d="M555.00008,708.11581h-51a7.50836,7.50836,0,0,1-7.5-7.5v-206a7.50836,7.50836,0,0,1,7.5-7.5h51a7.50836,7.50836,0,0,1,7.5,7.5v206A7.50836,7.50836,0,0,1,555.00008,708.11581Zm-51-219a5.50623,5.50623,0,0,0-5.5,5.5v206a5.50622,5.50622,0,0,0,5.5,5.5h51a5.50622,5.50622,0,0,0,5.5-5.5v-206a5.50622,5.50622,0,0,0-5.5-5.5Z"
-                                        transform="translate(-275.16231 -191.88419)" fill="#3f3d56" />
-                                      <path
-                                        d="M676.00008,708.11581h-51a7.50836,7.50836,0,0,1-7.5-7.5v-337a7.50836,7.50836,0,0,1,7.5-7.5h51a7.50836,7.50836,0,0,1,7.5,7.5v337A7.50836,7.50836,0,0,1,676.00008,708.11581Zm-51-350a5.50623,5.50623,0,0,0-5.5,5.5v337a5.50622,5.50622,0,0,0,5.5,5.5h51a5.50622,5.50622,0,0,0,5.5-5.5v-337a5.50622,5.50622,0,0,0-5.5-5.5Z"
-                                        transform="translate(-275.16231 -191.88419)" fill="#3f3d56" />
-                                      <path
-                                        d="M798.12948,707.61581h-51a6.50753,6.50753,0,0,1-6.5-6.5v-475a6.50753,6.50753,0,0,1,6.5-6.5h51a6.50753,6.50753,0,0,1,6.5,6.5v475A6.50753,6.50753,0,0,1,798.12948,707.61581Z"
-                                        transform="translate(-275.16231 -191.88419)" fill="#1f04a3" />
-                                      <path
-                                        d="M480.94169,414.24247a10.05581,10.05581,0,0,0-10.48188-11.30867L452.6832,370.32469l-4,14,12.17889,29.88574a10.11027,10.11027,0,0,0,20.0796.032Z"
-                                        transform="translate(-275.16231 -191.88419)" fill="#a0616a" />
-                                      <polygon points="68.816 351.113 78.717 358.342 111.312 323.589 96.698 312.92 68.816 351.113" fill="#a0616a" />
-                                      <path
-                                        d="M335.82708,548.54689H374.3578a0,0,0,0,1,0,0v14.88687a0,0,0,0,1,0,0H350.71393a14.88686,14.88686,0,0,1-14.88686-14.88686v0A0,0,0,0,1,335.82708,548.54689Z"
-                                        transform="translate(38.89227 1022.53744) rotate(-143.86855)" fill="#2f2e41" />
-                                      <polygon points="121.201 389.377 133.461 389.376 139.293 342.088 121.199 342.089 121.201 389.377" fill="#a0616a" />
-                                      <path
-                                        d="M393.73673,577.75756h38.53073a0,0,0,0,1,0,0v14.88687a0,0,0,0,1,0,0H408.62359a14.88686,14.88686,0,0,1-14.88686-14.88686v0A0,0,0,0,1,393.73673,577.75756Z"
-                                        transform="translate(550.8686 978.49895) rotate(179.99738)" fill="#2f2e41" />
-                                      <path d="M433.1832,396.82469s6,58-9,98l-11,76h-19l2-90-7-80S403.1832,364.82469,433.1832,396.82469Z"
-                                        transform="translate(-275.16231 -191.88419)" fill="#2f2e41" />
-                                      <polygon points="93.021 208.94 113.021 277.94 74.021 339.94 93.521 356.44 138.021 286.94 125.021 201.94 93.021 208.94"
-                                        fill="#2f2e41" />
-                                      <circle cx="144.02483" cy="29.6531" r="24.56103" fill="#a0616a" />
-                                      <path d="M398.6832,255.32469s15-10,32,12l4.5,138.5s-13-18-40-1-33-2-33-2S343.1832,259.82469,398.6832,255.32469Z"
-                                        transform="translate(-275.16231 -191.88419)" fill="#ccc" />
-                                      <path
-                                        d="M429.47327,266.9755h0a17.50586,17.50586,0,0,1,16.53679,16.56026l3.1731,60.28892,21,57-12,10-39-68-7.98473-55.89313A17.50587,17.50587,0,0,1,429.47327,266.9755Z"
-                                        transform="translate(-275.16231 -191.88419)" fill="#ccc" />
-                                      <path
-                                        d="M401.14009,239.96055c4.01526,4.27712,11.47215,1.98106,11.99535-3.86208a7.05905,7.05905,0,0,0-.00889-1.36328c-.27013-2.58827-1.76543-4.9381-1.40725-7.67094a4.02264,4.02264,0,0,1,.7362-1.88313c3.19965-4.28461,10.71059,1.9164,13.73032-1.96233,1.85163-2.37835-.32494-6.12294,1.096-8.78115,1.87537-3.5084,7.43013-1.7777,10.91355-3.69907,3.87574-2.13777,3.64392-8.08425,1.09265-11.7012-3.11139-4.411-8.56664-6.76475-13.95392-7.104s-10.73745,1.11709-15.767,3.07715c-5.71454,2.227-11.38133,5.3048-14.898,10.32961-4.27662,6.11072-4.68817,14.326-2.54936,21.47132C393.42083,231.15805,397.8612,236.46783,401.14009,239.96055Z"
-                                        transform="translate(-275.16231 -191.88419)" fill="#2f2e41" />
-                                      <path d="M923.647,707.69147H276.353a1.19069,1.19069,0,0,1,0-2.38137H923.647a1.19069,1.19069,0,0,1,0,2.38137Z"
-                                        transform="translate(-275.16231 -191.88419)" fill="#3f3d56" />
-                                    </svg>
-                      
-                                    <h2 class="text-2xl font-medium">
-                                        There's nothing here...
-                                    </h2>
-                                
-                                    <p class="mt-4 text-sm text-gray-500">
-                                        Proficiencies will appear here.
-                                    </p>
-                                </div>
-                              </ng-container>
-                      
-                              <ng-container *ngIf="proficiencies.length >  0">
-                                <p class="animate__animated animate__fadeIn">Please  select your proficiency level from the list below</p>
-                                <br>
-                                <ng-container *ngFor="let proficiency of proficiencies; let i = index;">
-                                  <p class="animate__animated animate__fadeIn">{{proficiency.type}}</p>
-                                  <div class="max-w-full w-full py-2">
-                                    <div class="grid grid-cols-2 gap-2">
-                                      <div>
-                                        <div class="proficiency-details">
-                                          <div class="proficiency-detail">
-                                            <div class="levels" id="{{proficiency.type}}">
-                                              <div class="level" #refEl1 id="{{proficiency.type}}-1" data-value="1" [attr.data-proficiency-type]="proficiency.type" (mouseover)="handleMouseOver(refEl1, i)" (mouseout)="handleMouseLeave(refEl1, i)" (click)="handleLevelClick(refEl1, i)"></div>
-                                              <div class="level" #refEl2 id="{{proficiency.type}}-2" data-value="2" [attr.data-proficiency-type]="proficiency.type" (mouseover)="handleMouseOver(refEl2, i)" (mouseout)="handleMouseLeave(refEl2, i)" (click)="handleLevelClick(refEl2, i)"></div>
-                                              <div class="level" #refEl3 id="{{proficiency.type}}-3" data-value="3" [attr.data-proficiency-type]="proficiency.type" (mouseover)="handleMouseOver(refEl3, i)" (mouseout)="handleMouseLeave(refEl3, i)" (click)="handleLevelClick(refEl3, i)"></div>
-                                              <div class="level" #refEl4 id="{{proficiency.type}}-4" data-value="4" [attr.data-proficiency-type]="proficiency.type" (mouseover)="handleMouseOver(refEl4, i)" (mouseout)="handleMouseLeave(refEl4, i)" (click)="handleLevelClick(refEl4, i)"></div>
-                                              <div class="level" #refEl5 id="{{proficiency.type}}-5" data-value="5" [attr.data-proficiency-type]="proficiency.type" (mouseover)="handleMouseOver(refEl5, i)" (mouseout)="handleMouseLeave(refEl5, i)" (click)="handleLevelClick(refEl5, i)"></div>
-                                  
-                                              <div class="status">Intermediate</div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
+                              <p class="animate__animated animate__fadeIn">What activity would like to be notified?</p>
+                              <br>
+                              <div class="w-1/2 divide-y divide-slate-100">
+                                <div class="flex justify-between p-4 items-center">
+                                  <div>
+                                    <p class="truncate animate__animated animate__fadeIn">All activities</p>
                                   </div>
-                                  
-                                  <mat-divider></mat-divider>
-                                  <br>
-                                </ng-container>
-                                <br>
-                                <div class="max-w-full w-full">
-                                  <div class="grid gap-2">
-                                    <div class="overflow-hidden justify-self-start">
-                                      <button *ngIf="proficiencyRatings.length > 0" class="hover:bg-[#FC007E] px-8 py-2 text-sm text-white rounded-full animate__animated animate__fadeIn" (click)="saveProficiency()" [disabled]="updateLoading">
-                                        Save
-                                        <svg *ngIf="updateLoading" role="status"
-                                            class="inline w-[8px] h-[8px] text-[#F1F1F1] animate-spin dark:text-[#F1F1F1] fill-[#FFFFFF]"
-                                            viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                                              fill="currentColor" />
-                                            <path
-                                              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                                              fill="currentFill" />
-                                        </svg>
-                                      </button>
-                                    </div>
+                                  <div class="ml-3 overflow-hidden justify-self-end">
+                                    <mat-slide-toggle class="example-margin" [color]="color">
+                                    </mat-slide-toggle>
                                   </div>
                                 </div>
-                              </ng-container>
+                                <div class="flex justify-between p-4 items-center">
+                                  <div>
+                                    <p class="truncate animate__animated animate__fadeIn">When a project is received</p>
+                                  </div>
+                                  <div class="ml-3 overflow-hidden justify-self-end">
+                                    <mat-slide-toggle class="example-margin" [color]="color">
+                                    </mat-slide-toggle>
+                                  </div>
+                                </div>
+                                <div class="flex justify-between p-4 items-center">
+                                  <div>
+                                    <p class="truncate animate__animated animate__fadeIn">When a project is completed</p>
+                                  </div>
+                                  <div class="ml-3 overflow-hidden justify-self-end">
+                                    <mat-slide-toggle class="example-margin" [color]="color">
+                                    </mat-slide-toggle>
+                                  </div>
+                                </div>
+                                <div class="flex justify-between p-4 items-center">
+                                  <div>
+                                    <p class="truncate animate__animated animate__fadeIn">When a project is under review</p>
+                                  </div>
+                                  <div class="ml-3 overflow-hidden justify-self-end">
+                                    <mat-slide-toggle class="example-margin" [color]="color">
+                                    </mat-slide-toggle>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </ng-container>
+
+                      <ng-container *ngIf="showHelp">
+                        <ng-container *ngIf="loadingProficiencies">
+                          <div class="flex flex-col items-center">
+                            <div class="flex-shrink pr-4">
+                                <div class="p-1 h-48 w-auto min-h-full flex items-center justify-center">
+                                    <mat-spinner [diameter]="30" class="mx-auto"></mat-spinner>
+                                </div>
+                            </div>
+                          </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="!loadingProficiencies">                        
+                          <div class="bg-white shadow-xl rounded m-2">
+                            <div class="flex flex-col bg-white rounded w-full mx-auto p-6">
+                              <div>
+                                <h1 class="text-xl font-semibold animate__animated animate__fadeIn">Help</h1>
+                              </div>
+                              <br>
+                              <h1 class="text-xl font-semibold animate__animated animate__fadeIn">Frequently Asked Questions</h1>
+                              <br>
+                              <mat-accordion class="lg:w-1/2 w-full">
+                                <mat-expansion-panel expanded>
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                      <h1 class="font-semibold">What Is BugBountyBox?</h1>
+                                    </mat-panel-title>
+                                  </mat-expansion-panel-header>
+                                  <p class="py-2">
+                                    BugBountyBox was created to help solve African security problems. Our team consists of security experts who will help
+                                    your organisation stay ahead of the attackers.
+                                  </p>
+                                </mat-expansion-panel>
+                                <mat-expansion-panel>
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                      <h1 class="font-semibold">How to create a bug report</h1>
+                                    </mat-panel-title>
+                                  </mat-expansion-panel-header>
+                                  <p class="py-2">
+                                    Navigate to projects from your dashboard. Select a project and click "Submit report". Fill out the bug report form and
+                                    submit.
+                                  </p>
+                                </mat-expansion-panel>
+                                <mat-expansion-panel>
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                      <h1 class="font-semibold">Payment security</h1>
+                                    </mat-panel-title>
+                                  </mat-expansion-panel-header>
+                                  <p class="py-2">
+                                    Your payment methods are secure since BugBountyBox does not store your payment information.
+                                  </p>
+                                </mat-expansion-panel>
+                              </mat-accordion>                              
+                            </div>
+                          </div>
+                        </ng-container>
+                      </ng-container>
+
+                      <ng-container *ngIf="showDeleteAccount">
+                        <ng-container *ngIf="loadingProficiencies">
+                          <div class="flex flex-col items-center">
+                            <div class="flex-shrink pr-4">
+                                <div class="p-1 h-48 w-auto min-h-full flex items-center justify-center">
+                                    <mat-spinner [diameter]="30" class="mx-auto"></mat-spinner>
+                                </div>
+                            </div>
+                          </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="!loadingProficiencies">                        
+                          <div class="bg-white shadow-xl rounded m-2">
+                            <div class="flex flex-col bg-white rounded w-full mx-auto p-6">
+                              <div>
+                                <h1 class="text-xl font-semibold animate__animated animate__fadeIn">Delete Account</h1>
+                              </div>
+                              <br>
+                              <p class="animate__animated animate__fadeIn">You are about to <span class="text-red-500">Delete</span> this account forever</p>
+                              <br>
+                              <div class="w-1/2 flex justify-between">
+                                <button class="delete-button" (click)='confirmAccountDelete()'>Delete</button>
+                              </div>
                             </div>
                           </div>
                         </ng-container>
@@ -706,19 +1040,7 @@
         </div>
           <!-- /End replace -->
         </div>
-        <footer class="bg-slate-100 grid text-center md:fixed inset-x-0 bottom-0 px-4">
-            <nav class="flex flex-col md:flex-row gap-3 lg:mx-auto lg:w-[calc(90%+2rem)]">
-              <mat-nav-list class="gap-3">
-                <div>
-                  <a mat-button>© BugBountyBox</a>
-                  <span>|</span>
-                  <a mat-button href="#">Privacy Policy</a>
-                  <span>|</span>
-                  <a mat-button href="#">Terms of Sevice</a>
-                </div>
-              </mat-nav-list>
-            </nav>
-          </footer>
+        <app-footer></app-footer>
       </mat-sidenav-content>
     </mat-sidenav-container>
   </main>

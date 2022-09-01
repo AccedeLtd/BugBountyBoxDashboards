@@ -49,7 +49,7 @@ export class MainComponent implements OnInit {
     else if(includeHacker) {
       this.oidcSecurityService.checkAuth('', 'hacker').subscribe(({ isAuthenticated, userData }) => {
         if (isAuthenticated) {
-          this.handleHackerAuth(userData);
+          this.handleHackerAuth('hacker', userData);
         }
         else {
           this.oidcSecurityService.authorize('hacker');
@@ -125,15 +125,23 @@ export class MainComponent implements OnInit {
   }
 
   handleAuth(role: string, userData: any) {
-    if (userData.role != role)
-      this.oidcSecurityService.logoff();
+    if (userData.role != role) {
+      alert(
+        `ACCESS DENIED. Please login.`
+      );
+      this.oidcSecurityService.logoff(role);
+    }
     else
       this._router.navigateByUrl(role);
   }
 
-  handleHackerAuth(userData: any) {
-    if (userData.role != 'hacker')
-      this.oidcSecurityService.logoff();
+  handleHackerAuth(role: string, userData: any) {
+    if (userData.role != 'hacker') {
+      alert(
+        `ACCESS DENIED. Please login.`
+      );
+      this.oidcSecurityService.logoff(role);
+    }
     else
       this.getHacker();
   }

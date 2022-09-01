@@ -1,0 +1,141 @@
+<div class="min-h-full">
+    <app-nav (sideNavToggleEvent)="toggleSideNav()"></app-nav>
+    <main>
+      <mat-sidenav-container>
+        <mat-sidenav [(opened)]="sideNavOpened">
+            <app-side-nav></app-side-nav>
+            <div class="sm:hidden border-t border-gray-200 font-medium">
+              <mat-nav-list>
+                <a mat-list-item (click)="logout()">Log out</a>
+              </mat-nav-list>
+            </div>
+          </mat-sidenav>
+      
+        <mat-sidenav-content id="container" class="flex-1 overflow-auto relative" style="scroll-behavior: smooth">
+          <div class="max-w-full mx-auto pt-6 pb-12 sm:px-6 lg:px-8">
+            <div class="flex flex-row flex-wrap flex-1 flex-grow content-start">
+              <div id="dash-content" class="py-6 lg:py-0 w-full lg:max-w-md flex flex-wrap content-start">
+                <div class="lg:w-full  md:w-1/2 w-full">
+                    <div class="bg-white shadow-xl rounded p-6 m-2 md:mx-10">
+                        <app-user-profile></app-user-profile>
+                    </div>
+                </div>
+  
+                <div class="lg:w-full  md:w-1/2 w-full">
+                    <div class="bg-white shadow-xl rounded m-2 md:mx-10 animate__animated animate__fadeIn">
+                        <app-recent-updates></app-recent-updates>
+                    </div>
+                </div>
+            </div>
+      
+              <div id="main-content" class="w-full flex-1">
+                  <main class="w-full">
+                    <ng-container [ngSwitch]="loadStatus">
+                        <ng-container *ngSwitchCase="'loading'">
+                            <div class="flex flex-col items-center">
+                                <div class="flex-shrink pr-4">
+                                    <div class="p-1 h-48 w-auto min-h-full flex items-center justify-center">
+                                        <mat-spinner [diameter]="30" class="mx-auto"></mat-spinner>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngSwitchCase="'error'">
+                            <div class="relative px-8 text-center rounded-lg">                        
+                                <h2>
+                                    Something went wrong. Please check your internet connection and try again.
+                                </h2>
+                            
+                                <button class="h-8 px-4 py-1 text-xs text-white rounded-full hover:bg-[#FC007E]" (click)="loadData()">Retry</button>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngSwitchCase="'success'">
+                            <div>
+                                <h1 class="my-6 text-xl font-semibold flex gap-8 items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 31.715 29.829" class="cursor-pointer" routerLink="../../">
+                                        <g id="Vector_Smart_Object" data-name="Vector Smart Object" transform="translate(2.589 1.29)">
+                                            <g id="Vector_Smart_Object-2" data-name="Vector Smart Object" transform="translate(0 0)">
+                                                <g id="Group_65" data-name="Group 65" transform="translate(0 0)">
+                                                    <path id="Path_124" data-name="Path 124" d="M221.175,150.066,209.68,163.691l11.495,13.625"
+                                                        transform="translate(-209.653 -150.066)" fill="none" stroke="#1f0fa3" stroke-miterlimit="10"
+                                                        stroke-width="4" />
+                                                    <line id="Line_27" data-name="Line 27" x1="29.126" transform="translate(0 13.625)" fill="none"
+                                                        stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="4" />
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                    Bugs/ {{this.bug?.projectTitle === null ? 'No Title':this.bug?.projectTitle}}
+                                </h1>
+                                <!-- <h1 class="my-6 text-xl font-semibold animate__animated animate__fadeIn animate__delay-1s"><a class="text-indigo-600 animate__animated animate__fadeIn animate__delay-1s" routerLink="/admin/bugs">←</a>Bugs/ Bug {{this.bug?.projectTitle === null ? 'No Title':this.bug?.projectTitle}}</h1> -->
+                            </div>
+                        
+                            <div class="w-full">
+                                <div class="bg-white shadow-xl rounded m-2 animate__animated animate__fadeIn animate__delay-2s">
+                                    <div class="flex flex-col bg-white rounded w-full mx-auto p-2 animate__animated animate__fadeIn animate__delay-2s">
+                                    <div class="flex flex-col md:flex-row gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
+                                        <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md">
+                                        <div class="flex flex-col">
+                                            <div class="text-xl animate__animated animate__fadeIn animate__delay-3s">
+                                            Detail View
+                                            </div>
+                                            <div class="flex flex-col text-sm divide-y divide-slate-200">
+                                            <div class="grid grid-cols-2 gap-8 p-2">
+                                                <div class="animate__animated animate__fadeIn animate__delay-1s">Vulnerability Type</div>
+                                                <div class="animate__animated animate__fadeIn animate__delay-2s">{{this.bug?.vulnerability?.type}}</div>
+                                            </div>
+                                            <div class="grid grid-cols-2 gap-8 p-2">
+                                                <div class="animate__animated animate__fadeIn animate__delay-3s">Reported by</div>
+                                                <div class="animate__animated animate__fadeIn animate__delay-4s">{{this.bug?.hacker?.userName}}</div>
+                                            </div>
+                                            <div class="grid grid-cols-2 gap-8 p-2">
+                                                <div class="animate__animated animate__fadeIn animate__delay-5s">Asset</div>
+                                                <div class="animate__animated animate__fadeIn animate__delay-3s">{{this.bug?.domainName}}</div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <!-- <div class="flex text-sm space-x-6">
+                                        <button class="bg-transparent text-gray-800 border border-slate-500 py-1 px-4 rounded-full inline-flex items-center gap-3 animate__animated animate__fadeIn animate__delay-4s">
+                                            <span>Status</span>
+                                            <span>Validated</span>
+                                            <svg id="icon-drop_down" data-name="icon-drop down" xmlns="http://www.w3.org/2000/svg" width="12" height="5" viewBox="0 0 21 12">
+                                            <path id="Color_Overlay" data-name="Color Overlay" d="M11599,610h21l-10.5,12Z" transform="translate(-11599.001 -610.001)" fill="#999"/>
+                                            </svg>
+                                        </button>
+                                        </div> -->
+                                    </div>
+                                    <div class="p-3">
+                                        <h1 class="text-gray-800 !text-xl p-2 animate__animated animate__fadeIn animate__delay-2s"> Description </h1>
+                                    </div>
+                                    <mat-divider></mat-divider>
+                                    <div class="p-6 animate__animated animate__fadeIn animate__delay-3s">
+                                        <ejs-richtexteditor [toolbarSettings]='tools' [height]='300' [value]="bug.description" readonly="true"></ejs-richtexteditor>
+                                    </div>
+                                    
+                                    <div class="p-3">
+                                        <h1 class="text-gray-800 !text-xl p-2 animate__animated animate__fadeIn animate__delay-2s"> Impact </h1>
+                                    </div>
+                                    <mat-divider></mat-divider>
+                                    <div class="p-6 animate__animated animate__fadeIn animate__delay-3s">
+                                        <ejs-richtexteditor [toolbarSettings]='tools' [height]='300' [value]="bug.impact" readonly="true"></ejs-richtexteditor>
+                                    </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                  </main>
+              </div>
+      
+          </div>
+            <!-- /End replace -->
+          </div>
+          <app-footer></app-footer>
+        </mat-sidenav-content>
+      </mat-sidenav-container>
+    </main>
+</div>

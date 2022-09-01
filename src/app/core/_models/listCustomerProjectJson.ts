@@ -6,6 +6,7 @@ export interface ListCustomerProjectJson {
     postedAt:         null;
     closedAt:         null;
     projectStatus:    number;
+    projectLogoUrl?:    string;
     domains:          RequirementLevel[];
     customer:         Customer;
     requirementLevel?: RequirementLevel;

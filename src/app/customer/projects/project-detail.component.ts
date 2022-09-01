@@ -21,14 +21,6 @@ import { ToolbarService, LinkService, ImageService, HtmlEditorService } from '@s
 export class ProjectDetailComponent {
   searchInput!: string;
   sideNavOpened = false;
-
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
-
   showReportForm: boolean = false;
   user: any;
   authUser: any;
@@ -114,16 +106,20 @@ export class ProjectDetailComponent {
   closeProjectByCustomer(info: CloseProjectJson) {
     info.projectId = this.recordName;
     info.closedBy = this.projectDetail?.customer?.userName;
-    this.customerService.closProjectByCustomer(info).subscribe(
-      result => {
-    //    console.log(`${JSON.stringify(result)}`);
+
+    this.customerService.closeProject(info.projectId).subscribe({
+      next: result => {
         this.loading = false;
-        result.success === true ? this.showToasterSuccess("Your project has been closed successfully") : this.showToasterError("Your project could not be closed successfully");
+        this.showToasterSuccess("Your project has been closed successfully");
         setTimeout(() => {
           this.router.navigateByUrl('/customer/projects');
         }, 2000);
+      },
+      error: () => {
+        this.loading = false;
+        this.showToasterError("Your project could not be closed successfully");
       }
-    )
+    })
   }
 
   toggleSideNav() {

@@ -17,12 +17,6 @@ import { NotificationService } from 'src/app/core/_services/notification.service
 export class TasksComponent implements OnInit {
   @ViewChild('kanbanObj') kanbanObj!: KanbanComponent;
   sideNavOpened = false;
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
   loadingTasks: LoadStatus = 'loading';
   tasks: any;
   taskColumns: ColumnsModel[] = [
@@ -65,20 +59,36 @@ export class TasksComponent implements OnInit {
     this.loadingTasks = 'loading';
 
     forkJoin({
+      userProfile: this.hackerService.getProfile(),
       getTasksResult: this.hackerService.getTasks(),
-      getProjectsResult: this.hackerService.getProjects()
+      requirementLevels: this.hackerService.getRequirementLevels(),
     }).subscribe({
       next: ({
+        userProfile,
         getTasksResult,
-        getProjectsResult,
+        requirementLevels,
       }) => {
         this.formatTasks(getTasksResult.data);
-        this.projects = getProjectsResult.data;
-
-        this.loadingTasks = 'success';
+        const level = requirementLevels?.find((i: any) => i.name.includes(userProfile.level));
+        this.getProjects(level!.id);
       },
       error: () => (this.loadingTasks = 'error'),
     });
+  }
+
+  getProjects(level: number) {
+    this.hackerService.getProjects({
+      requirementLevelId: level
+    }).subscribe({
+      next: (result) => {
+        this.projects = result.data;
+
+        this.loadingTasks = 'success';
+      },
+      error: () => {
+        this.loadingTasks = 'error';
+      }
+    })
   }
 
   refreshData() {

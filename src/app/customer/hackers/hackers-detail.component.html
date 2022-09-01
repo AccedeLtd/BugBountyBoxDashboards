@@ -3,18 +3,13 @@
     <main>
       <mat-sidenav-container>
         <mat-sidenav [(opened)]="sideNavOpened">
-          <mat-nav-list class="gap-3">
-            <a *ngFor="let section of sections" mat-list-item routerLink="/customer{{ section.id }}" routerLinkActive="active" (click)="toggleSideNav()">
-              {{ section.title }}
-            </a>
-          </mat-nav-list>
+          <app-customer-side-nav></app-customer-side-nav>
           <div class="sm:hidden border-t border-gray-200 font-medium">
             <mat-nav-list>
-              <a mat-list-item routerLink="/customer/settings" routerLinkActive="active">Settings</a>
               <a mat-list-item (click)="logout()">Log out</a>
             </mat-nav-list>
           </div>
-        </mat-sidenav>
+      </mat-sidenav>
       
         <mat-sidenav-content id="container" class="flex-1 overflow-auto relative" style="scroll-behavior: smooth">
           <div class="max-w-full mx-auto pt-6 pb-12 px-2 lg:px-20">
@@ -137,19 +132,7 @@
           </div>
             <!-- /End replace -->
           </div>
-          <footer class="bg-slate-100 grid text-center md:fixed inset-x-0 bottom-0 px-4">
-              <nav class="flex flex-col md:flex-row gap-3 lg:mx-auto lg:w-[calc(90%+2rem)]">
-                <mat-nav-list class="gap-3">
-                  <div>
-                    <a mat-button>© BugBountyBox</a>
-                    <span>|</span>
-                    <a mat-button href="#">Privacy Policy</a>
-                    <span>|</span>
-                    <a mat-button href="#">Terms of Sevice</a>
-                  </div>
-                </mat-nav-list>
-              </nav>
-            </footer>
+          <app-footer></app-footer>
         </mat-sidenav-content>
       </mat-sidenav-container>
     </main>

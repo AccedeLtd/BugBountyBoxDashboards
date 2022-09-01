@@ -4,7 +4,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { HackerService } from 'src/app/core/_services/hacker.service';
-import { merge, Observable, of } from 'rxjs';
+import { forkJoin, merge, Observable, of } from 'rxjs';
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexLegend, ApexPlotOptions, ApexTitleSubtitle, ApexXAxis } from 'ng-apexcharts';
 import { MatDialog } from '@angular/material/dialog';
 import { WithdrawDialogComponent } from '../settings/withdraw-dialog/withdraw-dialog.component';
@@ -29,15 +29,7 @@ export type ChartOptions = {
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  sideNavOpened = false;
-
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
-  
+  sideNavOpened = false;  
   user: any;
   authUser: any;
   userName: any;
@@ -55,6 +47,7 @@ export class DashboardComponent {
   loadingWalletBalance: LoadStatus = 'loading';
   bountyProjects: any[] = [];
   taskStats: any;
+  requirementLevelId: any;
 
   constructor(
     @Inject(DOCUMENT) public document: Document,
@@ -64,7 +57,7 @@ export class DashboardComponent {
   ) {
     this.chartOptions = { 
       colors:['#1F0FA3', '#FC097E'],
-      series: [3,14],
+      series: [0,0],
       labels: ['Awaiting Payment','Closed Bounties'],
       chart: {  
           height: 100,
@@ -131,20 +124,40 @@ export class DashboardComponent {
   }
 
   async ngOnInit(): Promise<void> {
-		this.loadBountyOverview();
+		this.loadProfile();
 		this.loadTaskOverview();
     this.loadWalletBalance();
 		this.loadBountyActivity();
 	}
   
+  loadProfile() {
+    forkJoin({
+      userProfile: this.hackerService.getProfile(),
+      testingTypes: this.hackerService.getTestingTypes(),
+      requirementLevels: this.hackerService.getRequirementLevels(),
+    }).subscribe({
+      next: ({userProfile, testingTypes, requirementLevels}) => {
+        const level = requirementLevels?.find((i: any) => i.name.includes(userProfile.level));
+        this.requirementLevelId = level!.id;
+        this.loadBountyOverview();
+        // this.loadStatus = 'success';
+      },
+      error: () => {
+        this.loadingBountyOverview = 'error';
+      }
+    })
+  }
+
   loadBountyOverview() {
     this.loadingBountyOverview = 'loading';
 
     this.hackerService.getBountyOverview().subscribe({
 			next:result => {
-        const total = Object.values(result).reduce((a:any, b:any) => a + b, 0);
+        const series = Object.values(result);
+        const total = series.reduce((a:any, b:any) => a + b, 0);
         this.bountyOverview = result;
         this.bountyOverview.total = total;
+        this.chartOptions.series = series;
         this.loadProjects();//hide loader in loadProjects()
 			},
       error: err => {
@@ -154,7 +167,9 @@ export class DashboardComponent {
   }
 
   loadProjects() {
-    this.hackerService.getProjects().subscribe({
+    this.hackerService.getProjects({
+      requirementLevelId: this.requirementLevelId
+    }).subscribe({
 			next: result => {
         this.bountyProjects = result.data;
         this.loadingBountyOverview = 'success';

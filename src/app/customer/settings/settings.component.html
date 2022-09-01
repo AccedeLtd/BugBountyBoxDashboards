@@ -3,14 +3,9 @@
   <main>
     <mat-sidenav-container>
       <mat-sidenav [(opened)]="sideNavOpened">
-        <mat-nav-list class="gap-3">
-          <a *ngFor="let section of sections" mat-list-item routerLink="/customer{{ section.id }}" routerLinkActive="active" (click)="toggleSideNav()">
-            {{ section.title }}
-          </a>
-        </mat-nav-list>
+        <app-customer-side-nav></app-customer-side-nav>
         <div class="sm:hidden border-t border-gray-200 font-medium">
           <mat-nav-list>
-            <a mat-list-item routerLink="/customer/settings" routerLinkActive="active">Settings</a>
             <a mat-list-item (click)="logout()">Log out</a>
           </mat-nav-list>
         </div>
@@ -298,7 +293,7 @@
                                 </div>
                                 <mat-divider></mat-divider>
                                 <br>
-                                <div>
+                                <!-- <div>
                                   <p class=" animate__animated animate__fadeIn">Verification</p>
                                   <p class="animate__animated animate__fadeIn">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -306,9 +301,6 @@
                                   <br>
                                   <div class="max-w-full w-full py-2">
                                     <div class="grid grid-cols-2 gap-2">
-                                      <div>
-                                        <!-- <p>High</p> -->
-                                      </div>
                                       <div class="ml-3 overflow-hidden justify-self-end">
                                         <div class="flex items-center text-pink-500 text-sm animate__animated animate__fadeIn">
                                           <a id="login" mat-button href="javascript:;">Begin verification process</a>
@@ -328,8 +320,8 @@
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                                <mat-divider></mat-divider>
+                                </div> -->
+                                <!-- <mat-divider></mat-divider> -->
                                 <br>
                                 <div class="max-w-full w-full">
                                   <div class="overflow-hidden justify-self-start">
@@ -812,19 +804,7 @@
     
         </div>
         </div>
-        <footer class="bg-slate-100 grid text-center md:fixed inset-x-0 bottom-0 px-4">
-            <nav class="flex flex-col md:flex-row gap-3 lg:mx-auto lg:w-[calc(90%+2rem)]">
-              <mat-nav-list class="gap-3">
-                <div>
-                  <a mat-button>© BugBountyBox</a>
-                  <span>|</span>
-                  <a mat-button href="#">Privacy Policy</a>
-                  <span>|</span>
-                  <a mat-button href="#">Terms of Sevice</a>
-                </div>
-              </mat-nav-list>
-            </nav>
-          </footer>
+        <app-footer></app-footer>
       </mat-sidenav-content>
     </mat-sidenav-container>
   </main>
