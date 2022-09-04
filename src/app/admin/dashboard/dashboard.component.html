@@ -2,227 +2,195 @@
   <app-admin-nav (sideNavToggleEvent)="toggleSideNav()"></app-admin-nav>
   <main>
     <mat-sidenav-container>
-        <mat-sidenav [(opened)]="sideNavOpened">
-            <app-admin-side-nav></app-admin-side-nav>
-            <div class="sm:hidden border-t border-gray-200 font-medium">
-              <mat-nav-list>
-                <a mat-list-item (click)="logout()">Log out</a>
-              </mat-nav-list>
-            </div>
-        </mat-sidenav>
-    
-      <mat-sidenav-content id="container" class="flex-1 overflow-auto relative" style="scroll-behavior: smooth">
-        <div class="max-w-full mx-auto pt-6 pb-12 px-6 lg:px-20">
+      <mat-sidenav [(opened)]="sideNavOpened">
+        <app-admin-side-nav></app-admin-side-nav>
+        <div class="sm:hidden border-t border-gray-200 font-medium">
+          <mat-nav-list>
+            <a mat-list-item (click)="logout()">Log out</a>
+          </mat-nav-list>
+        </div>
+      </mat-sidenav>
+
+      <mat-sidenav-content
+        id="container"
+        class="flex-1 overflow-auto relative px-3 lg:px-10 pb-20"
+        style="scroll-behavior: smooth"
+      >
+        <div class="max-w-full mx-auto pt-6">
           <div class="flex flex-row flex-wrap flex-1 flex-grow content-start">
             <div id="main-content" class="w-full flex-1">
-                <div class="flex flex-1 flex-wrap">
-                    <!-- <div class="w-full xl:w-2/3 xl:max-w-6xl"> -->
-                    <div class="w-full xl:w-1/2">
-                        <!--"Container" for the graphs"-->
-                        <div class="max-w-full lg:max-w-3xl xl:max-w-5xl">
-                            <div>
-                                <!-- &nbsp; -->
-                                <!-- <h5 class="text-xl font-semibold text-black animate__animated animate__fadeIn animate__delay-0.5s">Dashboard</h5> -->
-                            </div>
-                            <div>
-                                <div class="w-full">
-                                    <div class="bg-white shadow-xl rounded m-2 animate__animated animate__fadeIn animate__delay-0.2s">
-                                        <div class="flex flex-col bg-white rounded w-full mx-auto p-2">
-                                            <div>
-                                                <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
-                                                    <h1 class="text-gray-800 !text-base font-semibold px-2 animate__animated animate__fadeIn animate__delay-0.8s"> Bounties </h1>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="min-h-full flex">
-                                                    <div class="max-w-full w-full text-left px-4 py-2">
-                                                        <div class="grid grid-cols-2 gap-2">
-                                                            <div class="bg-[#1F04A3] p-4 animate__animated animate__fadeIn animate__delay-1s">
-                                                                <h1 class="text-white !text-base font-semibold animate__animated animate__fadeIn animate__delay-1.2s">
-                                                                    Total Clients
-                                                                </h1>
-                                                                <h1 class="text-white !text-base ml-5 animate__animated animate__fadeIn animate__delay-1.6s">
-                                                                    {{totalClients}}
-                                                                </h1>
-                                                            </div>
-                                                            <p class="col-span-2 text-xs animate__animated animate__fadeIn animate__delay-1.5s">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
-                                                            <div class="text-lg animate__animated animate__fadeIn animate__delay-1s">{{activeClients}} <span class="text-sm">Active Clients</span></div>
-                                                            <div class="col-span-2">
-                                                                <mat-progress-bar class="!h-2.5 orange-progress" mode="determinate" value={{activeClients}}></mat-progress-bar>
-                                                            </div>
-                                                            <div class="text-lg animate__animated animate__fadeIn animate__delay-1.2s">{{notActiveClients}} <span class="text-sm">Not Active Clients</span></div>
-                                                            <div class="col-span-2 animate__animated animate__fadeIn animate__delay-1.2">
-                                                                <mat-progress-bar class="!h-2.5 green-progress" mode="determinate" value={{notActiveClients}}></mat-progress-bar>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div
-                                                    class="flex gap-3 items-center text-gray-800 p-1 rounded-md justify-between">
-                                                    <div class="flex flex-col"></div>
-                                                    <div class="flex flex-col">
-                                                        <div class="flex items-center text-indigo-600 animate__animated animate__fadeIn animate__delay-1s">
-                                                            <a id="login" mat-button>
-                                                                See more
-                                                            </a>
-                                                            <span>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 19.003 17.968">
-                                                                    <g id="icon-view" transform="translate(0 0.647)">
-                                                                      <g id="Group_32" data-name="Group 32" transform="translate(-223.648 -168.825)">
-                                                                        <path id="Path_52" data-name="Path 52" d="M234.349,168.825l6.987,8.337-6.987,8.337" fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.016"/>
-                                                                        <line id="Line_1" data-name="Line 1" x2="17.704" transform="translate(223.648 177.161)" fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="1.993"/>
-                                                                      </g>
-                                                                    </g>
-                                                                </svg>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="w-full">
-                                    <div class="bg-white shadow-xl rounded m-2 animate__animated animate__fadeIn animate__delay-0.4s">
-                                        <div class="flex flex-col bg-white rounded w-full mx-auto p-2">
-                                            <div>
-                                                <h1 class="text-gray-800 !text-base font-semibold p-2 animate__animated animate__fadeIn animate__delay-0.8s"> Vulnerabilities </h1>
-                                            </div>
-                                            <div>
-                                                <div class="flex grid md:grid-cols-2 gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
-                                                    <div class="flex gap-3 animate__animated animate__fadeIn animate__delay-2s">
-                                                       <!-- <svg xmlns="http://www.w3.org/2000/svg" width="200" height="190"
-                                                            viewBox="0 0 393.589 393.59">
-                                                            <text id="KES_80_000" data-name="KES 80,000" transform="translate(201.295 175.794)"
-                                                                fill="#222" font-size="36" font-family="SegoeUI, Segoe UI">
-                                                                <tspan x="-86.458" y="0">KES 80,000</tspan>
-                                                            </text>
-                                                            <text id="Total_Vulnerabilities" data-name="Total 
-                                                          Vulnerabilities" transform="translate(202.295 217.794)" fill="#222" font-size="28"
-                                                                font-family="SegoeUI, Segoe UI">
-                                                                <tspan x="-33.264" y="0">Total </tspan>
-                                                                <tspan x="-86.7" y="33.6">Vulnerabilities</tspan>
-                                                            </text>
-                                                            <g id="piechart">
-                                                                <path id="Path_581" data-name="Path 581"
-                                                                    d="M134.655,903.407a124.989,124.989,0,0,1,6.375-39.428l-68-22.578a196.817,196.817,0,0,0,186.741,258.8v-71.678A125.118,125.118,0,0,1,134.655,903.407Z"
-                                                                    transform="translate(-62.977 -706.612)" fill="#f29100"></path>
-                                                                <path id="Path_582" data-name="Path 582"
-                                                                    d="M319.7,929.6A196.9,196.9,0,0,0,132.585,793.725V865.4a125.1,125.1,0,0,1,73.532,226.322l42.122,57.98A196.683,196.683,0,0,0,319.7,929.6Z"
-                                                                    transform="translate(64.21 -793.725)" fill="#35a8e0"></path>
-                                                                <path id="Path_583" data-name="Path 583"
-                                                                    d="M132.585,923.042V994.72A195.851,195.851,0,0,0,248.24,957.11l-42.122-57.98A124.522,124.522,0,0,1,132.585,923.042Z"
-                                                                    transform="translate(64.21 -601.13)" fill="#fc007e"></path>
-                                                                <path id="Path_584" data-name="Path 584"
-                                                                    d="M253.274,865.4V793.725A196.855,196.855,0,0,0,66.533,928.514l68,22.578A125.147,125.147,0,0,1,253.274,865.4Z"
-                                                                    transform="translate(-56.48 -793.725)" fill="#93c01f"></path>
-                                                            </g>
-                                                        </svg>-->
-                                                        <apx-chart
-                                                            [series]="chartOptions.series"
-                                                            [chart]="chartOptions.chart"
-                                                            [labels]="chartOptions.labels"
-                                                            [legend]="chartOptions.legend"
-                                                            [dataLabels]="chartOptions.dataLabels"
-                                                            [plotOptions]="chartOptions.plotOptions"
-                                                        ></apx-chart>
-                                                    </div>
-                                                    <div class="flex flex-col divide-y divide-slate-200">
-                                                        <div class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-1s">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                                viewBox="0 0 20 20" class="h-2.5 w-2.5 rounded-full mt-2">
-                                                                <path id="Ellipse_4" data-name="Ellipse 4"
-                                                                    d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z" fill="#fc007e"></path>
-                                                            </svg>
-                                                            <div>Critical</div>
-                                                            <div>{{this.vulnerabilities.critical}}</div>
-                                                        </div>
-                                                        <div class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-2s">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                                viewBox="0 0 20 20" class="h-2.5 w-2.5 rounded-full mt-2">
-                                                                <path id="Ellipse_4" data-name="Ellipse 4"
-                                                                    d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z" fill="#35a8e0"></path>
-                                                            </svg>
-                                                            <div>Medium</div>
-                                                            <div>{{this.vulnerabilities.medium}}</div>
-                                                        </div>
-                                                        <div class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-3s">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                                viewBox="0 0 20 20" class="h-2.5 w-2.5 rounded-full mt-2">
-                                                                <path id="Ellipse_4" data-name="Ellipse 4"
-                                                                    d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z" fill="#f29100"></path>
-                                                            </svg>
-                                                            <div>High</div>
-                                                            <div>{{this.vulnerabilities.high}}</div>
-                                                        </div>
-                                                        <div class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-4s">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                                viewBox="0 0 20 20" class="h-2.5 w-2.5 rounded-full mt-2">
-                                                                <path id="Ellipse_4" data-name="Ellipse 4"
-                                                                    d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z" fill="#93c01f"></path>  
-                                                            </svg>
-                                                            <div>Low</div>
-                                                            <div>{{this.vulnerabilities.low}}</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="divide-y divide-slate-200">
-                                                    <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
-                                                        <div class="flex gap-3 animate__animated animate__fadeIn animate__delay-7s">
-                                                            <div class="flex flex-col max-w-xs md:max-w-full">
-                                                                <p class="text-xs text-slate-500 truncate"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut. </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="flex gap-3 items-center text-gray-800 p-1 rounded-md justify-between animate__animated animate__fadeIn animate__delay-8s">
-                                                    <div class="flex flex-col"></div>
-                                                    <div class="flex flex-col">
-                                                        <div class="flex items-center text-indigo-600">
-                                                            <a id="login" mat-button> See more </a>
-                                                            <span>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 19.003 17.968">
-                                                                    <g id="icon-view" transform="translate(0 0.647)">
-                                                                      <g id="Group_32" data-name="Group 32" transform="translate(-223.648 -168.825)">
-                                                                        <path id="Path_52" data-name="Path 52" d="M234.349,168.825l6.987,8.337-6.987,8.337" fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.016"/>
-                                                                        <line id="Line_1" data-name="Line 1" x2="17.704" transform="translate(223.648 177.161)" fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="1.993"/>
-                                                                      </g>
-                                                                    </g>
-                                                                </svg>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+              <div class="grid gap-4 grid-cols-1 lg:grid-cols-2">
+                <div class="w-full">
+                  <!--"Container" for the graphs"-->
+                  <div class="max-w-full">
+                    <div>
+                      <!-- &nbsp; -->
+                      <!-- <h5 class="text-xl font-semibold text-black animate__animated animate__fadeIn animate__delay-0.5s">Dashboard</h5> -->
                     </div>
-                    
-                    <div class="w-full xl:w-1/2">
-                        <!--"Container" for the graphs"-->
-                        <div class="max-w-full lg:max-w-3xl xl:max-w-5xl">
+                    <div>
+                      <div class="w-full">
+                        <div
+                          class="bg-white mb-8 shadow-md rounded m-2 animate__animated animate__fadeIn animate__delay-0.2s"
+                        >
+                          <div
+                            class="flex flex-col bg-white rounded w-full mx-auto p-2"
+                          >
                             <div>
-                                <!-- <h5 class="text-lg text-black">&nbsp;</h5> -->
+                              <div
+                                class="flex gap-3 items-center text-gray-800 p-3 justify-between"
+                              >
+                                <h1
+                                  class="text-gray-800 !text-base font-semibold px-2 animate__animated animate__fadeIn animate__delay-0.8s"
+                                >
+                                  Bounties
+                                </h1>
+                              </div>
                             </div>
-
                             <div>
-                                <div class="w-full">
-                                    <div class="bg-white shadow-xl rounded m-2 animate__animated animate__fadeIn animate__delay-0.2s">
-                                        <div class="flex flex-col bg-white rounded w-full mx-auto p-2">
-                                            <div>
-                                                <h1 class="text-gray-800 !text-base font-semibold p-2 animate__animated animate__fadeIn animate__delay-0.8s"> Payouts </h1>
-                                            </div>
-                                            <div>
-                                                <div class="flex grid md:grid-cols-2 gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
-                                                    <div class="flex gap-3 animate__animated animate__fadeIn animate__delay-3s">
-                                                        <!--<svg xmlns="http://www.w3.org/2000/svg" width="200" height="190"
+                              <div class="min-h-full flex">
+                                <div
+                                  class="max-w-full w-full text-left px-4 py-2"
+                                >
+                                  <div class="grid grid-cols-2 gap-2">
+                                    <div
+                                      class="w-full flex justify-between bg-[#070118] p-4 animate__animated animate__fadeIn animate__delay-1s"
+                                    >
+                                      <h1
+                                        class="text-white !text-base font-semibold animate__animated animate__fadeIn animate__delay-1.2s"
+                                      >
+                                        Total Clients
+                                      </h1>
+                                      <h1
+                                        class="text-white !text-base ml-5 animate__animated animate__fadeIn animate__delay-1.6s"
+                                      >
+                                        {{ totalClients }}
+                                      </h1>
+                                    </div>
+                                    <p
+                                      class="col-span-2 text-xs animate__animated animate__fadeIn animate__delay-1.5s"
+                                    >
+                                      Lorem ipsum dolor sit amet, consectetur
+                                      adipiscing elit, sed do eiusmod tempor
+                                      incididunt ut labore et dolore
+                                    </p>
+                                    <div
+                                      class="text-lg animate__animated animate__fadeIn animate__delay-1s"
+                                    >
+                                      {{ activeClients }}
+                                      <span class="text-sm"
+                                        >Active Clients</span
+                                      >
+                                    </div>
+                                    <div class="col-span-2">
+                                      <mat-progress-bar
+                                        class="!h-2.5 orange-progress"
+                                        mode="determinate"
+                                        value="{{ activeClients }}"
+                                      ></mat-progress-bar>
+                                    </div>
+                                    <div
+                                      class="text-lg animate__animated animate__fadeIn animate__delay-1.2s"
+                                    >
+                                      {{ notActiveClients }}
+                                      <span class="text-sm"
+                                        >Not Active Clients</span
+                                      >
+                                    </div>
+                                    <div
+                                      class="col-span-2 animate__animated animate__fadeIn animate__delay-1.2"
+                                    >
+                                      <mat-progress-bar
+                                        class="!h-2.5 green-progress"
+                                        mode="determinate"
+                                        value="{{ notActiveClients }}"
+                                      ></mat-progress-bar>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div
+                                class="flex gap-3 items-center text-gray-800 p-1 rounded-md justify-between"
+                              >
+                                <div class="flex flex-col"></div>
+                                <div class="flex flex-col">
+                                  <div
+                                    class="flex items-center text-[#fc007e] animate__animated animate__fadeIn animate__delay-1s"
+                                  >
+                                    <a id="login" mat-button>
+                                      See more
+                                      <span class="inline-block pl-2">
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="10"
+                                          height="10"
+                                          viewBox="0 0 19.003 17.968"
+                                        >
+                                          <g
+                                            id="icon-view"
+                                            transform="translate(0 0.647)"
+                                          >
+                                            <g
+                                              id="Group_32"
+                                              data-name="Group 32"
+                                              transform="translate(-223.648 -168.825)"
+                                            >
+                                              <path
+                                                id="Path_52"
+                                                data-name="Path 52"
+                                                d="M234.349,168.825l6.987,8.337-6.987,8.337"
+                                                fill="none"
+                                                stroke="#fc007e"
+                                                stroke-miterlimit="10"
+                                                stroke-width="2.016"
+                                              />
+                                              <line
+                                                id="Line_1"
+                                                data-name="Line 1"
+                                                x2="17.704"
+                                                transform="translate(223.648 177.161)"
+                                                fill="none"
+                                                stroke="#fc007e"
+                                                stroke-miterlimit="10"
+                                                stroke-width="1.993"
+                                              />
+                                            </g>
+                                          </g>
+                                        </svg>
+                                      </span>
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div class="w-full">
+                        <div
+                          class="bg-white shadow-md rounded m-2 animate__animated animate__fadeIn animate__delay-0.4s"
+                        >
+                          <div
+                            class="flex flex-col bg-white rounded w-full mx-auto p-2"
+                          >
+                            <div>
+                              <h1
+                                class="text-gray-800 !text-base font-semibold p-2 animate__animated animate__fadeIn animate__delay-0.8s"
+                              >
+                                Vulnerabilities
+                              </h1>
+                            </div>
+                            <div>
+                              <div
+                                class="flex grid md:grid-cols-2 gap-3 items-center text-gray-800 p-3 rounded-md justify-between"
+                              >
+                                <div
+                                  class="flex gap-3 animate__animated animate__fadeIn animate__delay-2s"
+                                >
+                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="200" height="190"
                                                             viewBox="0 0 393.589 393.59">
                                                             <text id="KES_80_000" data-name="KES 80,000" transform="translate(201.295 175.794)"
                                                                 fill="#222" font-size="36" font-family="SegoeUI, Segoe UI">
@@ -249,147 +217,547 @@
                                                                     transform="translate(-56.48 -793.725)" fill="#93c01f"></path>
                                                             </g>
                                                         </svg>-->
-                                                        <apx-chart
-                                                            [series]="payoutOptions.series"
-                                                            [chart]="payoutOptions.chart"
-                                                            [labels]="payoutOptions.labels"
-                                                            [legend]="payoutOptions.legend"
-                                                            [dataLabels]="payoutOptions.dataLabels"
-                                                            [plotOptions]="payoutOptions.plotOptions"
-                                                        ></apx-chart>
-                            
-                                                    </div>
-                                                    <div class="flex flex-col divide-y divide-slate-200">
-                                                        <div class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-1s">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                                viewBox="0 0 20 20" class="h-2.5 w-2.5 rounded-full mt-2">
-                                                                <path id="Ellipse_4" data-name="Ellipse 4"
-                                                                    d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z" fill="#fc007e"></path>
-                                                            </svg>
-                                                            <div>Critical</div>
-                                                            <div>KES {{this.payouts.critical | number: '.2'}}</div>
-                                                        </div>
-                                                        <div class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-2s">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                                viewBox="0 0 20 20" class="h-2.5 w-2.5 rounded-full mt-2">
-                                                                <path id="Ellipse_4" data-name="Ellipse 4"
-                                                                    d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z" fill="#35a8e0"></path>
-                                                            </svg>
-                                                            <div>Medium</div>
-                                                            <div>KES {{this.payouts.medium | number: '.2'}}</div>
-                                                        </div>
-                                                        <div class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-3s">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                                viewBox="0 0 20 20" class="h-2.5 w-2.5 rounded-full mt-2">
-                                                                <path id="Ellipse_4" data-name="Ellipse 4"
-                                                                    d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z" fill="#f29100"></path>
-                                                            </svg>
-                                                            <div>High</div>
-                                                            <div>KES {{this.payouts.high | number: '.2'}}</div>
-                                                        </div>
-                                                        <div class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-4s">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                                viewBox="0 0 20 20" class="h-2.5 w-2.5 rounded-full mt-2">
-                                                                <path id="Ellipse_4" data-name="Ellipse 4"
-                                                                    d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z" fill="#93c01f"></path>
-                                                            </svg>
-                                                            <div>Low</div>
-                                                            <div>KES {{this.payouts.low | number: '.2'}}</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="divide-y divide-slate-200 animate__animated animate__fadeIn animate__delay-8s">
-                                                    <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
-                                                        <div class="flex gap-3">
-                                                            <div class="flex flex-col max-w-xs md:max-w-full">
-                                                                <p class="text-xs text-slate-500 truncate"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut. </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="flex gap-3 items-center text-gray-800 p-1 rounded-md justify-between animate__animated animate__fadeIn animate__delay-1s">
-                                                    <div class="flex flex-col"></div>
-                                                    <div class="flex flex-col">
-                                                        <div class="flex items-center text-indigo-600">
-                                                            <a id="login" mat-button> See more </a>
-                                                            <span>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 19.003 17.968">
-                                                                    <g id="icon-view" transform="translate(0 0.647)">
-                                                                      <g id="Group_32" data-name="Group 32" transform="translate(-223.648 -168.825)">
-                                                                        <path id="Path_52" data-name="Path 52" d="M234.349,168.825l6.987,8.337-6.987,8.337" fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.016"/>
-                                                                        <line id="Line_1" data-name="Line 1" x2="17.704" transform="translate(223.648 177.161)" fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="1.993"/>
-                                                                      </g>
-                                                                    </g>
-                                                                </svg>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                  <apx-chart
+                                    [series]="chartOptions.series"
+                                    [chart]="chartOptions.chart"
+                                    [labels]="chartOptions.labels"
+                                    [legend]="chartOptions.legend"
+                                    [dataLabels]="chartOptions.dataLabels"
+                                    [plotOptions]="chartOptions.plotOptions"
+                                  ></apx-chart>
                                 </div>
-                            </div>
-
-                            <div>
-                                <div class="w-full">
-                                    <div class="bg-white shadow-xl rounded m-2">
-                                        <div class="flex flex-col bg-white rounded w-full mx-auto p-2">
-                                            <div>
-                                                <div class="flex gap-3 items-center text-gray-800 p-2 rounded-md justify-between animate__animated animate__fadeIn animate__delay-0.8s">
-                                                    <h1 class="text-gray-800 !text-base font-semibold px-2"> Payouts </h1>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="min-h-full flex">
-                                                    <div class="max-w-full w-full text-left px-4 py-2">
-                                                        <div class="bg-[#FC007E] p-2 animate__animated animate__fadeIn animate__delay-1s">
-                                                            <div class="flex gap-3 items-center p-1 rounded-md justify-between text-white !text-base animate__animated animate__fadeIn animate__delay-1.5s">
-                                                                <h1> Total Payouts </h1>
-                                                                <h1> KES {{this.totalPayouts | number: '.2'}} </h1>
-                                                            </div>
-                                                        </div>
-
-                                                        <ul role="list" class="p-2 divide-y divide-slate-200 relative grid grid-rows-2 grid-flow-col gap-4">
-                                                            <li class="flex pt-2 last:pb-0 items-start animate__animated animate__fadeIn animate__delay-2s hover:bg-gray-100">
-                                                                <div class="ml-3 overflow-hidden text-left space-y-1">
-                                                                    <p class="text-sm text-slate-900">Critical</p>
-                                                                    <p class="text-xs text-slate-500 truncate">KES {{this.payouts.critical | number: '.2'}}</p>
-                                                                </div>
-                                                            </li>
-                                                            <li class="flex pt-2 last:pb-0 items-start animate__animated animate__fadeIn animate__delay-3s hover:bg-gray-100">
-                                                                <div class="ml-3 overflow-hidden text-left space-y-1">
-                                                                    <p class="text-sm text-slate-900">Medium</p>
-                                                                    <p class="text-xs text-slate-500 truncate">KES {{this.payouts.medium | number: '.2'}}</p>
-                                                                </div>
-                                                            </li>
-                                                            <li class="flex pt-2 last:pb-0 items-start animate__animated animate__fadeIn animate__delay-4s hover:bg-gray-100">
-                                                                <div class="ml-3 overflow-hidden text-left space-y-1">
-                                                                    <p class="text-sm text-slate-900">High</p>
-                                                                    <p class="text-xs text-slate-500 truncate">KES {{this.payouts.high | number: '.2'}}</p>
-                                                                </div>
-                                                            </li>
-                                                            <li class="flex pt-2 last:pb-0 items-start animate__animated animate__fadeIn animate__delay-5s hover:bg-gray-100">
-                                                                <div class="ml-3 overflow-hidden text-left space-y-1">
-                                                                    <p class="text-sm text-slate-900">Low</p>
-                                                                    <p class="text-xs text-slate-500 truncate">KES {{this.payouts.low | number: '.2'}}</p> 
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div
+                                  class="flex flex-col divide-y divide-slate-200"
+                                >
+                                  <div
+                                    class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-1s"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 20 20"
+                                      class="h-2.5 w-2.5 rounded-full mt-2"
+                                    >
+                                      <path
+                                        id="Ellipse_4"
+                                        data-name="Ellipse 4"
+                                        d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z"
+                                        fill="#fc007e"
+                                      ></path>
+                                    </svg>
+                                    <div class="text-sm">Critical</div>
+                                    <div class="text-sm">
+                                      {{ this.vulnerabilities.critical }}
                                     </div>
+                                  </div>
+                                  <div
+                                    class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-2s"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 20 20"
+                                      class="h-2.5 w-2.5 rounded-full mt-2"
+                                    >
+                                      <path
+                                        id="Ellipse_4"
+                                        data-name="Ellipse 4"
+                                        d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z"
+                                        fill="#35a8e0"
+                                      ></path>
+                                    </svg>
+                                    <div class="text-sm">Medium</div>
+                                    <div class="text-sm">
+                                      {{ this.vulnerabilities.medium }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-3s"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 20 20"
+                                      class="h-2.5 w-2.5 rounded-full mt-2"
+                                    >
+                                      <path
+                                        id="Ellipse_4"
+                                        data-name="Ellipse 4"
+                                        d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z"
+                                        fill="#f29100"
+                                      ></path>
+                                    </svg>
+                                    <div class="text-sm">High</div>
+                                    <div class="text-sm">
+                                      {{ this.vulnerabilities.high }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-4s"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 20 20"
+                                      class="h-2.5 w-2.5 rounded-full mt-2"
+                                    >
+                                      <path
+                                        id="Ellipse_4"
+                                        data-name="Ellipse 4"
+                                        d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z"
+                                        fill="#93c01f"
+                                      ></path>
+                                    </svg>
+                                    <div class="text-sm">Low</div>
+                                    <div class="text-sm">
+                                      {{ this.vulnerabilities.low }}
+                                    </div>
+                                  </div>
                                 </div>
+                              </div>
+                              <div class="divide-y divide-slate-200">
+                                <div
+                                  class="flex gap-3 items-center text-gray-800 p-3 justify-between"
+                                >
+                                  <div
+                                    class="flex gap-3 animate__animated animate__fadeIn animate__delay-7s"
+                                  >
+                                    <div
+                                      class="flex flex-col max-w-xs md:max-w-full"
+                                    >
+                                      <p class="text-xs text-gray-500 truncate">
+                                        Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut.
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="flex gap-3 items-center text-gray-800 p-1 rounded-md justify-between animate__animated animate__fadeIn animate__delay-8s"
+                              >
+                                <div class="flex flex-col"></div>
+                                <div class="flex flex-col">
+                                  <div
+                                    class="flex items-center text-[#fc007e] animate__animated animate__fadeIn animate__delay-1s"
+                                  >
+                                    <a id="login" mat-button>
+                                      See more
+                                      <span class="inline-block pl-2">
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="10"
+                                          height="10"
+                                          viewBox="0 0 19.003 17.968"
+                                        >
+                                          <g
+                                            id="icon-view"
+                                            transform="translate(0 0.647)"
+                                          >
+                                            <g
+                                              id="Group_32"
+                                              data-name="Group 32"
+                                              transform="translate(-223.648 -168.825)"
+                                            >
+                                              <path
+                                                id="Path_52"
+                                                data-name="Path 52"
+                                                d="M234.349,168.825l6.987,8.337-6.987,8.337"
+                                                fill="none"
+                                                stroke="#fc007e"
+                                                stroke-miterlimit="10"
+                                                stroke-width="2.016"
+                                              />
+                                              <line
+                                                id="Line_1"
+                                                data-name="Line 1"
+                                                x2="17.704"
+                                                transform="translate(223.648 177.161)"
+                                                fill="none"
+                                                stroke="#fc007e"
+                                                stroke-miterlimit="10"
+                                                stroke-width="1.993"
+                                              />
+                                            </g>
+                                          </g>
+                                        </svg> </span
+                                    ></a>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
+                          </div>
                         </div>
-                    </div>    
+                      </div>
+                    </div>
+                  </div>
                 </div>
-    
+
+                <div class="w-full">
+                  <!--"Container" for the graphs"-->
+                  <div class="max-w-full">
+                    <div>
+                      <!-- <h5 class="text-lg text-black">&nbsp;</h5> -->
+                    </div>
+
+                    <div>
+                      <div class="w-full">
+                        <div
+                          class="bg-white mb-8 shadow-md rounded m-2 animate__animated animate__fadeIn animate__delay-0.2s"
+                        >
+                          <div
+                            class="flex flex-col bg-white rounded w-full mx-auto p-2"
+                          >
+                            <div>
+                              <h1
+                                class="text-gray-800 !text-base font-semibold p-2 animate__animated animate__fadeIn animate__delay-0.8s"
+                              >
+                                Payouts
+                              </h1>
+                            </div>
+                            <div>
+                              <div
+                                class="flex grid md:grid-cols-2 gap-3 items-center text-gray-800 p-3 rounded-md justify-between"
+                              >
+                                <div
+                                  class="flex gap-3 animate__animated animate__fadeIn animate__delay-3s"
+                                >
+                                  <!--<svg xmlns="http://www.w3.org/2000/svg" width="200" height="190"
+                                                            viewBox="0 0 393.589 393.59">
+                                                            <text id="KES_80_000" data-name="KES 80,000" transform="translate(201.295 175.794)"
+                                                                fill="#222" font-size="36" font-family="SegoeUI, Segoe UI">
+                                                                <tspan x="-86.458" y="0">KES 80,000</tspan>
+                                                            </text>
+                                                            <text id="Total_Vulnerabilities" data-name="Total 
+                                                          Vulnerabilities" transform="translate(202.295 217.794)" fill="#222" font-size="28"
+                                                                font-family="SegoeUI, Segoe UI">
+                                                                <tspan x="-33.264" y="0">Total </tspan>
+                                                                <tspan x="-86.7" y="33.6">Vulnerabilities</tspan>
+                                                            </text>
+                                                            <g id="piechart">
+                                                                <path id="Path_581" data-name="Path 581"
+                                                                    d="M134.655,903.407a124.989,124.989,0,0,1,6.375-39.428l-68-22.578a196.817,196.817,0,0,0,186.741,258.8v-71.678A125.118,125.118,0,0,1,134.655,903.407Z"
+                                                                    transform="translate(-62.977 -706.612)" fill="#f29100"></path>
+                                                                <path id="Path_582" data-name="Path 582"
+                                                                    d="M319.7,929.6A196.9,196.9,0,0,0,132.585,793.725V865.4a125.1,125.1,0,0,1,73.532,226.322l42.122,57.98A196.683,196.683,0,0,0,319.7,929.6Z"
+                                                                    transform="translate(64.21 -793.725)" fill="#35a8e0"></path>
+                                                                <path id="Path_583" data-name="Path 583"
+                                                                    d="M132.585,923.042V994.72A195.851,195.851,0,0,0,248.24,957.11l-42.122-57.98A124.522,124.522,0,0,1,132.585,923.042Z"
+                                                                    transform="translate(64.21 -601.13)" fill="#fc007e"></path>
+                                                                <path id="Path_584" data-name="Path 584"
+                                                                    d="M253.274,865.4V793.725A196.855,196.855,0,0,0,66.533,928.514l68,22.578A125.147,125.147,0,0,1,253.274,865.4Z"
+                                                                    transform="translate(-56.48 -793.725)" fill="#93c01f"></path>
+                                                            </g>
+                                                        </svg>-->
+                                  <apx-chart
+                                    [series]="payoutOptions.series"
+                                    [chart]="payoutOptions.chart"
+                                    [labels]="payoutOptions.labels"
+                                    [legend]="payoutOptions.legend"
+                                    [dataLabels]="payoutOptions.dataLabels"
+                                    [plotOptions]="payoutOptions.plotOptions"
+                                  ></apx-chart>
+                                </div>
+                                <div
+                                  class="flex flex-col divide-y divide-slate-200"
+                                >
+                                  <div
+                                    class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-1s"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 20 20"
+                                      class="h-2.5 w-2.5 rounded-full mt-2"
+                                    >
+                                      <path
+                                        id="Ellipse_4"
+                                        data-name="Ellipse 4"
+                                        d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z"
+                                        fill="#fc007e"
+                                      ></path>
+                                    </svg>
+                                    <div class="text-sm">Critical</div>
+                                    <div class="text-sm">
+                                      KES
+                                      {{ this.payouts.critical | number: ".2" }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-2s"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 20 20"
+                                      class="h-2.5 w-2.5 rounded-full mt-2"
+                                    >
+                                      <path
+                                        id="Ellipse_4"
+                                        data-name="Ellipse 4"
+                                        d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z"
+                                        fill="#35a8e0"
+                                      ></path>
+                                    </svg>
+                                    <div class="text-sm">Medium</div>
+                                    <div class="text-sm">
+                                      KES
+                                      {{ this.payouts.medium | number: ".2" }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-3s"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 20 20"
+                                      class="h-2.5 w-2.5 rounded-full mt-2"
+                                    >
+                                      <path
+                                        id="Ellipse_4"
+                                        data-name="Ellipse 4"
+                                        d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z"
+                                        fill="#f29100"
+                                      ></path>
+                                    </svg>
+                                    <div class="text-sm">High</div>
+                                    <div class="text-sm">
+                                      KES {{ this.payouts.high | number: ".2" }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="flex gap-3 p-2 animate__animated animate__fadeIn animate__delay-4s"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 20 20"
+                                      class="h-2.5 w-2.5 rounded-full mt-2"
+                                    >
+                                      <path
+                                        id="Ellipse_4"
+                                        data-name="Ellipse 4"
+                                        d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z"
+                                        fill="#93c01f"
+                                      ></path>
+                                    </svg>
+                                    <div class="text-sm">Low</div>
+                                    <div class="text-sm">
+                                      KES {{ this.payouts.low | number: ".2" }}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="divide-y divide-slate-200 animate__animated animate__fadeIn animate__delay-8s"
+                              >
+                                <div
+                                  class="flex gap-3 items-center text-gray-800 p-3 justify-between"
+                                >
+                                  <div class="flex gap-3">
+                                    <div
+                                      class="flex flex-col max-w-xs md:max-w-full"
+                                    >
+                                      <p class="text-xs text-gray-500 truncate">
+                                        Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut.
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="flex gap-3 items-center text-gray-800 p-1 rounded-md justify-between animate__animated animate__fadeIn animate__delay-1s"
+                              >
+                                <div class="flex flex-col"></div>
+                                <div class="flex flex-col">
+                                  <div
+                                    class="flex items-center text-[#fc007e] animate__animated animate__fadeIn animate__delay-1s"
+                                  >
+                                    <a id="login" mat-button>
+                                      See more
+                                      <span class="inline-block pl-2">
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="10"
+                                          height="10"
+                                          viewBox="0 0 19.003 17.968"
+                                        >
+                                          <g
+                                            id="icon-view"
+                                            transform="translate(0 0.647)"
+                                          >
+                                            <g
+                                              id="Group_32"
+                                              data-name="Group 32"
+                                              transform="translate(-223.648 -168.825)"
+                                            >
+                                              <path
+                                                id="Path_52"
+                                                data-name="Path 52"
+                                                d="M234.349,168.825l6.987,8.337-6.987,8.337"
+                                                fill="none"
+                                                stroke="#fc007e"
+                                                stroke-miterlimit="10"
+                                                stroke-width="2.016"
+                                              />
+                                              <line
+                                                id="Line_1"
+                                                data-name="Line 1"
+                                                x2="17.704"
+                                                transform="translate(223.648 177.161)"
+                                                fill="none"
+                                                stroke="#fc007e"
+                                                stroke-miterlimit="10"
+                                                stroke-width="1.993"
+                                              />
+                                            </g>
+                                          </g>
+                                        </svg> </span
+                                    ></a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div class="w-full">
+                        <div class="bg-white shadow-md rounded">
+                          <div
+                            class="flex flex-col bg-white rounded w-full mx-auto p-2"
+                          >
+                            <div>
+                              <div
+                                class="flex gap-3 items-center text-gray-800 p-2 rounded-md justify-between animate__animated animate__fadeIn animate__delay-0.8s"
+                              >
+                                <h1
+                                  class="text-gray-900 !text-sm font-semibold px-2"
+                                >
+                                  Payouts
+                                </h1>
+                              </div>
+                            </div>
+                            <div>
+                              <div class="min-h-full flex">
+                                <div
+                                  class="max-w-full w-full text-left px-4 py-2"
+                                >
+                                  <div
+                                    class="bg-[#fc007e] p-2 animate__animated animate__fadeIn animate__delay-1s"
+                                  >
+                                    <div
+                                      class="flex gap-3 items-center p-1 rounded-md justify-between text-white !text-base animate__animated animate__fadeIn animate__delay-1.5s"
+                                    >
+                                      <h1>Total Payouts</h1>
+                                      <h1>
+                                        KES
+                                        {{ this.totalPayouts | number: ".2" }}
+                                      </h1>
+                                    </div>
+                                  </div>
+
+                                  <ul
+                                    role="list"
+                                    class="p-2 divide-y divide-slate-200 relative grid grid-rows-2 grid-flow-col gap-4"
+                                  >
+                                    <li
+                                      class="flex pt-2 last:pb-0 items-start animate__animated animate__fadeIn animate__delay-2s hover:bg-gray-100"
+                                    >
+                                      <div
+                                        class="ml-3 overflow-hidden text-left space-y-1"
+                                      >
+                                        <p class="text-sm text-gray-900">
+                                          Critical
+                                        </p>
+                                        <p
+                                          class="text-xs text-gray-500 truncate"
+                                        >
+                                          KES
+                                          {{
+                                            this.payouts.critical | number: ".2"
+                                          }}
+                                        </p>
+                                      </div>
+                                    </li>
+                                    <li
+                                      class="flex pt-2 last:pb-0 items-start animate__animated animate__fadeIn animate__delay-3s hover:bg-gray-100"
+                                    >
+                                      <div
+                                        class="ml-3 overflow-hidden text-left space-y-1"
+                                      >
+                                        <p class="text-sm text-gray-900">
+                                          Medium
+                                        </p>
+                                        <p
+                                          class="text-xs text-gray-500 truncate"
+                                        >
+                                          KES
+                                          {{
+                                            this.payouts.medium | number: ".2"
+                                          }}
+                                        </p>
+                                      </div>
+                                    </li>
+                                    <li
+                                      class="flex pt-2 last:pb-0 items-start animate__animated animate__fadeIn animate__delay-4s hover:bg-gray-100"
+                                    >
+                                      <div
+                                        class="ml-3 overflow-hidden text-left space-y-1"
+                                      >
+                                        <p class="text-sm text-gray-900">
+                                          High
+                                        </p>
+                                        <p
+                                          class="text-xs text-gray-500 truncate"
+                                        >
+                                          KES
+                                          {{ this.payouts.high | number: ".2" }}
+                                        </p>
+                                      </div>
+                                    </li>
+                                    <li
+                                      class="flex pt-2 last:pb-0 items-start animate__animated animate__fadeIn animate__delay-5s hover:bg-gray-100"
+                                    >
+                                      <div
+                                        class="ml-3 overflow-hidden text-left space-y-1"
+                                      >
+                                        <p class="text-sm text-gray-900">Low</p>
+                                        <p
+                                          class="text-xs text-gray-500 truncate"
+                                        >
+                                          KES
+                                          {{ this.payouts.low | number: ".2" }}
+                                        </p>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-    
-        </div>
+          </div>
           <!-- /End replace -->
         </div>
         <app-footer></app-footer>

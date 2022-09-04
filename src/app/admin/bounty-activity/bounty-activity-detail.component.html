@@ -10,57 +10,136 @@
           </mat-nav-list>
         </div>
       </mat-sidenav>
-    
-      <mat-sidenav-content id="container" class="flex-1 overflow-auto relative" style="scroll-behavior: smooth">
-        <div class="max-w-full mx-auto pt-6 pb-12 px-2 lg:px-20">
-            <div id="main-content" class="w-full flex-1">
-                <main class="w-full">
-                    <div>
-                      <h1 class="my-6 text-xl font-semibold flex gap-8 items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 31.715 29.829" class="cursor-pointer" routerLink="/admin/bugs">
-                            <g id="Vector_Smart_Object" data-name="Vector Smart Object" transform="translate(2.589 1.29)">
-                                <g id="Vector_Smart_Object-2" data-name="Vector Smart Object" transform="translate(0 0)">
-                                    <g id="Group_65" data-name="Group 65" transform="translate(0 0)">
-                                        <path id="Path_124" data-name="Path 124" d="M221.175,150.066,209.68,163.691l11.495,13.625"
-                                            transform="translate(-209.653 -150.066)" fill="none" stroke="#1f0fa3" stroke-miterlimit="10"
-                                            stroke-width="4" />
-                                        <line id="Line_27" data-name="Line 27" x1="29.126" transform="translate(0 13.625)" fill="none"
-                                            stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="4" />
-                                    </g>
-                                </g>
-                            </g>
-                        </svg>
-                        Bugs/ Bug {{this.specificBug?.projectTitle === null ? 'No Title':this.specificBug?.projectTitle}}
-                      </h1>
-                        <!-- <h1 class="my-6 text-xl font-semibold animate__animated animate__fadeIn animate__delay-1s"><a class="text-indigo-600 animate__animated animate__fadeIn animate__delay-1s" routerLink="/admin/bugs">←</a>Bugs/ Bug {{this.specificBug?.projectTitle === null ? 'No Title':this.specificBug?.projectTitle}}</h1> -->
-                    </div>
-                
-                    <div class="w-full">
-                        <div class="bg-white shadow-xl rounded m-2 animate__animated animate__fadeIn animate__delay-2s">
-                          <div class="flex flex-col bg-white rounded w-full mx-auto p-2 animate__animated animate__fadeIn animate__delay-2s">
-                            <div class="flex flex-col md:flex-row gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
-                              <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md">
-                                <div class="flex flex-col">
-                                  <div class="text-xl animate__animated animate__fadeIn animate__delay-3s">
-                                    Detail View
-                                  </div>
-                                  <div class="flex flex-col text-sm divide-y divide-slate-200">
-                                    <div class="grid grid-cols-2 gap-8 p-2">
-                                      <div class="animate__animated animate__fadeIn animate__delay-1s">Vulnerability Type</div>
-                                      <div class="animate__animated animate__fadeIn animate__delay-2s">{{this.specificBug?.vulnerability?.type}}</div>
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-8 p-2">
-                                      <div class="animate__animated animate__fadeIn animate__delay-3s">Reported by</div>
-                                      <div class="animate__animated animate__fadeIn animate__delay-4s">{{this.specificBug?.hacker?.userName}}</div>
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-8 p-2">
-                                      <div class="animate__animated animate__fadeIn animate__delay-5s">Asset</div>
-                                      <div class="animate__animated animate__fadeIn animate__delay-3s">{{this.specificBug?.domainName}}</div>
-                                    </div>
-                                  </div>
-                                </div>
+
+      <mat-sidenav-content
+        id="container"
+        class="flex-1 overflow-auto relative px-3 lg:px-10 pb-20"
+        style="scroll-behavior: smooth"
+      >
+        <div class="max-w-full mx-auto pt-6">
+          <div id="main-content" class="w-full flex-1">
+            <main class="w-full">
+              <div>
+                <h1 class="my-6 text-xl font-semibold flex gap-8 items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 31.715 29.829"
+                    class="cursor-pointer"
+                    routerLink="/admin/bugs"
+                  >
+                    <g
+                      id="Vector_Smart_Object"
+                      data-name="Vector Smart Object"
+                      transform="translate(2.589 1.29)"
+                    >
+                      <g
+                        id="Vector_Smart_Object-2"
+                        data-name="Vector Smart Object"
+                        transform="translate(0 0)"
+                      >
+                        <g
+                          id="Group_65"
+                          data-name="Group 65"
+                          transform="translate(0 0)"
+                        >
+                          <path
+                            id="Path_124"
+                            data-name="Path 124"
+                            d="M221.175,150.066,209.68,163.691l11.495,13.625"
+                            transform="translate(-209.653 -150.066)"
+                            fill="none"
+                            stroke="#fc007e"
+                            stroke-miterlimit="10"
+                            stroke-width="4"
+                          />
+                          <line
+                            id="Line_27"
+                            data-name="Line 27"
+                            x1="29.126"
+                            transform="translate(0 13.625)"
+                            fill="none"
+                            stroke="#fc007e"
+                            stroke-miterlimit="10"
+                            stroke-width="4"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
+                  Bugs/ Bug
+                  {{
+                    this.specificBug?.projectTitle === null
+                      ? "No Title"
+                      : this.specificBug?.projectTitle
+                  }}
+                </h1>
+                <!-- <h1 class="my-6 text-xl font-semibold animate__animated animate__fadeIn animate__delay-1s"><a class="text-indigo-600 animate__animated animate__fadeIn animate__delay-1s" routerLink="/admin/bugs">←</a>Bugs/ Bug {{this.specificBug?.projectTitle === null ? 'No Title':this.specificBug?.projectTitle}}</h1> -->
+              </div>
+
+              <div class="w-full">
+                <div
+                  class="bg-white shadow-md rounded m-2 animate__animated animate__fadeIn animate__delay-2s"
+                >
+                  <div
+                    class="flex flex-col bg-white rounded w-full mx-auto p-2 animate__animated animate__fadeIn animate__delay-2s"
+                  >
+                    <div
+                      class="flex flex-col md:flex-row gap-3 items-center text-gray-800 p-3 rounded-md justify-between"
+                    >
+                      <div
+                        class="flex gap-3 items-center text-gray-800 p-3 rounded-md"
+                      >
+                        <div class="flex flex-col">
+                          <div
+                            class="text-xl animate__animated animate__fadeIn animate__delay-3s"
+                          >
+                            Detail View
+                          </div>
+                          <div
+                            class="flex flex-col text-sm divide-y divide-slate-200"
+                          >
+                            <div class="grid grid-cols-2 gap-8 p-2">
+                              <div
+                                class="animate__animated animate__fadeIn animate__delay-1s"
+                              >
+                                Vulnerability Type
                               </div>
-                              <!-- <div class="flex text-sm space-x-6">
+                              <div
+                                class="animate__animated animate__fadeIn animate__delay-2s"
+                              >
+                                {{ this.specificBug?.vulnerability?.type }}
+                              </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-8 p-2">
+                              <div
+                                class="animate__animated animate__fadeIn animate__delay-3s"
+                              >
+                                Reported by
+                              </div>
+                              <div
+                                class="animate__animated animate__fadeIn animate__delay-4s"
+                              >
+                                {{ this.specificBug?.hacker?.userName }}
+                              </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-8 p-2">
+                              <div
+                                class="animate__animated animate__fadeIn animate__delay-5s"
+                              >
+                                Asset
+                              </div>
+                              <div
+                                class="animate__animated animate__fadeIn animate__delay-3s"
+                              >
+                                {{ this.specificBug?.domainName }}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="flex text-sm space-x-6">
                                 <button class="bg-transparent text-gray-800 border border-slate-500 py-1 px-4 rounded-full inline-flex items-center gap-3 animate__animated animate__fadeIn animate__delay-4s">
                                   <span>Status</span>
                                   <span>Validated</span>
@@ -69,37 +148,67 @@
                                   </svg>
                                 </button>
                               </div> -->
-                            </div>
-                            <div class="p-3">
-                              <h1 class="text-gray-800 !text-xl p-2 animate__animated animate__fadeIn animate__delay-2s"> Description </h1>
-                            </div>
-                            <mat-divider></mat-divider>
-                            <div class="p-6 animate__animated animate__fadeIn animate__delay-3s">
-                              <ejs-richtexteditor [toolbarSettings]='tools' [height]='300' [value]="specificBug?.description" readonly="true"></ejs-richtexteditor>
-                            </div>
-                            
-                            <div class="p-3">
-                              <h1 class="text-gray-800 !text-xl p-2 animate__animated animate__fadeIn animate__delay-2s"> Impact </h1>
-                            </div>
-                            <mat-divider></mat-divider>
-                            <div class="p-6 animate__animated animate__fadeIn animate__delay-3s">
-                              <ejs-richtexteditor [toolbarSettings]='tools' [height]='300' [value]="specificBug?.impact" readonly="true"></ejs-richtexteditor>
-                            </div>
-                            
-                            <mat-divider></mat-divider>
-                            <div *ngIf="specificBug?.status == BugStatus.Open" class="h-10 lg:h-10 max-w-full w-full px-4 py-2">
-                              <div class="grid grid-cols-2 gap-2">
-                                <div>&nbsp;</div>
-                                <div class="ml-3 overflow-hidden justify-self-end">
-                                  <button class="px-4 py-1 text-sm text-white rounded-full animate__animated animate__fadeIn animate__delay-4s hover:bg-[#FC007E]" (click)='validateDialog()'>Validate Bug</button>
-                                </div>
-                              </div>      
-                            </div>
-                          </div>
-                        </div>
                     </div>
-                </main>
-            </div>
+                    <div class="p-3">
+                      <h1
+                        class="text-gray-800 !text-xl p-2 animate__animated animate__fadeIn animate__delay-2s"
+                      >
+                        Description
+                      </h1>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div
+                      class="p-6 animate__animated animate__fadeIn animate__delay-3s"
+                    >
+                      <ejs-richtexteditor
+                        [toolbarSettings]="tools"
+                        [height]="300"
+                        [value]="specificBug?.description"
+                        readonly="true"
+                      ></ejs-richtexteditor>
+                    </div>
+
+                    <div class="p-3">
+                      <h1
+                        class="text-gray-800 !text-xl p-2 animate__animated animate__fadeIn animate__delay-2s"
+                      >
+                        Impact
+                      </h1>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div
+                      class="p-6 animate__animated animate__fadeIn animate__delay-3s"
+                    >
+                      <ejs-richtexteditor
+                        [toolbarSettings]="tools"
+                        [height]="300"
+                        [value]="specificBug?.impact"
+                        readonly="true"
+                      ></ejs-richtexteditor>
+                    </div>
+
+                    <mat-divider></mat-divider>
+                    <div
+                      *ngIf="specificBug?.status == BugStatus.Open"
+                      class="h-10 lg:h-10 max-w-full w-full px-4 py-2"
+                    >
+                      <div class="grid grid-cols-2 gap-2">
+                        <div>&nbsp;</div>
+                        <div class="ml-3 overflow-hidden justify-self-end">
+                          <button
+                            class="px-4 py-1 text-sm text-white rounded-full animate__animated animate__fadeIn animate__delay-4s hover:bg-[#fc007e]"
+                            (click)="validateDialog()"
+                          >
+                            Validate Bug
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
         </div>
 
         <app-footer></app-footer>

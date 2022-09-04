@@ -1,57 +1,102 @@
-<mat-toolbar class="bg-white flex-col shadow-lg z-50 h-20" color="primary">
-  <div class="w-full mx-auto py-3 flex items-center lg:justify-between xl:w-11/12">
+<mat-toolbar
+  class="bg-white flex-col shadow-lg z-50 h-20 !px-0"
+  color="primary"
+>
+  <div
+    class="w-full mx-auto py-3 px-3 lg:px-10 flex items-center lg:justify-between"
+  >
     <div class="lg:hidden">
       <button mat-icon-button (click)="toggleSideNav()">
         <mat-icon>menu</mat-icon>
       </button>
     </div>
     <a class="flex-shrink-0">
-      <img src="assets/dashboar-logo.png" alt="Logo" style="width: 200px" />
+      <img src="assets/images/white-logo.svg" alt="Logo" style="width: 10rem" />
     </a>
 
-    <mat-nav-list class="gap-3 items-center">
-        <div *ngFor="let menu  of sections; index as i">
-            <span *ngIf="i>0">|</span>
-            <ng-container [ngTemplateOutlet]="menu.submenus ?  childMenu : parentMenu" [ngTemplateOutletContext]="{menu:menu}">
-            </ng-container>
-        </div>
+    <mat-nav-list class="gap-3 items-center" disableRipple>
+      <div *ngFor="let menu of sections; index as i">
+        <span *ngIf="i > 0" class="pr-5">|</span>
+        <ng-container
+          [ngTemplateOutlet]="menu.submenus ? childMenu : parentMenu"
+          [ngTemplateOutletContext]="{ menu: menu }"
+        >
+        </ng-container>
+      </div>
 
-        <ng-template #parentMenu let-menu="menu">
-          <a id="login" routerLink="/customer{{ menu.id }}" [class.active]="menu.active" mat-button>
-            {{ menu.title }}
-          </a>
-        </ng-template>
+      <ng-template #parentMenu let-menu="menu">
+        <a
+          id="login"
+          routerLink="/customer{{ menu.id }}"
+          [class.active]="menu.active"
+          mat-button
+        >
+          {{ menu.title }}
+        </a>
+      </ng-template>
 
-        <ng-template #childMenu let-menu="menu">
-          <a id="login" [class.active]="menu.active" mat-button [matMenuTriggerFor]="subMenu" style="pointer-events: all;cursor: pointer;">
-            {{ menu.title }}
-          </a>
-          
-          <mat-menu #subMenu="matMenu" [overlapTrigger]="false">
-            <mat-list>
-              <mat-list-item *ngFor="let submenu of menu.submenus" class="cursor-pointer" routerLinkActive="is-active" [routerLinkActiveOptions]="{exact:true}" (click)="selectOption(submenu)">
-                {{submenu.title}}
-              </mat-list-item>
-            </mat-list>
-          </mat-menu>
-        </ng-template>
+      <ng-template #childMenu let-menu="menu">
+        <a
+          id="login"
+          [class.active]="menu.active"
+          mat-button
+          [matMenuTriggerFor]="subMenu"
+          style="pointer-events: all; cursor: pointer"
+        >
+          {{ menu.title }}
+        </a>
 
-        <div>
-          <svg [matMenuTriggerFor]="notificationMenu" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 47.001 46.999">
-            <g id="icon-notification" transform="translate(-2558 -2586)">
-              <g id="icon-notification-2" data-name="icon-notification" transform="translate(2450.069 1995.443)">
-                <path id="Path_211" data-name="Path 211" d="M154.931,628.421h-47c3.594-3.661,6.621-4.434,6.621-8.915v-9.186a16.83,16.83,0,0,1,12.841-16.182,3.83,3.83,0,0,1,4.038-3.582,3.954,3.954,0,0,1,4.038,3.689,16.739,16.739,0,0,1,12.893,16.075V619.8C148.361,624.292,151.337,624.76,154.931,628.421Zm-23.5,9.135c4.125,0,7.582-3.209,8.514-7.309H122.919C123.85,634.348,127.306,637.556,131.431,637.556Z" fill="#c7c9cb"/>
-              </g>
-              <path id="Color_Overlay" data-name="Color Overlay" d="M2572.989,2625.691h17.025c-.93,4.1-4.388,7.309-8.513,7.309S2573.92,2629.791,2572.989,2625.691ZM2558,2623.865c3.595-3.661,6.621-4.434,6.621-8.915v-9.186a16.83,16.83,0,0,1,12.841-16.181A3.829,3.829,0,0,1,2581.5,2586a3.954,3.954,0,0,1,4.037,3.689,16.738,16.738,0,0,1,12.893,16.074v9.482c0,4.489,2.976,4.957,6.57,8.618Z" fill="#fff"/>
+        <mat-menu #subMenu="matMenu" [overlapTrigger]="false">
+          <mat-list>
+            <mat-list-item
+              *ngFor="let submenu of menu.submenus"
+              class="cursor-pointer"
+              routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="selectOption(submenu)"
+            >
+              {{ submenu.title }}
+            </mat-list-item>
+          </mat-list>
+        </mat-menu>
+      </ng-template>
+
+      <div>
+        <svg
+          [matMenuTriggerFor]="notificationMenu"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 47.001 46.999"
+        >
+          <g id="icon-notification" transform="translate(-2558 -2586)">
+            <g
+              id="icon-notification-2"
+              data-name="icon-notification"
+              transform="translate(2450.069 1995.443)"
+            >
+              <path
+                id="Path_211"
+                data-name="Path 211"
+                d="M154.931,628.421h-47c3.594-3.661,6.621-4.434,6.621-8.915v-9.186a16.83,16.83,0,0,1,12.841-16.182,3.83,3.83,0,0,1,4.038-3.582,3.954,3.954,0,0,1,4.038,3.689,16.739,16.739,0,0,1,12.893,16.075V619.8C148.361,624.292,151.337,624.76,154.931,628.421Zm-23.5,9.135c4.125,0,7.582-3.209,8.514-7.309H122.919C123.85,634.348,127.306,637.556,131.431,637.556Z"
+                fill="#c7c9cb"
+              />
             </g>
-          </svg>
-          
-          <!-- "notificationMenu" menu -->
-          <mat-menu #notificationMenu="matMenu" [overlapTrigger]="false">
-            <mat-list>
-              <mat-list-item>No notifications</mat-list-item>
-            </mat-list>
-            <!-- <mat-list>
+            <path
+              id="Color_Overlay"
+              data-name="Color Overlay"
+              d="M2572.989,2625.691h17.025c-.93,4.1-4.388,7.309-8.513,7.309S2573.92,2629.791,2572.989,2625.691ZM2558,2623.865c3.595-3.661,6.621-4.434,6.621-8.915v-9.186a16.83,16.83,0,0,1,12.841-16.181A3.829,3.829,0,0,1,2581.5,2586a3.954,3.954,0,0,1,4.037,3.689,16.738,16.738,0,0,1,12.893,16.074v9.482c0,4.489,2.976,4.957,6.57,8.618Z"
+              fill="#fff"
+            />
+          </g>
+        </svg>
+
+        <!-- "notificationMenu" menu -->
+        <mat-menu #notificationMenu="matMenu" [overlapTrigger]="false">
+          <mat-list>
+            <mat-list-item>No notifications</mat-list-item>
+          </mat-list>
+          <!-- <mat-list>
               <mat-list-item>New bounty</mat-list-item>
               <mat-divider></mat-divider>
               <mat-list-item>New bounty</mat-list-item>
@@ -60,25 +105,29 @@
               <mat-divider></mat-divider>
               <mat-list-item>New bounty</mat-list-item>
             </mat-list> -->
-          </mat-menu>
-        </div>
+        </mat-menu>
+      </div>
 
-        <div class="ml-4">
-          <img [matMenuTriggerFor]="profileMenu" class="mx-auto h-12 w-12 bg-gray-300 rounded-full" [src]="user?.logoUrl ?? 'assets/default_profile.jpg'" alt="Avatar">
-          
-          <!-- "profileMenu" menu -->
-          <mat-menu #profileMenu="matMenu" [overlapTrigger]="false">
-            <button mat-menu-item routerLink="/customer/settings">
-              <mat-icon>settings</mat-icon>
-              <span>Settings</span>
-            </button>
-            <button mat-menu-item (click)="logout()">
-              <mat-icon>logout</mat-icon>
-              <span>Log out</span>
-            </button>
-          </mat-menu>
-        </div>
+      <div class="ml-4">
+        <img
+          [matMenuTriggerFor]="profileMenu"
+          class="mx-auto h-12 w-12 bg-gray-300 rounded-full"
+          [src]="user?.logoUrl ?? 'assets/default_profile.jpg'"
+          alt="Avatar"
+        />
 
+        <!-- "profileMenu" menu -->
+        <mat-menu #profileMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item routerLink="/customer/settings">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Log out</span>
+          </button>
+        </mat-menu>
+      </div>
     </mat-nav-list>
   </div>
 </mat-toolbar>

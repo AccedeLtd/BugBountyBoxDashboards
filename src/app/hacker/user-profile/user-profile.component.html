@@ -1,36 +1,44 @@
 <!-- <div class="lg:w-full  md:w-1/2 w-full">
-    <div class="bg-white shadow-xl rounded p-6 m-2 md:mx-10">
+    <div class="bg-white shadow-md rounded p-6 mb-6">
     </div>
 </div> -->
 
 <div *ngIf="loading" class="flex flex-col items-center">
-    <div class="flex-shrink pr-4">
-        <div class="p-1 h-48 w-auto min-h-full flex items-center justify-center">
-            <mat-spinner [diameter]="30" class="mx-auto"></mat-spinner>
-        </div>
+  <div class="flex-shrink pr-4">
+    <div class="p-1 h-48 w-auto min-h-full flex items-center justify-center">
+      <mat-spinner [diameter]="30" class="mx-auto"></mat-spinner>
     </div>
+  </div>
 </div>
 
-<div *ngIf="!loading" class="flex flex-col items-center animate__animated animate__fadeIn animate__delay-1s">
-    <div class="flex-shrink pr-4">
-        <div class="rounded-full p-1 bg-gray-300">
-            <img class="mx-auto h-24 w-24 rounded-full" src="{{user.image}}" alt="Avatar">
-        </div>
+<div
+  *ngIf="!loading"
+  class="flex flex-col items-center animate__animated animate__fadeIn animate__delay-1s"
+>
+  <div class="flex-shrink">
+    <div class="rounded-full p-1 bg-gray-300">
+      <img
+        class="mx-auto h-12 w-12 rounded-full"
+        src="{{ user.image }}"
+        alt="Avatar"
+      />
     </div>
-    <div class="flex-1">
-        <p class="mt-2 text-lg text-indigo-600 font-semibold text-center">
-            {{user.fullName ? user.fullName : user.email}}
-        </p>
-        <p class="text-slate-500 text-sm text-center">
-            <mat-icon class="text-sm">place</mat-icon>{{user.country ? user.country : '-' }}
-        </p>
-        <div class="flex gap-4 mt-4 text-sm text-center">
-            <p> Level {{user.level ? user.level : '-'}} </p>
-            <span> | </span>
-            <p> {{user.followers.length  | i18nPlural: followerMapping}} </p>
-        </div>
-        <!-- <p class="mt-4 text-slate-500 text-sm text-center">
+  </div>
+  <div class="flex-1">
+    <p class="my-4 text-sm text-primary font-semibold text-center">
+      {{ user.fullName ? user.fullName : user.email }}
+    </p>
+    <p class="my-3 text-gray-500 text-sm text-center">
+      <mat-icon class="text-sm">place</mat-icon
+      >{{ user.country ? user.country : "-" }}
+    </p>
+    <div class="flex gap-4 mt-4 text-sm text-center">
+      <p>Level {{ user.level ? user.level : "-" }}</p>
+      <span> | </span>
+      <p>{{ user.followers.length | i18nPlural: followerMapping }}</p>
+    </div>
+    <!-- <p class="mt-4 text-gray-500 text-sm text-center">
             Level {{user.level ? user.level : '-'}} | {{user.followers.length  | i18nPlural: followerMapping}}
         </p> -->
-    </div>
+  </div>
 </div>

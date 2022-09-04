@@ -1,1 +1,1 @@
-export const env = 'admin';
+export const env = 'hacker';

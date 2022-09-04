@@ -9,16 +9,24 @@ mat-toolbar mat-nav-list {
   @apply lg:flex;
 }
 
+mat-nav-list div {
+  @apply !px-2;
+}
+
+mat-nav-list div a {
+  @apply !pl-0 !pr-0 !rounded-none !w-auto !px-0 !min-w-max;
+}
+
 mat-nav-list a.active {
   pointer-events: none;
   cursor: default;
   border-bottom: var(--accent) solid;
 }
 
-a#login,
+/* a#login,
 a#signup {
   @apply px-5 py-1 !important;
-}
+} */
 
 section {
   background-color: white;
@@ -38,7 +46,7 @@ section .button {
 }
 
 .blue {
-  color: #1f04a3;
+  color: #3909d1;
 }
 
 .pink {
@@ -162,7 +170,7 @@ p {
 }
 
 .community-link:hover {
-  background-color: #1f04a3;
+  background-color: #3909d1;
 }
 
 .community-link:hover > h1 {
