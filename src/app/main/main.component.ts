@@ -36,37 +36,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(includeAdmin) {
-      this.oidcSecurityService.checkAuth('', 'admin').subscribe(({ isAuthenticated, userData }) => {
-        if (isAuthenticated) {
-          this.handleAuth('admin', userData);
-        }
-        else {
-          this.oidcSecurityService.authorize('admin');
-        }
-      });
-    }
-    else if(includeHacker) {
-      this.oidcSecurityService.checkAuth('', 'hacker').subscribe(({ isAuthenticated, userData }) => {
-        if (isAuthenticated) {
-          this.handleHackerAuth('hacker', userData);
-        }
-        else {
-          this.oidcSecurityService.authorize('hacker');
-        }
-      });
-    }
-    else if(includeCustomer) {
-      this.oidcSecurityService.checkAuth('', 'customer').subscribe(({ isAuthenticated, userData }) => {
-        if (isAuthenticated) {
-          this.handleAuth('customer', userData);
-        }
-        else {
-          this.oidcSecurityService.authorize('customer');
-        }
-      });
-    }
-    else {
+    if(includeAdmin && includeHacker && includeCustomer) {
       this.loading = true;
       let configId = '';
       const hashedConfigId = sessionStorage.getItem(constants.CONFIGID);
@@ -121,6 +91,36 @@ export class MainComponent implements OnInit {
       else {
         this.loading = false;
       }
+    }
+    else if(includeAdmin) {
+      this.oidcSecurityService.checkAuth('', 'admin').subscribe(({ isAuthenticated, userData }) => {
+        if (isAuthenticated) {
+          this.handleAuth('admin', userData);
+        }
+        else {
+          this.oidcSecurityService.authorize('admin');
+        }
+      });
+    }
+    else if(includeHacker) {
+      this.oidcSecurityService.checkAuth('', 'hacker').subscribe(({ isAuthenticated, userData }) => {
+        if (isAuthenticated) {
+          this.handleHackerAuth('hacker', userData);
+        }
+        else {
+          this.oidcSecurityService.authorize('hacker');
+        }
+      });
+    }
+    else if(includeCustomer) {
+      this.oidcSecurityService.checkAuth('', 'customer').subscribe(({ isAuthenticated, userData }) => {
+        if (isAuthenticated) {
+          this.handleAuth('customer', userData);
+        }
+        else {
+          this.oidcSecurityService.authorize('customer');
+        }
+      });
     }
   }
 
