@@ -117,7 +117,7 @@ export class PayoutsDialogComponent implements OnInit {
       error: (err) => {
         const error = err.error?.error?.details?.split('\r\n') || null;
         this.error = error[0];
-        this.notifyService.showError(error[0], "Error");
+        // this.notifyService.showError(error[0], "Error");
         this.isSuccess = false;
         this.submitting = false;
         this.step++;

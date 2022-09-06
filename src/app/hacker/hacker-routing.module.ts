@@ -10,10 +10,14 @@ import { ProjectDetailComponent } from './projects/project-detail.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AccountingComponent } from './accounting/accounting.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { BugsReportsComponent } from './bugs-reports/bugs-reports.component';
+import { BugReportDetailComponent } from './bugs-reports/bug-report-detail/bug-report-detail.component';
+import { HackerComponent } from './hacker.component';
 
 const routes: Routes = [
   {
     path: '',
+    // component: HackerComponent,
     children: [
       { path: '', component: DashboardComponent },
       { path: 'projects', component: ProjectsComponent },
@@ -21,6 +25,8 @@ const routes: Routes = [
       { path: 'tasks', component: TasksComponent },
       { path: 'bounty-activity', component: BountyActivityComponent },
       { path: 'bounty-activity/details/:id', component: BountyActivityDetailComponent },
+      { path: 'bugs', component: BugsReportsComponent },
+      { path: 'bugs/details/:id', component: BugReportDetailComponent },
       { path: 'payments', component: PaymentsComponent },
       { path: 'payments/details', component: PaymentDetailsComponent },
       { path: 'payments/accounting', component: AccountingComponent },

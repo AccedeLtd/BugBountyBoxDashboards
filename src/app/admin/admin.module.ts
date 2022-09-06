@@ -19,7 +19,7 @@ import { PaymentDetailsComponent } from './payments/payment-details.component';
 import { SettingsComponent } from './settings/settings.component';
 import { PaymentMethodDialogComponent } from './settings/payment-method-dialog/payment-method-dialog.component';
 import { SharedModule } from '../shared/shared.module';
-import { AdminNavComponent } from '../components/admin-nav/admin-nav.component';
+import { AdminNavComponent } from './admin-nav/admin-nav.component';
 import { ProjectReviewDialogComponent } from './projects/project-review-dialog/project-review-dialog.component';
 import { HackersComponent } from './hackers/hackers.component';
 import { ClientsComponent } from './clients/clients.component';
@@ -27,9 +27,9 @@ import { BountiesComponent } from './bounties/bounties.component';
 import { VulnerabilitiesComponent } from './vulnerabilities/vulnerabilities.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { AdminPaymentDialogComponent } from './admin-payment-dialog/admin-payment-dialog.component';
-import { AdminVulnerabilityDialogComponent } from './admin-vulnerability-dialog/admin-vulnerability-dialog.component';
-import { UpdateVulnerabilityComponent } from './update-vulnerability/update-vulnerability.component';
-import { DeleteVulnerabilityComponent } from './delete-vulnerability/delete-vulnerability.component';
+import { AdminVulnerabilityDialogComponent } from './vulnerabilities/admin-vulnerability-dialog/admin-vulnerability-dialog.component';
+import { UpdateVulnerabilityComponent } from './vulnerabilities/update-vulnerability/update-vulnerability.component';
+import { DeleteVulnerabilityComponent } from './vulnerabilities/delete-vulnerability/delete-vulnerability.component';
 import { ValidateProjectDialogComponent } from './validate-project-dialog/validate-project-dialog.component';
 import { SplitToArrayPipePipe } from './pipes/split-to-array-pipe.pipe';
 import { HackerToArrayPipePipe } from './pipes/hacker-to-array-pipe.pipe';
@@ -46,6 +46,8 @@ import { VulnerabilityTypeDialogComponent } from './vulnerability-types/vulnerab
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { AccountingComponent } from './accounting/accounting.component';
 import { ProjectDetailsDialogComponent } from './accounting/project-details-dialog/project-details-dialog.component';
+import { UpdateVulnerabilityTypeDialogComponent } from './vulnerability-types/update-vulnerability-type-dialog/update-vulnerability-type-dialog.component';
+import { AdminSideNavComponent } from './admin-side-nav/admin-side-nav.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +83,8 @@ import { ProjectDetailsDialogComponent } from './accounting/project-details-dial
     VulnerabilityTypeDialogComponent,
     AccountingComponent,
     ProjectDetailsDialogComponent,
+    UpdateVulnerabilityTypeDialogComponent,
+    AdminSideNavComponent,
   ],
   imports: [
     CommonModule,

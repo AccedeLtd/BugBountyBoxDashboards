@@ -6,7 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NavComponent } from '../components/nav/nav.component';
+import { NavComponent } from './nav/nav.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
@@ -36,9 +36,14 @@ import { ProjectDetailsDialogComponent } from './accounting/project-details-dial
 import { TasksComponent } from './tasks/tasks.component';
 import { KanbanModule } from '@syncfusion/ej2-angular-kanban';
 import { EditPaymentMethodDialogComponent } from './settings/edit-payment-method-dialog/edit-payment-method-dialog.component';
+import { BugsReportsComponent } from './bugs-reports/bugs-reports.component';
+import { BugReportDetailComponent } from './bugs-reports/bug-report-detail/bug-report-detail.component';
+import { HackerComponent } from './hacker.component';
+import { SideNavComponent } from './side-nav/side-nav.component';
 
 @NgModule({
   declarations: [
+    HackerComponent,
     NavComponent,
     DashboardComponent,
     ProjectsComponent,
@@ -58,6 +63,9 @@ import { EditPaymentMethodDialogComponent } from './settings/edit-payment-method
     ProjectDetailsDialogComponent,
     TasksComponent,
     EditPaymentMethodDialogComponent,
+    BugsReportsComponent,
+    BugReportDetailComponent,
+    SideNavComponent,
   ],
   imports: [
     CommonModule,

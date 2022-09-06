@@ -19,14 +19,6 @@ export class ProjectsComponent implements OnInit {
   totalCount:number = 0;
   pageSize:number = 5;
   page:number = 1;
-
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
-
   user: any;
   authUser: any;
   userName: any;

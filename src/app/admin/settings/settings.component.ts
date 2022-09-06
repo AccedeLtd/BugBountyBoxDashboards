@@ -8,12 +8,13 @@ import { PaymentMethodDialogComponent } from './payment-method-dialog/payment-me
 import { AdminService } from 'src/app/core/_services/admin.services';
 import { NotificationService } from 'src/app/core/_services/notification.service';
 import {AuthenticatedAdminJson} from 'src/app/core/_models/authAdminJson'; 
-import { AdminNavComponent } from 'src/app/components/admin-nav/admin-nav.component';
+import { AdminNavComponent } from 'src/app/admin/admin-nav/admin-nav.component';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { ProfileState } from 'src/app/core/_enums/profileState';
 import { ProfileService } from 'src/app/core/_services/profile.service';
 import { ThemePalette } from '@angular/material/core';
+import countries from 'src/app/core/_utils/countries';
 
 @Component({
   selector: 'app-settings',
@@ -29,6 +30,8 @@ export class SettingsComponent implements OnInit {
   loadingAdmin: boolean = true;
   bounties: any;
   showUserInfo = true;
+  isChangePassword: boolean = false;
+  isChangeEmail: boolean = false;
   file!: File; 
   shortLink: string = "";
   updateLoading: boolean = false;
@@ -45,16 +48,10 @@ export class SettingsComponent implements OnInit {
     fullName:'',
     role:''
   }
-
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
   showNotification: boolean = false;
   uploading: boolean = false;
   color: ThemePalette = 'primary';
+  readonly countries = countries;
 
   constructor(
     public oidcSecurityService: OidcSecurityService,
@@ -77,7 +74,7 @@ export class SettingsComponent implements OnInit {
     this.adminService.getAuthAdmin().subscribe({
       next:results => {
         this.loadingAdmin = false;
-        this.authenticatedAdmin = results;
+        this.user = results;
       },
       error:() => {
         this.loadingAdmin = false;
@@ -86,7 +83,7 @@ export class SettingsComponent implements OnInit {
     })
   }
 
-  updateAuthenticatedAdmin(){
+  update(){
     this.updateLoading = true;
     this.adminService.updateAuthAdmin(this.authenticatedAdmin).subscribe({
       next:() => {
@@ -100,6 +97,20 @@ export class SettingsComponent implements OnInit {
     })
   }
 
+  changePassword(value: any) {
+    this.updateLoading = false;
+    this.adminService.changePassword(value).subscribe({
+      next:() => {
+        this.updateLoading = false;
+        this.notify.showSuccess("Password changed successfully", "Success")
+      },
+      error:() => {
+        this.updateLoading = false;
+        this.notify.showError("Something went wrong changing password, please try again", "Error")
+      }
+    })
+  }
+
   onChange(event:any) {
     this.file = event.target.files[0];
     this.onUpload();
@@ -107,12 +118,12 @@ export class SettingsComponent implements OnInit {
 
   onUpload() {
     this.uploading = true;
-//    console.log(this.file);
+    //    console.log(this.file);
     this.adminService.uploadAvatar(this.file).subscribe({
       next: results => {
         if (this.file.type.includes("image/")) {
           this.authenticatedAdmin.profilePhotoUrl = results.result.profilePhotoUrl;
-      //    console.log(this.authenticatedAdmin.profilePhotoUrl);
+          //    console.log(this.authenticatedAdmin.profilePhotoUrl);
           //Update avatar in nav
           this.profileService.updateSubject.next(ProfileState.Update);
           this.uploading = false;
@@ -154,6 +165,14 @@ export class SettingsComponent implements OnInit {
       height: '500px',
       width: '400px',
     });
+  }
+
+  toggleChangePassword() {
+    this.isChangePassword = !this.isChangePassword;
+  }
+  
+  toggleChangeEmail() {
+    this.isChangeEmail = !this.isChangeEmail;
   }
 
 }

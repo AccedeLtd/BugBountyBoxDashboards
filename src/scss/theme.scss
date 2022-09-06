@@ -12,6 +12,9 @@ $my-theme: mat.define-light-theme(
       primary: $my-primary,
       accent: $my-accent,
     ),
+    typography: mat.define-typography-config(
+      $font-family: 'Eina03',
+    ),
   )
 );
 

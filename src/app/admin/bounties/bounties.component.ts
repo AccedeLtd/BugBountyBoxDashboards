@@ -4,11 +4,12 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { HackerService } from 'src/app/core/_services/hacker.service';
-import { merge, Observable, of } from 'rxjs';
+import { forkJoin, merge, Observable, of } from 'rxjs';
 import { VulnerabilitiesResponseJSON } from 'src/app/core/_models/vulnerabilitiesResponseJSON';
 import { AdminService } from 'src/app/core/_services/admin.services';
 import { PayoutStatsJson } from 'src/app/core/_models/PayoutStatsJson';
 import { VulnerabilityStatsJSON } from 'src/app/core/_models/vulnerabilityStatsJson';
+import LoadStatus from 'src/app/core/_utils/LoadStatus';
 
 @Component({
   selector: 'app-bounties',
@@ -16,23 +17,11 @@ import { VulnerabilityStatsJSON } from 'src/app/core/_models/vulnerabilityStatsJ
   styleUrls: ['./bounties.component.css']
 })
 export class BountiesComponent {
-  sideNavOpened = false;
-
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-    { id: '/bounties', title: 'Bounties', active: false },
-    { id: '/clients', title: 'Clients', active: false },
-    { id: '/vulnerabilities', title: 'Vulnerabilities', active: false },
-    { id: '/bugs', child: '/bugsy/details', title: 'Bugs', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/hackers', child: '/bounty-activity/details', title: 'Hackers', active: false },
-  ];
-  
+  sideNavOpened = false;  
   user: any;
   authUser: any;
   userName: any;
-  loading: boolean = true;
+  loadStatus: LoadStatus = 'loading';
   bountyBySeverity?:PayoutStatsJson;
   filteredString:string = '';
   allvulnReports:VulnerabilityStatsJSON[] = [];
@@ -52,55 +41,23 @@ export class BountiesComponent {
   }
 
   async ngOnInit(): Promise<void> {
-    this.loading = true;
-    this.getAllVulnerabilities();  
-    this.getBountyBySeverity();
-    this.getVulnPayoutAndReport();
+    this.loadData();
 	}
 
-  getAllVulnerabilities(){
-    this.adminService.getVulnerabilitiesFromAdmin().subscribe(
-      results => {
-        this.allVulnerabilities = results.result.data;
-    //    console.log(this.allVulnerabilities);
-        this.allVulnerabilities.forEach(vulnerability => {
-          this.allvulnReports.forEach(vulnReports => {
-            if(vulnerability.type === vulnReports.vulnerability){
-              vulnerability.bugReportCount = vulnReports.bugReportCount;
-              vulnerability.totalAmount = vulnReports.totalAmount;
-              // this.totalBounties += vulnReports.totalAmount;
-            }
-          })
-        })
-      }
-    )
-  }
-
-  getVulnPayoutAndReport(){
-    this.adminService.getVulnerabilityPayoutStats().subscribe(
-      results => {
-        this.allvulnReports = results.result;
-        this.totalCount = results.result.totalCount;
-        this.allVulnerabilities.forEach(vulnerability => {
-          this.allvulnReports.forEach(vulnReports => {
-            if(vulnerability.type === vulnReports.vulnerability){
-              vulnerability.bugReportCount = vulnReports.bugReportCount;
-              vulnerability.totalAmount = vulnReports.totalAmount;
-              this.totalBounties += vulnReports.totalAmount;
-            }
-          })
-        })
-    //    console.log(this.allvulnReports);  
-      }
-    )
-  }
-
-  getBountyBySeverity(){
-    this.adminService.BountyBySeverity().subscribe(
-      results => {
-        this.bountyBySeverity = results.result;
-      }
-    )
+  loadData() {
+    forkJoin({
+      getVulnerabilityPayoutStatsResult: this.adminService.getVulnerabilityPayoutStats(),
+      getBountyBySeverityResult: this.adminService.BountyBySeverity(),
+    }).subscribe({
+      next: ({getVulnerabilityPayoutStatsResult, getBountyBySeverityResult}) => {
+        this.allVulnerabilities = getVulnerabilityPayoutStatsResult.result;
+        this.bountyBySeverity = getBountyBySeverityResult.result;
+        const values: number[] = Object.values(getBountyBySeverityResult.result);
+        this.totalBounties = values.reduce((a: any, b: any) => a+b, 0);
+        this.loadStatus = 'success';
+      },
+      error: () => (this.loadStatus = 'error'),
+    })
   }
 
   toggleSideNav() {

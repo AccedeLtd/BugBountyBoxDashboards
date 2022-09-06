@@ -3,84 +3,111 @@
   <main>
     <mat-sidenav-container>
       <mat-sidenav [(opened)]="sideNavOpened">
-        <mat-nav-list class="gap-3">
-          <a *ngFor="let section of sections" mat-list-item routerLink="/customer{{ section.id }}" routerLinkActive="active" (click)="toggleSideNav()">
-            {{ section.title }}
-          </a>
-        </mat-nav-list>
+        <app-customer-side-nav></app-customer-side-nav>
         <div class="sm:hidden border-t border-gray-200 font-medium">
           <mat-nav-list>
-            <a mat-list-item routerLink="/customer/settings" routerLinkActive="active">Settings</a>
             <a mat-list-item (click)="logout()">Log out</a>
           </mat-nav-list>
         </div>
       </mat-sidenav>
-    
-      <mat-sidenav-content id="container" class="flex-1 overflow-auto relative" style="scroll-behavior: smooth">
-        <div class="max-w-full mx-auto py-6 sm:px-6 lg:px-8">
+
+      <mat-sidenav-content
+        id="container"
+        class="flex-1 overflow-auto relative"
+        style="scroll-behavior: smooth"
+      >
+        <div class="max-w-full mx-auto py-6">
           <!-- Replace with your content -->
           <!-- <div class="px-4 py-6 sm:px-0">
             <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
           </div> -->
 
-          <div class="flex flex-row flex-wrap flex-1 flex-grow content-start">    
+          <div class="flex flex-row flex-wrap flex-1 flex-grow content-start">
             <!--Graph Content -->
             <div id="main-content" class="w-full flex-1">
-                <main class="w-full">
-                    <div>
-                        <h1 class="my-6 text-xl font-semibold">Upcoming Payments</h1>
-                    </div>
-                
-                    <div class="w-full">
-                      <!-- <div class="mx-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4"> -->
-                        <div class="bg-white shadow-xl rounded m-2">
-                          <div class="flex flex-col bg-white rounded w-full mx-auto p-2">
-                            <div class="flex flex-col md:flex-row gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
-                              <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md">
-                                <div class="flex flex-col">
-                                  <h1 class="text-gray-800 !text-base"> Acme Inc. </h1>
-                                  <h1 class="text-gray-800 !text-xs"> Lorem ipsum </h1>
-                                </div>
-                              </div>
-                              <div class="flex text-sm space-x-6">
-                                <p>KES 40,000</p>
-                                <button class="bg-green-500 text-white text-xs py-1 px-4 rounded-full inline-flex items-center space-x-6">
-                                  <span>Payment Completed</span>
-                                  <svg id="icon-check" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 31.1 31.101">
-                                    <path id="Path_446" data-name="Path 446" d="M451.146,979.009A15.55,15.55,0,1,0,466.7,994.56,15.55,15.55,0,0,0,451.146,979.009Zm-1.819,22.542-6.887-6.135,1.949-2.188,4.67,4.16,9.269-10.7,2.214,1.918Z" transform="translate(-435.596 -979.009)" fill="#fff"/>
-                                  </svg>                                      
-                                </button>
-                              </div>
-                            </div>
-                            <mat-divider></mat-divider>
-                            <div class="p-3">
-                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est.</p>
-                              <br>
-                              <p>Allamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est. llamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit essllamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit ess</p>
-                            </div>
+              <main class="w-full">
+                <div>
+                  <h1 class="my-6 text-xl font-semibold">Upcoming Payments</h1>
+                </div>
+
+                <div class="w-full">
+                  <!-- <div class="mx-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4"> -->
+                  <div class="bg-white shadow-md rounded">
+                    <div
+                      class="flex flex-col bg-white rounded w-full mx-auto p-2"
+                    >
+                      <div
+                        class="flex flex-col md:flex-row gap-3 items-center text-gray-800 p-3 rounded-md justify-between"
+                      >
+                        <div
+                          class="flex gap-3 items-center text-gray-800 p-3 rounded-md"
+                        >
+                          <div class="flex flex-col">
+                            <h1 class="text-gray-800 !text-base">Acme Inc.</h1>
+                            <h1 class="text-gray-800 !text-xs">Lorem ipsum</h1>
                           </div>
                         </div>
-                      <!-- </div> -->
+                        <div class="flex text-sm space-x-6">
+                          <p>KES 40,000</p>
+                          <button
+                            class="bg-green-500 text-white text-xs py-1 px-4 rounded-full inline-flex items-center space-x-6"
+                          >
+                            <span>Payment Completed</span>
+                            <svg
+                              id="icon-check"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 31.1 31.101"
+                            >
+                              <path
+                                id="Path_446"
+                                data-name="Path 446"
+                                d="M451.146,979.009A15.55,15.55,0,1,0,466.7,994.56,15.55,15.55,0,0,0,451.146,979.009Zm-1.819,22.542-6.887-6.135,1.949-2.188,4.67,4.16,9.269-10.7,2.214,1.918Z"
+                                transform="translate(-435.596 -979.009)"
+                                fill="#fff"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <mat-divider></mat-divider>
+                      <div class="p-3">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit, sed do eiusmod tempor incididunt ut labore et
+                          dolore magna aliqua. Ut enim ad minim veniam, quis
+                          nostrud exercitation ullamco laboris nisi ut aliquip
+                          ex ea commodo consequat. Duis aute irure dolor in
+                          reprehenderit in voluptate velit esse cillum dolore eu
+                          fugiat nulla pariatur. Excepteur sint occaecat
+                          cupidatat non proident, sunt in culpa qui officia
+                          deserunt mollit anim id est.
+                        </p>
+                        <br />
+                        <p>
+                          Allamco laboris nisi ut aliquip ex ea commodo
+                          consequat. Duis aute irure dolor in reprehenderit in
+                          voluptate velit esse cillum dolore eu fugiat nulla
+                          pariatur. Excepteur sint occaecat cupidatat non
+                          proident, sunt in culpa qui officia deserunt mollit
+                          anim id est. llamco laboris nisi ut aliquip ex ea
+                          commodo consequat. Duis aute irure dolor in
+                          reprehenderit in voluptate velit essllamco laboris
+                          nisi ut aliquip ex ea commodo consequat. Duis aute
+                          irure dolor in reprehenderit in voluptate velit ess
+                        </p>
+                      </div>
                     </div>
-                </main>
+                  </div>
+                  <!-- </div> -->
+                </div>
+              </main>
             </div>
-    
-        </div>
+          </div>
           <!-- /End replace -->
         </div>
-        <footer class="bg-slate-100 grid text-center md:fixed inset-x-0 bottom-0 px-4">
-            <nav class="flex flex-col md:flex-row gap-3 lg:mx-auto lg:w-[calc(90%+2rem)]">
-              <mat-nav-list class="gap-3">
-                <div>
-                  <a mat-button>© BugBountyBox</a>
-                  <span>|</span>
-                  <a mat-button href="#">Privacy Policy</a>
-                  <span>|</span>
-                  <a mat-button href="#">Terms of Sevice</a>
-                </div>
-              </mat-nav-list>
-            </nav>
-          </footer>
+        <app-footer></app-footer>
       </mat-sidenav-content>
     </mat-sidenav-container>
   </main>

@@ -1,259 +1,572 @@
 <div class="min-h-full">
-    <app-admin-nav (sideNavToggleEvent)="toggleSideNav()"></app-admin-nav>
-    <main>
-      <mat-sidenav-container>
-        <mat-sidenav [(opened)]="sideNavOpened">
-          <mat-nav-list class="gap-3">
-            <a *ngFor="let section of sections" mat-list-item routerLink="/hacker{{ section.id }}" routerLinkActive="active" (click)="toggleSideNav()">
-              {{ section.title }}
-            </a>
+  <app-admin-nav (sideNavToggleEvent)="toggleSideNav()"></app-admin-nav>
+  <main>
+    <mat-sidenav-container>
+      <mat-sidenav [(opened)]="sideNavOpened">
+        <app-admin-side-nav></app-admin-side-nav>
+        <div class="sm:hidden border-t border-gray-200 font-medium">
+          <mat-nav-list>
+            <a mat-list-item (click)="logout()">Log out</a>
           </mat-nav-list>
-          <div class="sm:hidden border-t border-gray-200 font-medium">
-            <mat-nav-list>
-              <a mat-list-item routerLink="/hacker/settings" routerLinkActive="active">Settings</a>
-              <a mat-list-item (click)="logout()">Log out</a>
-            </mat-nav-list>
-          </div>
-        </mat-sidenav>
-      
-        <mat-sidenav-content id="container" class="flex-1 overflow-auto relative" style="scroll-behavior: smooth">
-          <div class="max-w-full mx-auto pt-6 pb-20 px-2 lg:px-20">
-            <div class="flex flex-row flex-wrap flex-1 flex-grow content-start">
-              <div id="main-content" class="w-full flex-1">
-                  <main class="w-full">
-                    <ng-container [ngSwitch]="loadStatus">
-                        <ng-container *ngSwitchCase="'loading'">
-                            <div class="flex flex-col items-center">
-                                <div class="flex-shrink pr-4">
-                                    <div
-                                        class="p-1 h-48 w-auto min-h-full flex items-center justify-center">
-                                        <mat-spinner [diameter]="30" class="mx-auto"></mat-spinner>
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-container>
+        </div>
+      </mat-sidenav>
 
-                        <ng-container *ngSwitchCase="'error'">
-                            <div class="relative px-8 text-center rounded-lg">
-                                <h2>
-                                    Something went wrong. Please check your internet connection and try
-                                    again.
-                                </h2>
+      <mat-sidenav-content
+        id="container"
+        class="flex-1 overflow-auto relative px-3 lg:px-10 pb-20"
+        style="scroll-behavior: smooth"
+      >
+        <div class="max-w-full mx-auto pt-6">
+          <div class="flex flex-row flex-wrap flex-1 flex-grow content-start">
+            <div id="main-content" class="w-full flex-1">
+              <main class="w-full">
+                <ng-container [ngSwitch]="loadStatus">
+                  <ng-container *ngSwitchCase="'loading'">
+                    <div class="flex flex-col items-center">
+                      <div class="flex-shrink pr-4">
+                        <div
+                          class="p-1 h-48 w-auto min-h-full flex items-center justify-center"
+                        >
+                          <mat-spinner
+                            [diameter]="30"
+                            class="mx-auto"
+                          ></mat-spinner>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
 
-                                <button
-                                    class="h-8 px-4 py-1 text-xs text-white rounded-full hover:bg-[#FC007E]"
-                                    (click)="loadData()">
-                                    Retry
-                                </button>
-                            </div>
-                        </ng-container>
+                  <ng-container *ngSwitchCase="'error'">
+                    <div class="relative px-8 text-center rounded-lg">
+                      <h2>
+                        Something went wrong. Please check your internet
+                        connection and try again.
+                      </h2>
 
-                        <ng-container *ngSwitchCase="'success'">
-                            <div class="flex justify-between">
-                                <h1 class="text-xl font-semibold">Accounting</h1>
-                                <!-- <div class="flex gap-2">
-                                    <button class="h-8 px-4 py-1 text-xs text-white rounded-full hover:bg-[#FC007E]" (click)="addFunds()">Add Funds</button>
-                                    <button class="h-8 px-4 py-1 text-xs text-white rounded-full hover:bg-[#FC007E]" routerLink="/customer/payments/transfers">Transfers</button>
+                      <button
+                        class="h-8 px-4 py-1 text-xs text-white rounded-full hover:bg-[#fc007e]"
+                        (click)="loadData()"
+                      >
+                        Retry
+                      </button>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'success'">
+                    <div class="flex justify-between pb-4">
+                      <h1 class="text-xl font-semibold">Accounting</h1>
+                      <!-- <div class="flex gap-2">
+                                    <button class="h-8 px-4 py-1 text-xs text-white rounded-full hover:bg-[#fc007e]" (click)="addFunds()">Add Funds</button>
+                                    <button class="h-8 px-4 py-1 text-xs text-white rounded-full hover:bg-[#fc007e]" routerLink="/customer/payments/transfers">Transfers</button>
                                 </div> -->
+                    </div>
+
+                    <div
+                      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
+                    >
+                      <div
+                        class="bg-white shadow-md rounded"
+                        *ngFor="let transactionsMetric of transactionsMetrics"
+                      >
+                        <div
+                          class="flex flex-col bg-white rounded w-full mx-auto p-2"
+                        >
+                          <div>
+                            <div
+                              class="flex gap-3 items-center text-gray-800 p-2 rounded-md justify-between"
+                            >
+                              <h1
+                                class="text-gray-900 !text-sm font-semibold px-2"
+                              >
+                                {{ transactionsMetric.label }}
+                              </h1>
                             </div>
+                          </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                                <div class="bg-white shadow-xl rounded m-2" *ngFor="let transactionsMetric of transactionsMetrics">
-                                    <div class="flex flex-col bg-white rounded w-full mx-auto p-2">
-                                        <div>
-                                            <div class="flex gap-3 items-center text-gray-800 p-2 rounded-md justify-between">
-                                                <h1 class="text-gray-800 !text-base font-semibold px-2"> {{transactionsMetric.label}} </h1>
-                                            </div>
-                                        </div>
-
-                                        <div class="animate__animated animate__fadeIn">
-                                            <div class="min-h-full flex">
-                                                <div class="max-w-full w-full text-left px-4">
-                                                    <div class="custom-card">
-                                                        <div class="upper-row">
-                                                            <div class="card-item">
-                                                                <span>
-                                                                    <span class="currency">KES</span> {{transactionsMetric.value | number: '.2'}}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                          <div class="animate__animated animate__fadeIn">
+                            <div class="min-h-full flex">
+                              <div class="max-w-full w-full text-left px-4">
+                                <div class="custom-card">
+                                  <div class="upper-row">
+                                    <div class="card-item">
+                                      <span>
+                                        <span class="currency">KES</span>
+                                        {{
+                                          transactionsMetric.value
+                                            | number: ".2"
+                                        }}
+                                      </span>
                                     </div>
+                                  </div>
                                 </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mt-10 flex justify-between">
+                      <h1 class="text-xl font-semibold">Payments</h1>
+                    </div>
+
+                    <ng-container *ngIf="payments.length == 0">
+                      <div class="relative p-8 text-center rounded-lg">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          data-name="Layer 1"
+                          class="mx-auto"
+                          width="200"
+                          height="150"
+                          viewBox="0 0 826.38189 505.13"
+                        >
+                          <path
+                            id="e73ea6d0-018f-4f1a-b9fb-ec835afd7d29-2905"
+                            data-name="Path 438"
+                            d="M958.436,653.57547a24.21462,24.21462,0,0,1-23.38268-4.11877c-8.18977-6.87442-10.758-18.196-12.84671-28.68191l-6.17973-31.01657,12.9377,8.90836c9.30465,6.40641,18.81827,13.01866,25.26011,22.29785s9.25223,21.94708,4.07792,31.988"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#e6e6e6"
+                          />
+                          <path
+                            id="adfa37d6-6055-4e93-a6c7-1993979ff9f6-2906"
+                            data-name="Path 439"
+                            d="M956.43833,693.286c1.62839-11.86369,3.30382-23.88079,2.15884-35.87167-1.01466-10.64933-4.26373-21.04881-10.87831-29.57938a49.20592,49.20592,0,0,0-12.62466-11.44039c-1.26215-.79648-2.42409,1.20354-1.16733,1.997a46.7794,46.7794,0,0,1,18.50446,22.32562c4.02858,10.24607,4.67545,21.41582,3.98154,32.30029-.41944,6.58218-1.31074,13.12121-2.20588,19.65252a1.19816,1.19816,0,0,0,.808,1.4225,1.16347,1.16347,0,0,0,1.42253-.808Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#f2f2f2"
+                          />
+                          <path
+                            id="ab8f3b7e-46a3-4c45-91c1-6e6ed9e46d7b-2907"
+                            data-name="Path 442"
+                            d="M944.7173,674.24958a17.82512,17.82512,0,0,1-15.53141,8.01861c-7.8644-.37318-14.41806-5.85972-20.31713-11.07026l-17.452-15.40881,11.54987-.5528c8.3062-.39784,16.82672-.771,24.73814,1.79338s15.20757,8.72639,16.654,16.9154"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#e6e6e6"
+                          />
+                          <path
+                            id="a06078c2-c2e6-4e9e-9e9d-932246ef76f7-2908"
+                            data-name="Path 443"
+                            d="M961.04131,700.10571c-7.83972-13.87142-16.93234-29.28794-33.1808-34.21551a37.02581,37.02581,0,0,0-13.95544-1.44105c-1.4819.128-1.1118,2.41174.367,2.28454a34.39821,34.39821,0,0,1,22.27164,5.89215c6.27994,4.27453,11.16975,10.21755,15.30781,16.51907,2.53511,3.8605,4.80577,7.88445,7.07642,11.903C959.65349,702.33242,961.77532,701.40488,961.04131,700.10571Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#f2f2f2"
+                          />
+                          <polygon
+                            points="494.22 150.5 494.22 282.58 189.16 282.58 189.16 352.71 108.51 352.71 108.51 150.5 494.22 150.5"
+                            fill="#fff"
+                          />
+                          <path
+                            d="M291.80906,344.435v209.22h84.16015v-7.01H298.81906V351.445h378.71v128.57h7.01V344.435Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#e5e5e5"
+                          />
+                          <rect
+                            x="189.35419"
+                            y="225.34781"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#e5e5e5"
+                          />
+                          <rect
+                            x="189.35419"
+                            y="247.78794"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#e5e5e5"
+                          />
+                          <rect
+                            x="189.35419"
+                            y="270.22806"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#e5e5e5"
+                          />
+                          <circle
+                            cx="174.51342"
+                            cy="229.98892"
+                            r="5.63266"
+                            fill="#e5e5e5"
+                          />
+                          <polygon
+                            points="389.22 3.5 389.22 135.58 84.16 135.58 84.16 205.71 3.51 205.71 3.51 3.5 389.22 3.5"
+                            fill="#fff"
+                          />
+                          <path
+                            d="M186.80906,197.435v209.22h84.16015v-7.01H193.81906v-195.2h378.71v128.57h7.01V197.435Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#f1f1f1"
+                          />
+                          <rect
+                            x="84.35419"
+                            y="78.34781"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#f1f1f1"
+                          />
+                          <rect
+                            x="84.35419"
+                            y="100.78794"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#f1f1f1"
+                          />
+                          <rect
+                            x="84.35419"
+                            y="123.22806"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#f1f1f1"
+                          />
+                          <circle
+                            cx="69.51342"
+                            cy="82.98892"
+                            r="5.63266"
+                            fill="#f1f1f1"
+                          />
+                          <rect
+                            x="209.77619"
+                            y="299.41412"
+                            width="385.71729"
+                            height="202.20937"
+                            fill="#fff"
+                          />
+                          <path
+                            d="M785.80906,702.565H393.07873V493.3426H785.80906Zm-385.71729-7.013H778.796V500.35564H400.09177Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#cbcbcb"
+                          />
+                          <rect
+                            x="290.20038"
+                            y="374.57656"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#3909d1"
+                          />
+                          <rect
+                            x="290.20038"
+                            y="397.01669"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#3909d1"
+                          />
+                          <rect
+                            x="290.20038"
+                            y="419.45681"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#3909d1"
+                          />
+                          <circle
+                            cx="275.35962"
+                            cy="379.21767"
+                            r="5.63266"
+                            fill="#3909d1"
+                          />
+                          <path
+                            d="M725.44621,493.35007a10.06737,10.06737,0,0,1,3.92234-14.93042l27.89641-87.347,19.4284,10.09245-33.53042,82.68569a10.12188,10.12188,0,0,1-17.71673,9.49924Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#9f616a"
+                          />
+                          <path
+                            d="M748.2368,403.1514a4.50917,4.50917,0,0,1,.02119-3.75868l9.55481-20.54247a12.53637,12.53637,0,0,1,24.06046,7.05209l-3.1935,22.50386a4.51406,4.51406,0,0,1-5.7515,3.69356l-21.85912-6.47651A4.509,4.509,0,0,1,748.2368,403.1514Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#3909d1"
+                          />
+                          <polygon
+                            points="642.019 209.183 640.461 231.001 587.475 249.702 586.696 228.663 642.019 209.183"
+                            fill="#9f616a"
+                          />
+                          <path
+                            d="M761.038,374.671l17.14237-12.46718,28.05117-7.792,23.376,4.67519,3.896,36.62235-4.67519,23.376-60.77752,14.02558-6.2336-10.90878s-14.02558-14.02558-3.11679-29.60956Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#3909d1"
+                          />
+                          <path
+                            d="M754.80436,342.67164V322.20853a32.64353,32.64353,0,1,1,65.28706,0v20.46311a4.3899,4.3899,0,0,1-4.385,4.385H759.18932A4.38991,4.38991,0,0,1,754.80436,342.67164Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#2f2e41"
+                          />
+                          <circle
+                            cx="599.32681"
+                            cy="125.4871"
+                            r="23.93309"
+                            fill="#9f616a"
+                          />
+                          <path
+                            d="M761.54594,322.82992a2.43626,2.43626,0,0,1-.57024-1.9422l2.835-19.7418a2.43962,2.43962,0,0,1,1.37838-1.86989c14.47068-6.7725,29.145-6.78107,43.61567-.02569a2.4548,2.4548,0,0,1,1.39218,1.98408l1.89249,19.76749a2.43565,2.43565,0,0,1-2.42514,2.66827h-4.79961a2.44551,2.44551,0,0,1-2.20747-1.4055l-2.07138-4.43825a1.46155,1.46155,0,0,0-2.77486.43679l-.40918,3.27253a2.4396,2.4396,0,0,1-2.41729,2.13443H763.387A2.43621,2.43621,0,0,1,761.54594,322.82992Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#2f2e41"
+                          />
+                          <path
+                            d="M865.4392,483.15889a10.06731,10.06731,0,0,1-6.97655-13.77062L821.35,385.54107l21.23033-5.34724,29.80474,84.10047a10.12188,10.12188,0,0,1-6.94588,18.86459Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#9f616a"
+                          />
+                          <path
+                            d="M822.61484,400.56782a4.50922,4.50922,0,0,1-2.479-2.82535L813.647,376.03573a12.53637,12.53637,0,0,1,22.67679-10.69584l12.54864,18.95135a4.514,4.514,0,0,1-1.85016,6.5802L826.374,400.53662A4.509,4.509,0,0,1,822.61484,400.56782Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#3909d1"
+                          />
+                          <polygon
+                            points="639.353 490.356 625.845 490.355 619.419 438.253 639.355 438.254 639.353 490.356"
+                            fill="#9f616a"
+                          />
+                          <path
+                            d="M829.60666,700.88487l-43.55544-.00162v-.5509a16.95391,16.95391,0,0,1,16.953-16.95273h.00107l26.60219.00108Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#2f2e41"
+                          />
+                          <polygon
+                            points="629.087 380.349 619.878 390.231 577.378 359.413 590.97 344.828 629.087 380.349"
+                            fill="#9f616a"
+                          />
+                          <path
+                            d="M827.8241,584.18961l-29.69366,31.86476-.40305-.37556a16.95391,16.95391,0,0,1-.84575-23.96l.00074-.00079,18.13594-19.46185Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#2f2e41"
+                          />
+                          <path
+                            d="M830.38667,428.43574l4.32015,4.32016c21.60958,21.60958,26.92973,51.573,24.33455,82.02316a85.20579,85.20579,0,0,1-2.16194,13.39415c-7.792,31.168-3.1168,130.90543-18.70078,137.139L835.06186,676.221l-30.38876-1.12278.7792-9.786s-7.01279-14.80478-2.3376-24.15517,14.80478-78.6991,14.80478-78.6991l-5.45439-56.88152-40.51835,20.25917s21.03837,11.688,19.48,19.48c0,0,12.46718,3.11679,9.35038,10.90878l4.6752,9.35039-10.90879,17.14238s-73.2447-43.63515-67.01111-65.45272,45.19354-37.40155,45.19354-37.40155l3.1168-23.376-2.68732-12.73714,54.51749-20.95656Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#2f2e41"
+                          />
+                          <path
+                            d="M1012.19094,702.565h-444a1,1,0,0,1,0-2h444a1,1,0,0,1,0,2Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#cbcbcb"
+                          />
+                        </svg>
+
+                        <h2 class="text-2xl font-medium">
+                          There's nothing here...
+                        </h2>
+
+                        <p class="mt-4 text-sm text-gray-500">
+                          Payments will appear here.
+                        </p>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="payments.length > 0">
+                      <div class="flex justify-end py-3 px-3">
+                        <pagination-template
+                          #p="paginationApi"
+                          [id]="paymentsConfig.id"
+                          (pageChange)="paymentsConfig.currentPage = $event"
+                        >
+                          <h1 class="flex gap-4 items-center">
+                            <div>
+                              <span
+                                class="text-base animate__animated animate__fadeIn"
+                                >{{ p.getCurrent() }} of
+                                {{ p.getLastPage() }}</span
+                              >
                             </div>
 
-                            <div class="mt-10 flex justify-between">
-                                <h1 class="text-xl font-semibold">Payments</h1>
-                            </div>
-                
-                            <ng-container *ngIf="payments.length ==  0">
-                                <div class="relative p-8 text-center rounded-lg">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-name="Layer 1" class="mx-auto" width="200" height="150" viewBox="0 0 826.38189 505.13">
-                                        <path id="e73ea6d0-018f-4f1a-b9fb-ec835afd7d29-2905" data-name="Path 438"
-                                            d="M958.436,653.57547a24.21462,24.21462,0,0,1-23.38268-4.11877c-8.18977-6.87442-10.758-18.196-12.84671-28.68191l-6.17973-31.01657,12.9377,8.90836c9.30465,6.40641,18.81827,13.01866,25.26011,22.29785s9.25223,21.94708,4.07792,31.988"
-                                            transform="translate(-186.80906 -197.435)" fill="#e6e6e6" />
-                                        <path id="adfa37d6-6055-4e93-a6c7-1993979ff9f6-2906" data-name="Path 439"
-                                            d="M956.43833,693.286c1.62839-11.86369,3.30382-23.88079,2.15884-35.87167-1.01466-10.64933-4.26373-21.04881-10.87831-29.57938a49.20592,49.20592,0,0,0-12.62466-11.44039c-1.26215-.79648-2.42409,1.20354-1.16733,1.997a46.7794,46.7794,0,0,1,18.50446,22.32562c4.02858,10.24607,4.67545,21.41582,3.98154,32.30029-.41944,6.58218-1.31074,13.12121-2.20588,19.65252a1.19816,1.19816,0,0,0,.808,1.4225,1.16347,1.16347,0,0,0,1.42253-.808Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#f2f2f2" />
-                                        <path id="ab8f3b7e-46a3-4c45-91c1-6e6ed9e46d7b-2907" data-name="Path 442"
-                                            d="M944.7173,674.24958a17.82512,17.82512,0,0,1-15.53141,8.01861c-7.8644-.37318-14.41806-5.85972-20.31713-11.07026l-17.452-15.40881,11.54987-.5528c8.3062-.39784,16.82672-.771,24.73814,1.79338s15.20757,8.72639,16.654,16.9154"
-                                            transform="translate(-186.80906 -197.435)" fill="#e6e6e6" />
-                                        <path id="a06078c2-c2e6-4e9e-9e9d-932246ef76f7-2908" data-name="Path 443"
-                                            d="M961.04131,700.10571c-7.83972-13.87142-16.93234-29.28794-33.1808-34.21551a37.02581,37.02581,0,0,0-13.95544-1.44105c-1.4819.128-1.1118,2.41174.367,2.28454a34.39821,34.39821,0,0,1,22.27164,5.89215c6.27994,4.27453,11.16975,10.21755,15.30781,16.51907,2.53511,3.8605,4.80577,7.88445,7.07642,11.903C959.65349,702.33242,961.77532,701.40488,961.04131,700.10571Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#f2f2f2" />
-                                        <polygon points="494.22 150.5 494.22 282.58 189.16 282.58 189.16 352.71 108.51 352.71 108.51 150.5 494.22 150.5"
-                                            fill="#fff" />
-                                        <path d="M291.80906,344.435v209.22h84.16015v-7.01H298.81906V351.445h378.71v128.57h7.01V344.435Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#e5e5e5" />
-                                        <rect x="189.35419" y="225.34781" width="244.49561" height="8.63082" fill="#e5e5e5" />
-                                        <rect x="189.35419" y="247.78794" width="244.49561" height="8.63082" fill="#e5e5e5" />
-                                        <rect x="189.35419" y="270.22806" width="244.49561" height="8.63082" fill="#e5e5e5" />
-                                        <circle cx="174.51342" cy="229.98892" r="5.63266" fill="#e5e5e5" />
-                                        <polygon points="389.22 3.5 389.22 135.58 84.16 135.58 84.16 205.71 3.51 205.71 3.51 3.5 389.22 3.5" fill="#fff" />
-                                        <path d="M186.80906,197.435v209.22h84.16015v-7.01H193.81906v-195.2h378.71v128.57h7.01V197.435Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#f1f1f1" />
-                                        <rect x="84.35419" y="78.34781" width="244.49561" height="8.63082" fill="#f1f1f1" />
-                                        <rect x="84.35419" y="100.78794" width="244.49561" height="8.63082" fill="#f1f1f1" />
-                                        <rect x="84.35419" y="123.22806" width="244.49561" height="8.63082" fill="#f1f1f1" />
-                                        <circle cx="69.51342" cy="82.98892" r="5.63266" fill="#f1f1f1" />
-                                        <rect x="209.77619" y="299.41412" width="385.71729" height="202.20937" fill="#fff" />
-                                        <path d="M785.80906,702.565H393.07873V493.3426H785.80906Zm-385.71729-7.013H778.796V500.35564H400.09177Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#cbcbcb" />
-                                        <rect x="290.20038" y="374.57656" width="244.49561" height="8.63082" fill="#1f04a3" />
-                                        <rect x="290.20038" y="397.01669" width="244.49561" height="8.63082" fill="#1f04a3" />
-                                        <rect x="290.20038" y="419.45681" width="244.49561" height="8.63082" fill="#1f04a3" />
-                                        <circle cx="275.35962" cy="379.21767" r="5.63266" fill="#1f04a3" />
-                                        <path
-                                            d="M725.44621,493.35007a10.06737,10.06737,0,0,1,3.92234-14.93042l27.89641-87.347,19.4284,10.09245-33.53042,82.68569a10.12188,10.12188,0,0,1-17.71673,9.49924Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#9f616a" />
-                                        <path
-                                            d="M748.2368,403.1514a4.50917,4.50917,0,0,1,.02119-3.75868l9.55481-20.54247a12.53637,12.53637,0,0,1,24.06046,7.05209l-3.1935,22.50386a4.51406,4.51406,0,0,1-5.7515,3.69356l-21.85912-6.47651A4.509,4.509,0,0,1,748.2368,403.1514Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#1f04a3" />
-                                        <polygon points="642.019 209.183 640.461 231.001 587.475 249.702 586.696 228.663 642.019 209.183" fill="#9f616a" />
-                                        <path
-                                            d="M761.038,374.671l17.14237-12.46718,28.05117-7.792,23.376,4.67519,3.896,36.62235-4.67519,23.376-60.77752,14.02558-6.2336-10.90878s-14.02558-14.02558-3.11679-29.60956Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#1f04a3" />
-                                        <path
-                                            d="M754.80436,342.67164V322.20853a32.64353,32.64353,0,1,1,65.28706,0v20.46311a4.3899,4.3899,0,0,1-4.385,4.385H759.18932A4.38991,4.38991,0,0,1,754.80436,342.67164Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#2f2e41" />
-                                        <circle cx="599.32681" cy="125.4871" r="23.93309" fill="#9f616a" />
-                                        <path
-                                            d="M761.54594,322.82992a2.43626,2.43626,0,0,1-.57024-1.9422l2.835-19.7418a2.43962,2.43962,0,0,1,1.37838-1.86989c14.47068-6.7725,29.145-6.78107,43.61567-.02569a2.4548,2.4548,0,0,1,1.39218,1.98408l1.89249,19.76749a2.43565,2.43565,0,0,1-2.42514,2.66827h-4.79961a2.44551,2.44551,0,0,1-2.20747-1.4055l-2.07138-4.43825a1.46155,1.46155,0,0,0-2.77486.43679l-.40918,3.27253a2.4396,2.4396,0,0,1-2.41729,2.13443H763.387A2.43621,2.43621,0,0,1,761.54594,322.82992Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#2f2e41" />
-                                        <path
-                                            d="M865.4392,483.15889a10.06731,10.06731,0,0,1-6.97655-13.77062L821.35,385.54107l21.23033-5.34724,29.80474,84.10047a10.12188,10.12188,0,0,1-6.94588,18.86459Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#9f616a" />
-                                        <path
-                                            d="M822.61484,400.56782a4.50922,4.50922,0,0,1-2.479-2.82535L813.647,376.03573a12.53637,12.53637,0,0,1,22.67679-10.69584l12.54864,18.95135a4.514,4.514,0,0,1-1.85016,6.5802L826.374,400.53662A4.509,4.509,0,0,1,822.61484,400.56782Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#1f04a3" />
-                                        <polygon points="639.353 490.356 625.845 490.355 619.419 438.253 639.355 438.254 639.353 490.356" fill="#9f616a" />
-                                        <path
-                                            d="M829.60666,700.88487l-43.55544-.00162v-.5509a16.95391,16.95391,0,0,1,16.953-16.95273h.00107l26.60219.00108Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#2f2e41" />
-                                        <polygon points="629.087 380.349 619.878 390.231 577.378 359.413 590.97 344.828 629.087 380.349" fill="#9f616a" />
-                                        <path
-                                            d="M827.8241,584.18961l-29.69366,31.86476-.40305-.37556a16.95391,16.95391,0,0,1-.84575-23.96l.00074-.00079,18.13594-19.46185Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#2f2e41" />
-                                        <path
-                                            d="M830.38667,428.43574l4.32015,4.32016c21.60958,21.60958,26.92973,51.573,24.33455,82.02316a85.20579,85.20579,0,0,1-2.16194,13.39415c-7.792,31.168-3.1168,130.90543-18.70078,137.139L835.06186,676.221l-30.38876-1.12278.7792-9.786s-7.01279-14.80478-2.3376-24.15517,14.80478-78.6991,14.80478-78.6991l-5.45439-56.88152-40.51835,20.25917s21.03837,11.688,19.48,19.48c0,0,12.46718,3.11679,9.35038,10.90878l4.6752,9.35039-10.90879,17.14238s-73.2447-43.63515-67.01111-65.45272,45.19354-37.40155,45.19354-37.40155l3.1168-23.376-2.68732-12.73714,54.51749-20.95656Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#2f2e41" />
-                                        <path d="M1012.19094,702.565h-444a1,1,0,0,1,0-2h444a1,1,0,0,1,0,2Z" transform="translate(-186.80906 -197.435)"
-                                            fill="#cbcbcb" />
-                                    </svg>
+                            <svg
+                              *ngIf="p.isFirstPage()"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="15"
+                              height="15"
+                              viewBox="0 0 27.995 25.073"
+                            >
+                              <g
+                                id="icon-nav"
+                                transform="matrix(-1, 0, 0, -1, 357.582, -233.52)"
+                              >
+                                <g id="Group_60" data-name="Group 60">
+                                  <path
+                                    id="Path_99"
+                                    data-name="Path 99"
+                                    d="M345.356-234.479l10.3-11.578-10.3-11.579"
+                                    fill="none"
+                                    stroke="#aaa"
+                                    stroke-miterlimit="10"
+                                    stroke-width="2.883"
+                                  ></path>
+                                  <line
+                                    id="Line_25"
+                                    data-name="Line 25"
+                                    x2="26.091"
+                                    transform="translate(329.587 -246.057)"
+                                    fill="none"
+                                    stroke="#aaa"
+                                    stroke-miterlimit="10"
+                                    stroke-width="2.937"
+                                  ></line>
+                                </g>
+                              </g>
+                            </svg>
 
-                                    <h2 class="text-2xl font-medium">
-                                        There's nothing here...
-                                    </h2>
-                                
-                                    <p class="mt-4 text-sm text-gray-500">
-                                        Payments will appear here.
-                                    </p>
-                                </div>
-                            </ng-container>
+                            <svg
+                              *ngIf="!p.isFirstPage()"
+                              (click)="p.previous()"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="15"
+                              height="15"
+                              viewBox="0 0 27.995 25.073"
+                            >
+                              <g
+                                id="icon-nav"
+                                transform="translate(-5638.005 -312.963)"
+                              >
+                                <g
+                                  id="icon-nav-2"
+                                  data-name="icon-nav"
+                                  transform="matrix(-1, 0, 0, -1, 5995.587, 79.443)"
+                                >
+                                  <g id="Group_60" data-name="Group 60">
+                                    <path
+                                      id="Path_99"
+                                      data-name="Path 99"
+                                      d="M345.356-234.479l10.3-11.578-10.3-11.579"
+                                      fill="none"
+                                      stroke="#fc007e"
+                                      stroke-miterlimit="10"
+                                      stroke-width="2.883"
+                                    ></path>
+                                    <line
+                                      id="Line_25"
+                                      data-name="Line 25"
+                                      x2="26.091"
+                                      transform="translate(329.587 -246.057)"
+                                      fill="none"
+                                      stroke="#fc007e"
+                                      stroke-miterlimit="10"
+                                      stroke-width="2.937"
+                                    ></line>
+                                  </g>
+                                </g>
+                              </g>
+                            </svg>
 
-                            <ng-container *ngIf="payments.length >  0">
-                                <div class="flex justify-end">
-                                    <pagination-template #p="paginationApi" [id]="paymentsConfig.id" (pageChange)="paymentsConfig.currentPage = $event">
-                                        <h1 class="flex gap-4 items-center">
-                                            <div>
-                                                <span class="text-md animate__animated animate__fadeIn">{{ p.getCurrent() }} of {{ p.getLastPage() }}</span>
-                                            </div>
+                            <svg
+                              *ngIf="!p.isLastPage()"
+                              (click)="p.next()"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="15"
+                              height="15"
+                              viewBox="0 0 27.995 25.073"
+                            >
+                              <g
+                                id="icon-nav"
+                                transform="translate(-5695 -312.963)"
+                              >
+                                <g
+                                  id="icon-nav-2"
+                                  data-name="icon-nav"
+                                  transform="translate(5365.413 79.443)"
+                                >
+                                  <g id="Group_58" data-name="Group 58">
+                                    <path
+                                      id="Path_97"
+                                      data-name="Path 97"
+                                      d="M345.356,234.479l10.3,11.578-10.3,11.579"
+                                      fill="none"
+                                      stroke="#fc007e"
+                                      stroke-miterlimit="10"
+                                      stroke-width="2.883"
+                                    ></path>
+                                    <line
+                                      id="Line_23"
+                                      data-name="Line 23"
+                                      x2="26.091"
+                                      transform="translate(329.587 246.057)"
+                                      fill="none"
+                                      stroke="#fc007e"
+                                      stroke-miterlimit="10"
+                                      stroke-width="2.937"
+                                    ></line>
+                                  </g>
+                                </g>
+                              </g>
+                            </svg>
 
-                                            <svg *ngIf="p.isFirstPage()" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 27.995 25.073">
-                                                <g id="icon-nav" transform="matrix(-1, 0, 0, -1, 357.582, -233.52)">
-                                                    <g id="Group_60" data-name="Group 60">
-                                                        <path id="Path_99" data-name="Path 99" d="M345.356-234.479l10.3-11.578-10.3-11.579" fill="none"
-                                                            stroke="#aaa" stroke-miterlimit="10" stroke-width="2.883"></path>
-                                                        <line id="Line_25" data-name="Line 25" x2="26.091" transform="translate(329.587 -246.057)" fill="none"
-                                                            stroke="#aaa" stroke-miterlimit="10" stroke-width="2.937"></line>
-                                                    </g>
-                                                </g>
-                                            </svg>
-                                        
-                                            <svg *ngIf="!p.isFirstPage()" (click)="p.previous()" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 27.995 25.073">
-                                                <g id="icon-nav" transform="translate(-5638.005 -312.963)">
-                                                    <g id="icon-nav-2" data-name="icon-nav" transform="matrix(-1, 0, 0, -1, 5995.587, 79.443)">
-                                                        <g id="Group_60" data-name="Group 60">
-                                                            <path id="Path_99" data-name="Path 99" d="M345.356-234.479l10.3-11.578-10.3-11.579" fill="none"
-                                                                stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.883"></path>
-                                                            <line id="Line_25" data-name="Line 25" x2="26.091" transform="translate(329.587 -246.057)"
-                                                                fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.937"></line>
-                                                        </g>
-                                                    </g>
-                                                </g>
-                                            </svg>
+                            <svg
+                              *ngIf="p.isLastPage()"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="15"
+                              height="15"
+                              viewBox="0 0 27.995 25.073"
+                            >
+                              <g
+                                id="icon-nav"
+                                transform="translate(-5695 -312.963)"
+                              >
+                                <g
+                                  id="icon-nav-2"
+                                  data-name="icon-nav"
+                                  transform="translate(5365.413 79.443)"
+                                >
+                                  <g id="Group_58" data-name="Group 58">
+                                    <path
+                                      id="Path_97"
+                                      data-name="Path 97"
+                                      d="M345.356,234.479l10.3,11.578-10.3,11.579"
+                                      fill="none"
+                                      stroke="#aaa"
+                                      stroke-miterlimit="10"
+                                      stroke-width="2.883"
+                                    ></path>
+                                    <line
+                                      id="Line_23"
+                                      data-name="Line 23"
+                                      x2="26.091"
+                                      transform="translate(329.587 246.057)"
+                                      fill="none"
+                                      stroke="#aaa"
+                                      stroke-miterlimit="10"
+                                      stroke-width="2.937"
+                                    ></line>
+                                  </g>
+                                </g>
+                              </g>
+                            </svg>
+                          </h1>
+                        </pagination-template>
+                      </div>
 
-                                            <svg *ngIf="!p.isLastPage()" (click)="p.next()" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 27.995 25.073">
-                                                <g id="icon-nav" transform="translate(-5695 -312.963)">
-                                                    <g id="icon-nav-2" data-name="icon-nav" transform="translate(5365.413 79.443)">
-                                                        <g id="Group_58" data-name="Group 58">
-                                                            <path id="Path_97" data-name="Path 97" d="M345.356,234.479l10.3,11.578-10.3,11.579" fill="none"
-                                                                stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.883"></path>
-                                                            <line id="Line_23" data-name="Line 23" x2="26.091" transform="translate(329.587 246.057)"
-                                                                fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.937"></line>
-                                                        </g>
-                                                    </g>
-                                                </g>
-                                            </svg>
-                                        
-                                            <svg *ngIf="p.isLastPage()" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 27.995 25.073">
-                                                <g id="icon-nav" transform="translate(-5695 -312.963)">
-                                                    <g id="icon-nav-2" data-name="icon-nav" transform="translate(5365.413 79.443)">
-                                                        <g id="Group_58" data-name="Group 58">
-                                                            <path id="Path_97" data-name="Path 97" d="M345.356,234.479l10.3,11.578-10.3,11.579" fill="none"
-                                                                stroke="#aaa" stroke-miterlimit="10" stroke-width="2.883"></path>
-                                                            <line id="Line_23" data-name="Line 23" x2="26.091" transform="translate(329.587 246.057)"
-                                                                fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="2.937"></line>
-                                                        </g>
-                                                    </g>
-                                                </g>
-                                            </svg>
-                                        </h1>
-                                    </pagination-template>
-                                </div>
-
-                                <div class="mx-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-10">
-                                    <div *ngFor="let payment of payments | paginate: paymentsConfig" class="max-w-xs h-60 py-4 px-4 bg-white shadow-lg rounded-lg mt-20 animate__animated animate__fadeIn">
-                                        <div class="flex justify-center -mt-16">
-                                            <img class="w-20 h-20 rounded-full bg-gray-300 border-2 border-gray-300 animate__animated animate__fadeIn"  [src]="payment.project.avatarUrl ? payment.project.avatarUrl : 'https://ui-avatars.com/api/?name='+ payment.project.hackerName">
-                                        </div>
-                                        <div>
-                                            <p class="truncate mt-2 text-base" title="{{payment.description}}">
-                                                {{payment.description}}
-                                            </p>
-                                            <p class="truncate mt-2 text-sm" title="KES {{payment.amount | number: '.2'}}">
-                                                KES {{payment.amount | number: '.2'}}
-                                            </p>
-                                            <mat-divider></mat-divider>
-                                            <p class="truncate mt-2 text-sm" title="{{payment.date | date: 'dd/MM/yyyy'}}">
-                                                {{payment.date | date: 'dd/MM/yyyy'}}
-                                            </p>
-                                        </div>
-                                        <!-- <div class="flex justify-end mt-4">
-                                            <div class="flex items-center text-indigo-600 text-sm animate__animated animate__fadeIn">
+                      <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
+                      >
+                        <div
+                          *ngFor="
+                            let payment of payments | paginate: paymentsConfig
+                          "
+                          class="w-full h-72 pt-7 px-4 bg-white shadow-lg rounded-lg animate__animated animate__fadeIn"
+                        >
+                          <div class="flex justify-center">
+                            <img
+                              class="w-12 h-12 rounded-full bg-gray-300 border-2 border-gray-300 animate__animated animate__fadeIn"
+                              [src]="
+                                payment.project.avatarUrl
+                                  ? payment.project.avatarUrl
+                                  : 'https://ui-avatars.com/api/?name=' +
+                                    payment.project.hackerName
+                              "
+                            />
+                          </div>
+                          <div class="pt-4">
+                            <p
+                              class="truncate py-1 text-sm font-semibold"
+                              title="{{ payment.description }}"
+                            >
+                              {{ payment.description }}
+                            </p>
+                            <p
+                              class="truncate py-1 text-xs"
+                              title="KES {{ payment.amount | number: '.2' }}"
+                            >
+                              KES {{ payment.amount | number: ".2" }}
+                            </p>
+                            <mat-divider></mat-divider>
+                            <p
+                              class="truncate py-1 text-xs"
+                              title="{{ payment.date | date: 'dd/MM/yyyy' }}"
+                            >
+                              {{ payment.date | date: "dd/MM/yyyy" }}
+                            </p>
+                          </div>
+                          <!-- <div class="flex justify-end mt-4">
+                                            <div class="flex items-center text-[#fc007e] text-sm animate__animated animate__fadeIn">
                                                 <a id="login" mat-button (click)="showPaymentDetails(payment)">
                                                 See More
                                                 </a>
@@ -261,221 +574,634 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 19.003 17.968">
                                                         <g id="icon-view" transform="translate(0 0.647)">
                                                         <g id="Group_32" data-name="Group 32" transform="translate(-223.648 -168.825)">
-                                                            <path id="Path_52" data-name="Path 52" d="M234.349,168.825l6.987,8.337-6.987,8.337" fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.016"/>
-                                                            <line id="Line_1" data-name="Line 1" x2="17.704" transform="translate(223.648 177.161)" fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="1.993"/>
+                                                            <path id="Path_52" data-name="Path 52" d="M234.349,168.825l6.987,8.337-6.987,8.337" fill="none" stroke="#fc007e" stroke-miterlimit="10" stroke-width="2.016"/>
+                                                            <line id="Line_1" data-name="Line 1" x2="17.704" transform="translate(223.648 177.161)" fill="none" stroke="#fc007e" stroke-miterlimit="10" stroke-width="1.993"/>
                                                         </g>
                                                         </g>
                                                     </svg>
                                                 </span>
                                             </div>
                                         </div> -->
-                                    </div>
-                                </div>
-                            </ng-container>
+                        </div>
+                      </div>
+                    </ng-container>
 
-                            <div class="mt-10 flex justify-between">
-                                <h1 class="text-xl font-semibold">Transactions</h1>
+                    <div class="mt-10 flex justify-between">
+                      <h1 class="text-xl font-semibold">Transactions</h1>
+                    </div>
+
+                    <ng-container *ngIf="transactions.length == 0">
+                      <div class="relative p-8 text-center rounded-lg">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          data-name="Layer 1"
+                          class="mx-auto"
+                          width="200"
+                          height="150"
+                          viewBox="0 0 826.38189 505.13"
+                        >
+                          <path
+                            id="e73ea6d0-018f-4f1a-b9fb-ec835afd7d29-2905"
+                            data-name="Path 438"
+                            d="M958.436,653.57547a24.21462,24.21462,0,0,1-23.38268-4.11877c-8.18977-6.87442-10.758-18.196-12.84671-28.68191l-6.17973-31.01657,12.9377,8.90836c9.30465,6.40641,18.81827,13.01866,25.26011,22.29785s9.25223,21.94708,4.07792,31.988"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#e6e6e6"
+                          />
+                          <path
+                            id="adfa37d6-6055-4e93-a6c7-1993979ff9f6-2906"
+                            data-name="Path 439"
+                            d="M956.43833,693.286c1.62839-11.86369,3.30382-23.88079,2.15884-35.87167-1.01466-10.64933-4.26373-21.04881-10.87831-29.57938a49.20592,49.20592,0,0,0-12.62466-11.44039c-1.26215-.79648-2.42409,1.20354-1.16733,1.997a46.7794,46.7794,0,0,1,18.50446,22.32562c4.02858,10.24607,4.67545,21.41582,3.98154,32.30029-.41944,6.58218-1.31074,13.12121-2.20588,19.65252a1.19816,1.19816,0,0,0,.808,1.4225,1.16347,1.16347,0,0,0,1.42253-.808Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#f2f2f2"
+                          />
+                          <path
+                            id="ab8f3b7e-46a3-4c45-91c1-6e6ed9e46d7b-2907"
+                            data-name="Path 442"
+                            d="M944.7173,674.24958a17.82512,17.82512,0,0,1-15.53141,8.01861c-7.8644-.37318-14.41806-5.85972-20.31713-11.07026l-17.452-15.40881,11.54987-.5528c8.3062-.39784,16.82672-.771,24.73814,1.79338s15.20757,8.72639,16.654,16.9154"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#e6e6e6"
+                          />
+                          <path
+                            id="a06078c2-c2e6-4e9e-9e9d-932246ef76f7-2908"
+                            data-name="Path 443"
+                            d="M961.04131,700.10571c-7.83972-13.87142-16.93234-29.28794-33.1808-34.21551a37.02581,37.02581,0,0,0-13.95544-1.44105c-1.4819.128-1.1118,2.41174.367,2.28454a34.39821,34.39821,0,0,1,22.27164,5.89215c6.27994,4.27453,11.16975,10.21755,15.30781,16.51907,2.53511,3.8605,4.80577,7.88445,7.07642,11.903C959.65349,702.33242,961.77532,701.40488,961.04131,700.10571Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#f2f2f2"
+                          />
+                          <polygon
+                            points="494.22 150.5 494.22 282.58 189.16 282.58 189.16 352.71 108.51 352.71 108.51 150.5 494.22 150.5"
+                            fill="#fff"
+                          />
+                          <path
+                            d="M291.80906,344.435v209.22h84.16015v-7.01H298.81906V351.445h378.71v128.57h7.01V344.435Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#e5e5e5"
+                          />
+                          <rect
+                            x="189.35419"
+                            y="225.34781"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#e5e5e5"
+                          />
+                          <rect
+                            x="189.35419"
+                            y="247.78794"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#e5e5e5"
+                          />
+                          <rect
+                            x="189.35419"
+                            y="270.22806"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#e5e5e5"
+                          />
+                          <circle
+                            cx="174.51342"
+                            cy="229.98892"
+                            r="5.63266"
+                            fill="#e5e5e5"
+                          />
+                          <polygon
+                            points="389.22 3.5 389.22 135.58 84.16 135.58 84.16 205.71 3.51 205.71 3.51 3.5 389.22 3.5"
+                            fill="#fff"
+                          />
+                          <path
+                            d="M186.80906,197.435v209.22h84.16015v-7.01H193.81906v-195.2h378.71v128.57h7.01V197.435Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#f1f1f1"
+                          />
+                          <rect
+                            x="84.35419"
+                            y="78.34781"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#f1f1f1"
+                          />
+                          <rect
+                            x="84.35419"
+                            y="100.78794"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#f1f1f1"
+                          />
+                          <rect
+                            x="84.35419"
+                            y="123.22806"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#f1f1f1"
+                          />
+                          <circle
+                            cx="69.51342"
+                            cy="82.98892"
+                            r="5.63266"
+                            fill="#f1f1f1"
+                          />
+                          <rect
+                            x="209.77619"
+                            y="299.41412"
+                            width="385.71729"
+                            height="202.20937"
+                            fill="#fff"
+                          />
+                          <path
+                            d="M785.80906,702.565H393.07873V493.3426H785.80906Zm-385.71729-7.013H778.796V500.35564H400.09177Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#cbcbcb"
+                          />
+                          <rect
+                            x="290.20038"
+                            y="374.57656"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#3909d1"
+                          />
+                          <rect
+                            x="290.20038"
+                            y="397.01669"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#3909d1"
+                          />
+                          <rect
+                            x="290.20038"
+                            y="419.45681"
+                            width="244.49561"
+                            height="8.63082"
+                            fill="#3909d1"
+                          />
+                          <circle
+                            cx="275.35962"
+                            cy="379.21767"
+                            r="5.63266"
+                            fill="#3909d1"
+                          />
+                          <path
+                            d="M725.44621,493.35007a10.06737,10.06737,0,0,1,3.92234-14.93042l27.89641-87.347,19.4284,10.09245-33.53042,82.68569a10.12188,10.12188,0,0,1-17.71673,9.49924Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#9f616a"
+                          />
+                          <path
+                            d="M748.2368,403.1514a4.50917,4.50917,0,0,1,.02119-3.75868l9.55481-20.54247a12.53637,12.53637,0,0,1,24.06046,7.05209l-3.1935,22.50386a4.51406,4.51406,0,0,1-5.7515,3.69356l-21.85912-6.47651A4.509,4.509,0,0,1,748.2368,403.1514Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#3909d1"
+                          />
+                          <polygon
+                            points="642.019 209.183 640.461 231.001 587.475 249.702 586.696 228.663 642.019 209.183"
+                            fill="#9f616a"
+                          />
+                          <path
+                            d="M761.038,374.671l17.14237-12.46718,28.05117-7.792,23.376,4.67519,3.896,36.62235-4.67519,23.376-60.77752,14.02558-6.2336-10.90878s-14.02558-14.02558-3.11679-29.60956Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#3909d1"
+                          />
+                          <path
+                            d="M754.80436,342.67164V322.20853a32.64353,32.64353,0,1,1,65.28706,0v20.46311a4.3899,4.3899,0,0,1-4.385,4.385H759.18932A4.38991,4.38991,0,0,1,754.80436,342.67164Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#2f2e41"
+                          />
+                          <circle
+                            cx="599.32681"
+                            cy="125.4871"
+                            r="23.93309"
+                            fill="#9f616a"
+                          />
+                          <path
+                            d="M761.54594,322.82992a2.43626,2.43626,0,0,1-.57024-1.9422l2.835-19.7418a2.43962,2.43962,0,0,1,1.37838-1.86989c14.47068-6.7725,29.145-6.78107,43.61567-.02569a2.4548,2.4548,0,0,1,1.39218,1.98408l1.89249,19.76749a2.43565,2.43565,0,0,1-2.42514,2.66827h-4.79961a2.44551,2.44551,0,0,1-2.20747-1.4055l-2.07138-4.43825a1.46155,1.46155,0,0,0-2.77486.43679l-.40918,3.27253a2.4396,2.4396,0,0,1-2.41729,2.13443H763.387A2.43621,2.43621,0,0,1,761.54594,322.82992Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#2f2e41"
+                          />
+                          <path
+                            d="M865.4392,483.15889a10.06731,10.06731,0,0,1-6.97655-13.77062L821.35,385.54107l21.23033-5.34724,29.80474,84.10047a10.12188,10.12188,0,0,1-6.94588,18.86459Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#9f616a"
+                          />
+                          <path
+                            d="M822.61484,400.56782a4.50922,4.50922,0,0,1-2.479-2.82535L813.647,376.03573a12.53637,12.53637,0,0,1,22.67679-10.69584l12.54864,18.95135a4.514,4.514,0,0,1-1.85016,6.5802L826.374,400.53662A4.509,4.509,0,0,1,822.61484,400.56782Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#3909d1"
+                          />
+                          <polygon
+                            points="639.353 490.356 625.845 490.355 619.419 438.253 639.355 438.254 639.353 490.356"
+                            fill="#9f616a"
+                          />
+                          <path
+                            d="M829.60666,700.88487l-43.55544-.00162v-.5509a16.95391,16.95391,0,0,1,16.953-16.95273h.00107l26.60219.00108Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#2f2e41"
+                          />
+                          <polygon
+                            points="629.087 380.349 619.878 390.231 577.378 359.413 590.97 344.828 629.087 380.349"
+                            fill="#9f616a"
+                          />
+                          <path
+                            d="M827.8241,584.18961l-29.69366,31.86476-.40305-.37556a16.95391,16.95391,0,0,1-.84575-23.96l.00074-.00079,18.13594-19.46185Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#2f2e41"
+                          />
+                          <path
+                            d="M830.38667,428.43574l4.32015,4.32016c21.60958,21.60958,26.92973,51.573,24.33455,82.02316a85.20579,85.20579,0,0,1-2.16194,13.39415c-7.792,31.168-3.1168,130.90543-18.70078,137.139L835.06186,676.221l-30.38876-1.12278.7792-9.786s-7.01279-14.80478-2.3376-24.15517,14.80478-78.6991,14.80478-78.6991l-5.45439-56.88152-40.51835,20.25917s21.03837,11.688,19.48,19.48c0,0,12.46718,3.11679,9.35038,10.90878l4.6752,9.35039-10.90879,17.14238s-73.2447-43.63515-67.01111-65.45272,45.19354-37.40155,45.19354-37.40155l3.1168-23.376-2.68732-12.73714,54.51749-20.95656Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#2f2e41"
+                          />
+                          <path
+                            d="M1012.19094,702.565h-444a1,1,0,0,1,0-2h444a1,1,0,0,1,0,2Z"
+                            transform="translate(-186.80906 -197.435)"
+                            fill="#cbcbcb"
+                          />
+                        </svg>
+
+                        <h2 class="text-2xl font-medium">
+                          There's nothing here...
+                        </h2>
+
+                        <p class="mt-4 text-sm text-gray-500">
+                          Transactions will appear here.
+                        </p>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="transactions.length > 0">
+                      <div class="flex justify-end py-3 px-3">
+                        <pagination-template
+                          #p="paginationApi"
+                          [id]="transactionsConfig.id"
+                          (pageChange)="transactionsConfig.currentPage = $event"
+                        >
+                          <h1 class="flex gap-4 items-center">
+                            <div>
+                              <span
+                                class="text-base animate__animated animate__fadeIn"
+                                >{{ p.getCurrent() }} of
+                                {{ p.getLastPage() }}</span
+                              >
                             </div>
-                
-                            <ng-container *ngIf="transactions.length ==  0">
-                                <div class="relative p-8 text-center rounded-lg">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-name="Layer 1" class="mx-auto" width="200" height="150" viewBox="0 0 826.38189 505.13">
-                                        <path id="e73ea6d0-018f-4f1a-b9fb-ec835afd7d29-2905" data-name="Path 438"
-                                            d="M958.436,653.57547a24.21462,24.21462,0,0,1-23.38268-4.11877c-8.18977-6.87442-10.758-18.196-12.84671-28.68191l-6.17973-31.01657,12.9377,8.90836c9.30465,6.40641,18.81827,13.01866,25.26011,22.29785s9.25223,21.94708,4.07792,31.988"
-                                            transform="translate(-186.80906 -197.435)" fill="#e6e6e6" />
-                                        <path id="adfa37d6-6055-4e93-a6c7-1993979ff9f6-2906" data-name="Path 439"
-                                            d="M956.43833,693.286c1.62839-11.86369,3.30382-23.88079,2.15884-35.87167-1.01466-10.64933-4.26373-21.04881-10.87831-29.57938a49.20592,49.20592,0,0,0-12.62466-11.44039c-1.26215-.79648-2.42409,1.20354-1.16733,1.997a46.7794,46.7794,0,0,1,18.50446,22.32562c4.02858,10.24607,4.67545,21.41582,3.98154,32.30029-.41944,6.58218-1.31074,13.12121-2.20588,19.65252a1.19816,1.19816,0,0,0,.808,1.4225,1.16347,1.16347,0,0,0,1.42253-.808Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#f2f2f2" />
-                                        <path id="ab8f3b7e-46a3-4c45-91c1-6e6ed9e46d7b-2907" data-name="Path 442"
-                                            d="M944.7173,674.24958a17.82512,17.82512,0,0,1-15.53141,8.01861c-7.8644-.37318-14.41806-5.85972-20.31713-11.07026l-17.452-15.40881,11.54987-.5528c8.3062-.39784,16.82672-.771,24.73814,1.79338s15.20757,8.72639,16.654,16.9154"
-                                            transform="translate(-186.80906 -197.435)" fill="#e6e6e6" />
-                                        <path id="a06078c2-c2e6-4e9e-9e9d-932246ef76f7-2908" data-name="Path 443"
-                                            d="M961.04131,700.10571c-7.83972-13.87142-16.93234-29.28794-33.1808-34.21551a37.02581,37.02581,0,0,0-13.95544-1.44105c-1.4819.128-1.1118,2.41174.367,2.28454a34.39821,34.39821,0,0,1,22.27164,5.89215c6.27994,4.27453,11.16975,10.21755,15.30781,16.51907,2.53511,3.8605,4.80577,7.88445,7.07642,11.903C959.65349,702.33242,961.77532,701.40488,961.04131,700.10571Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#f2f2f2" />
-                                        <polygon points="494.22 150.5 494.22 282.58 189.16 282.58 189.16 352.71 108.51 352.71 108.51 150.5 494.22 150.5"
-                                            fill="#fff" />
-                                        <path d="M291.80906,344.435v209.22h84.16015v-7.01H298.81906V351.445h378.71v128.57h7.01V344.435Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#e5e5e5" />
-                                        <rect x="189.35419" y="225.34781" width="244.49561" height="8.63082" fill="#e5e5e5" />
-                                        <rect x="189.35419" y="247.78794" width="244.49561" height="8.63082" fill="#e5e5e5" />
-                                        <rect x="189.35419" y="270.22806" width="244.49561" height="8.63082" fill="#e5e5e5" />
-                                        <circle cx="174.51342" cy="229.98892" r="5.63266" fill="#e5e5e5" />
-                                        <polygon points="389.22 3.5 389.22 135.58 84.16 135.58 84.16 205.71 3.51 205.71 3.51 3.5 389.22 3.5" fill="#fff" />
-                                        <path d="M186.80906,197.435v209.22h84.16015v-7.01H193.81906v-195.2h378.71v128.57h7.01V197.435Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#f1f1f1" />
-                                        <rect x="84.35419" y="78.34781" width="244.49561" height="8.63082" fill="#f1f1f1" />
-                                        <rect x="84.35419" y="100.78794" width="244.49561" height="8.63082" fill="#f1f1f1" />
-                                        <rect x="84.35419" y="123.22806" width="244.49561" height="8.63082" fill="#f1f1f1" />
-                                        <circle cx="69.51342" cy="82.98892" r="5.63266" fill="#f1f1f1" />
-                                        <rect x="209.77619" y="299.41412" width="385.71729" height="202.20937" fill="#fff" />
-                                        <path d="M785.80906,702.565H393.07873V493.3426H785.80906Zm-385.71729-7.013H778.796V500.35564H400.09177Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#cbcbcb" />
-                                        <rect x="290.20038" y="374.57656" width="244.49561" height="8.63082" fill="#1f04a3" />
-                                        <rect x="290.20038" y="397.01669" width="244.49561" height="8.63082" fill="#1f04a3" />
-                                        <rect x="290.20038" y="419.45681" width="244.49561" height="8.63082" fill="#1f04a3" />
-                                        <circle cx="275.35962" cy="379.21767" r="5.63266" fill="#1f04a3" />
-                                        <path
-                                            d="M725.44621,493.35007a10.06737,10.06737,0,0,1,3.92234-14.93042l27.89641-87.347,19.4284,10.09245-33.53042,82.68569a10.12188,10.12188,0,0,1-17.71673,9.49924Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#9f616a" />
-                                        <path
-                                            d="M748.2368,403.1514a4.50917,4.50917,0,0,1,.02119-3.75868l9.55481-20.54247a12.53637,12.53637,0,0,1,24.06046,7.05209l-3.1935,22.50386a4.51406,4.51406,0,0,1-5.7515,3.69356l-21.85912-6.47651A4.509,4.509,0,0,1,748.2368,403.1514Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#1f04a3" />
-                                        <polygon points="642.019 209.183 640.461 231.001 587.475 249.702 586.696 228.663 642.019 209.183" fill="#9f616a" />
-                                        <path
-                                            d="M761.038,374.671l17.14237-12.46718,28.05117-7.792,23.376,4.67519,3.896,36.62235-4.67519,23.376-60.77752,14.02558-6.2336-10.90878s-14.02558-14.02558-3.11679-29.60956Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#1f04a3" />
-                                        <path
-                                            d="M754.80436,342.67164V322.20853a32.64353,32.64353,0,1,1,65.28706,0v20.46311a4.3899,4.3899,0,0,1-4.385,4.385H759.18932A4.38991,4.38991,0,0,1,754.80436,342.67164Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#2f2e41" />
-                                        <circle cx="599.32681" cy="125.4871" r="23.93309" fill="#9f616a" />
-                                        <path
-                                            d="M761.54594,322.82992a2.43626,2.43626,0,0,1-.57024-1.9422l2.835-19.7418a2.43962,2.43962,0,0,1,1.37838-1.86989c14.47068-6.7725,29.145-6.78107,43.61567-.02569a2.4548,2.4548,0,0,1,1.39218,1.98408l1.89249,19.76749a2.43565,2.43565,0,0,1-2.42514,2.66827h-4.79961a2.44551,2.44551,0,0,1-2.20747-1.4055l-2.07138-4.43825a1.46155,1.46155,0,0,0-2.77486.43679l-.40918,3.27253a2.4396,2.4396,0,0,1-2.41729,2.13443H763.387A2.43621,2.43621,0,0,1,761.54594,322.82992Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#2f2e41" />
-                                        <path
-                                            d="M865.4392,483.15889a10.06731,10.06731,0,0,1-6.97655-13.77062L821.35,385.54107l21.23033-5.34724,29.80474,84.10047a10.12188,10.12188,0,0,1-6.94588,18.86459Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#9f616a" />
-                                        <path
-                                            d="M822.61484,400.56782a4.50922,4.50922,0,0,1-2.479-2.82535L813.647,376.03573a12.53637,12.53637,0,0,1,22.67679-10.69584l12.54864,18.95135a4.514,4.514,0,0,1-1.85016,6.5802L826.374,400.53662A4.509,4.509,0,0,1,822.61484,400.56782Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#1f04a3" />
-                                        <polygon points="639.353 490.356 625.845 490.355 619.419 438.253 639.355 438.254 639.353 490.356" fill="#9f616a" />
-                                        <path
-                                            d="M829.60666,700.88487l-43.55544-.00162v-.5509a16.95391,16.95391,0,0,1,16.953-16.95273h.00107l26.60219.00108Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#2f2e41" />
-                                        <polygon points="629.087 380.349 619.878 390.231 577.378 359.413 590.97 344.828 629.087 380.349" fill="#9f616a" />
-                                        <path
-                                            d="M827.8241,584.18961l-29.69366,31.86476-.40305-.37556a16.95391,16.95391,0,0,1-.84575-23.96l.00074-.00079,18.13594-19.46185Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#2f2e41" />
-                                        <path
-                                            d="M830.38667,428.43574l4.32015,4.32016c21.60958,21.60958,26.92973,51.573,24.33455,82.02316a85.20579,85.20579,0,0,1-2.16194,13.39415c-7.792,31.168-3.1168,130.90543-18.70078,137.139L835.06186,676.221l-30.38876-1.12278.7792-9.786s-7.01279-14.80478-2.3376-24.15517,14.80478-78.6991,14.80478-78.6991l-5.45439-56.88152-40.51835,20.25917s21.03837,11.688,19.48,19.48c0,0,12.46718,3.11679,9.35038,10.90878l4.6752,9.35039-10.90879,17.14238s-73.2447-43.63515-67.01111-65.45272,45.19354-37.40155,45.19354-37.40155l3.1168-23.376-2.68732-12.73714,54.51749-20.95656Z"
-                                            transform="translate(-186.80906 -197.435)" fill="#2f2e41" />
-                                        <path d="M1012.19094,702.565h-444a1,1,0,0,1,0-2h444a1,1,0,0,1,0,2Z" transform="translate(-186.80906 -197.435)"
-                                            fill="#cbcbcb" />
-                                    </svg>
 
-                                    <h2 class="text-2xl font-medium">
-                                        There's nothing here...
-                                    </h2>
-                                
-                                    <p class="mt-4 text-sm text-gray-500">
-                                        Transactions will appear here.
-                                    </p>
-                                </div>
+                            <svg
+                              *ngIf="p.isFirstPage()"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="15"
+                              height="15"
+                              viewBox="0 0 27.995 25.073"
+                            >
+                              <g
+                                id="icon-nav"
+                                transform="matrix(-1, 0, 0, -1, 357.582, -233.52)"
+                              >
+                                <g id="Group_60" data-name="Group 60">
+                                  <path
+                                    id="Path_99"
+                                    data-name="Path 99"
+                                    d="M345.356-234.479l10.3-11.578-10.3-11.579"
+                                    fill="none"
+                                    stroke="#aaa"
+                                    stroke-miterlimit="10"
+                                    stroke-width="2.883"
+                                  ></path>
+                                  <line
+                                    id="Line_25"
+                                    data-name="Line 25"
+                                    x2="26.091"
+                                    transform="translate(329.587 -246.057)"
+                                    fill="none"
+                                    stroke="#aaa"
+                                    stroke-miterlimit="10"
+                                    stroke-width="2.937"
+                                  ></line>
+                                </g>
+                              </g>
+                            </svg>
+
+                            <svg
+                              *ngIf="!p.isFirstPage()"
+                              (click)="p.previous()"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="15"
+                              height="15"
+                              viewBox="0 0 27.995 25.073"
+                            >
+                              <g
+                                id="icon-nav"
+                                transform="translate(-5638.005 -312.963)"
+                              >
+                                <g
+                                  id="icon-nav-2"
+                                  data-name="icon-nav"
+                                  transform="matrix(-1, 0, 0, -1, 5995.587, 79.443)"
+                                >
+                                  <g id="Group_60" data-name="Group 60">
+                                    <path
+                                      id="Path_99"
+                                      data-name="Path 99"
+                                      d="M345.356-234.479l10.3-11.578-10.3-11.579"
+                                      fill="none"
+                                      stroke="#fc007e"
+                                      stroke-miterlimit="10"
+                                      stroke-width="2.883"
+                                    ></path>
+                                    <line
+                                      id="Line_25"
+                                      data-name="Line 25"
+                                      x2="26.091"
+                                      transform="translate(329.587 -246.057)"
+                                      fill="none"
+                                      stroke="#fc007e"
+                                      stroke-miterlimit="10"
+                                      stroke-width="2.937"
+                                    ></line>
+                                  </g>
+                                </g>
+                              </g>
+                            </svg>
+
+                            <svg
+                              *ngIf="!p.isLastPage()"
+                              (click)="p.next()"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="15"
+                              height="15"
+                              viewBox="0 0 27.995 25.073"
+                            >
+                              <g
+                                id="icon-nav"
+                                transform="translate(-5695 -312.963)"
+                              >
+                                <g
+                                  id="icon-nav-2"
+                                  data-name="icon-nav"
+                                  transform="translate(5365.413 79.443)"
+                                >
+                                  <g id="Group_58" data-name="Group 58">
+                                    <path
+                                      id="Path_97"
+                                      data-name="Path 97"
+                                      d="M345.356,234.479l10.3,11.578-10.3,11.579"
+                                      fill="none"
+                                      stroke="#fc007e"
+                                      stroke-miterlimit="10"
+                                      stroke-width="2.883"
+                                    ></path>
+                                    <line
+                                      id="Line_23"
+                                      data-name="Line 23"
+                                      x2="26.091"
+                                      transform="translate(329.587 246.057)"
+                                      fill="none"
+                                      stroke="#fc007e"
+                                      stroke-miterlimit="10"
+                                      stroke-width="2.937"
+                                    ></line>
+                                  </g>
+                                </g>
+                              </g>
+                            </svg>
+
+                            <svg
+                              *ngIf="p.isLastPage()"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="15"
+                              height="15"
+                              viewBox="0 0 27.995 25.073"
+                            >
+                              <g
+                                id="icon-nav"
+                                transform="translate(-5695 -312.963)"
+                              >
+                                <g
+                                  id="icon-nav-2"
+                                  data-name="icon-nav"
+                                  transform="translate(5365.413 79.443)"
+                                >
+                                  <g id="Group_58" data-name="Group 58">
+                                    <path
+                                      id="Path_97"
+                                      data-name="Path 97"
+                                      d="M345.356,234.479l10.3,11.578-10.3,11.579"
+                                      fill="none"
+                                      stroke="#aaa"
+                                      stroke-miterlimit="10"
+                                      stroke-width="2.883"
+                                    ></path>
+                                    <line
+                                      id="Line_23"
+                                      data-name="Line 23"
+                                      x2="26.091"
+                                      transform="translate(329.587 246.057)"
+                                      fill="none"
+                                      stroke="#aaa"
+                                      stroke-miterlimit="10"
+                                      stroke-width="2.937"
+                                    ></line>
+                                  </g>
+                                </g>
+                              </g>
+                            </svg>
+                          </h1>
+                        </pagination-template>
+                      </div>
+
+                      <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
+                      >
+                        <div
+                          *ngFor="
+                            let transaction of transactions
+                              | paginate: transactionsConfig
+                          "
+                          class="w-full h-72 pt-7 px-4 bg-white shadow-lg rounded-lg animate__animated animate__fadeIn"
+                        >
+                          <div class="flex justify-center">
+                            <div
+                              class="w-20 h-20 rounded-full border-2 border-gray-300 animate__animated animate__fadeIn"
+                            >
+                              <ng-container [ngSwitch]="transaction.platform">
+                                <svg
+                                  *ngSwitchCase="PaymentMethodPlatform.Mpesa"
+                                  class="mx-auto"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="100%"
+                                  height="100%"
+                                  viewBox="0 0 167 83.999"
+                                >
+                                  <g
+                                    id="Group_192"
+                                    data-name="Group 192"
+                                    transform="translate(-93.684 -378.718)"
+                                  >
+                                    <path
+                                      id="Path_338"
+                                      data-name="Path 338"
+                                      d="M141.188,394.525H154.01a7.45,7.45,0,0,1,7.415,7.439v21.389a7.449,7.449,0,0,1-7.415,7.438H141.188a7.448,7.448,0,0,1-7.415-7.438V401.965a7.449,7.449,0,0,1,7.415-7.439Z"
+                                      fill="#fff"
+                                      fill-rule="evenodd"
+                                    />
+                                    <path
+                                      id="Path_339"
+                                      data-name="Path 339"
+                                      d="M158.645,462.717H136.554a5.9,5.9,0,0,1-5.871-5.89V391.891a5.9,5.9,0,0,1,5.871-5.89h22.091a5.882,5.882,0,0,1,.772.051v-4.778a2.561,2.561,0,0,1,2.55-2.556h0a2.561,2.561,0,0,1,2.55,2.556v8.059a2.548,2.548,0,0,1-.208,1.008,5.872,5.872,0,0,1,.208,1.549v64.936a5.9,5.9,0,0,1-5.871,5.89Zm-17.457-68.192H154.01a7.45,7.45,0,0,1,7.415,7.439v21.389a7.449,7.449,0,0,1-7.415,7.438H141.188a7.448,7.448,0,0,1-7.415-7.438V401.965a7.449,7.449,0,0,1,7.415-7.439Z"
+                                      fill="#d1e187"
+                                      fill-rule="evenodd"
+                                    />
+                                    <path
+                                      id="Path_340"
+                                      data-name="Path 340"
+                                      d="M169.709,395.887l14.1-.054c5.14.654,7.515,4.514,7.3,10.129-.392,5.658-3.59,8.424-8.931,8.909l-5.118-.1.144,15.524h-7.492V395.887Zm7.571,3.53c3.48-.5,6.152.469,6.334,5.966-.116,4.907-2.716,6.149-6.334,5.89V399.416Z"
+                                      fill="#8bc53f"
+                                      fill-rule="evenodd"
+                                    />
+                                    <path
+                                      id="Path_341"
+                                      data-name="Path 341"
+                                      d="M204.2,395.461l8.925-.041-.067,3.843-6.991-.032c-4.034.752-3.131,5.069-3.326,8.188l9.405-.177.033,4.718-9.114-.1-.043,11.422c.357,2.962,1.911,4.452,4.535,4.624l5.005-.056,1.527.035-.048,3.564-1.563.06-9.515-.1c-3.279-.111-5.927-1.742-7.146-6.814l-.233-22.162c.135-4.543,3.125-6.771,8.614-6.975Z"
+                                      fill="#8bc53f"
+                                      fill-rule="evenodd"
+                                    />
+                                    <path
+                                      id="Path_342"
+                                      data-name="Path 342"
+                                      d="M216.4,405.185c-.563-7.423,3.561-9.1,8.575-9.685,5.868-.35,9.554,2.106,10.273,8.37l-6.927-.019c-.439-3.159-2.89-4.374-5.132-2.869-3.195,3.922,6.778,10.824,9.768,13.385,5.169,4.1,4.294,15.467-3.667,17.574l-4.855.173c-4.931.116-7.866-3.008-8.716-8.8l6.979-.122c.381,2.473,1.433,4.011,3.667,3.9,3.475-.663,4.432-3.733,1.96-7.649-5.175-4.409-11.3-8.545-11.925-14.258Z"
+                                      fill="#8bc53f"
+                                      fill-rule="evenodd"
+                                    />
+                                    <path
+                                      id="Path_343"
+                                      data-name="Path 343"
+                                      d="M93.684,394.338h7.338l.076,2.286c4.433-1.921,7.777-3.28,11.279-.116,6.261-2.966,11-2.629,13.345,2.877l.327,30.908h-7.4V400.81c-.549-2.523-2.54-2.955-4.944-2.788v32.271h-7.569V400.81c-.549-2.523-2.54-2.955-4.944-2.788v32.271H93.684V394.338Z"
+                                      fill="#8bc53f"
+                                      fill-rule="evenodd"
+                                    />
+                                    <path
+                                      id="Path_344"
+                                      data-name="Path 344"
+                                      d="M239.364,431.2h7.609V412.211h6.334V431.2h7.377V404.075c-.147-5.511-4.371-8.966-10.352-8.988-6.821-.06-10.712,3.184-10.969,8.678V431.2Zm7.609-29.058c.252-2.026.909-2.842,3.128-3.06,2.251.057,3.054,1.362,3.206,3.37v5.5h-6.334v-5.812Z"
+                                      fill="#8bc53f"
+                                      fill-rule="evenodd"
+                                    />
+                                    <path
+                                      id="Path_345"
+                                      data-name="Path 345"
+                                      d="M139.68,409c1.27,2.976,3,4.346,5.088,4.428A29.281,29.281,0,0,1,134.3,418.3a33.248,33.248,0,0,1-6.666-1.327c5.421-1.074,9.462-3.706,12.05-7.982Z"
+                                      fill="#81211c"
+                                      fill-rule="evenodd"
+                                    />
+                                    <path
+                                      id="Path_346"
+                                      data-name="Path 346"
+                                      d="M153.894,401.325l15.294,7.749c-7.79,10.28-20.924,10.55-34.915,9.221,9.353-2.313,15.828-8.045,19.621-16.97Z"
+                                      fill="#eb2026"
+                                      fill-rule="evenodd"
+                                    />
+                                  </g>
+                                </svg>
+
+                                <svg
+                                  *ngSwitchCase="PaymentMethodPlatform.Paypal"
+                                  class="mx-auto"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="100%"
+                                  height="100%"
+                                  viewBox="0 0 194 47.001"
+                                >
+                                  <g
+                                    id="Group_193"
+                                    data-name="Group 193"
+                                    transform="translate(-416.523 -497.291)"
+                                  >
+                                    <path
+                                      id="Path_347"
+                                      data-name="Path 347"
+                                      d="M433.45,508.352h13.258c7.118,0,9.8,3.6,9.384,8.9-.682,8.742-5.966,13.575-12.976,13.575h-3.54c-.961,0-1.606.634-1.869,2.36l-1.518,10.019c-.1.652-.441,1.035-.955,1.081h-8.313c-.782,0-1.061-.6-.856-1.9l5.076-32.143A2.028,2.028,0,0,1,433.45,508.352Z"
+                                      fill="#009de2"
+                                      fill-rule="evenodd"
+                                    />
+                                    <path
+                                      id="Path_348"
+                                      data-name="Path 348"
+                                      d="M491,507.759c4.474,0,8.6,2.425,8.036,8.473-.67,7.171-4.534,11.164-10.611,11.18h-5.3c-.764,0-1.131.622-1.332,1.9l-1.025,6.526c-.154.985-.658,1.472-1.408,1.472h-4.937c-.786,0-1.061-.5-.886-1.63l4.081-26.157c.2-1.287.694-1.765,1.566-1.765Zm-8.042,14h4.021c2.515-.094,4.187-1.835,4.356-4.977a3.037,3.037,0,0,0-3.293-3.319l-3.786.016-1.3,8.28Zm29.5,13.545c.451-.409.91-.624.844-.118l-.16,1.213c-.084.63.168.969.758.969h4.386c.738,0,1.1-.3,1.281-1.442l2.7-16.966c.134-.852-.072-1.269-.72-1.269h-4.821c-.435,0-.646.243-.76.909l-.179,1.043c-.094.545-.343.64-.576.092-.818-1.939-2.906-2.808-5.832-2.747-6.767.14-11.329,5.276-11.816,11.86a8.154,8.154,0,0,0,8.082,9.093,8.72,8.72,0,0,0,6.809-2.635Zm-3.67-2.607a4.406,4.406,0,0,1-4.52-5.17,6.3,6.3,0,0,1,6.059-5.172,4.407,4.407,0,0,1,4.518,5.172,6.3,6.3,0,0,1-6.057,5.17Zm22.072-15.063h-4.432c-.919,0-1.292.674-1,1.528l5.521,16.172-5.441,7.693c-.455.642-.1,1.229.537,1.229h5a1.53,1.53,0,0,0,1.486-.73l16.984-24.364c.523-.752.277-1.536-.58-1.536l-4.729-.006c-.81,0-1.137.321-1.6,1L535.525,528.9l-3.151-10.3A1.362,1.362,0,0,0,530.864,517.635Z"
+                                      fill="#113984"
+                                      fill-rule="evenodd"
+                                    />
+                                    <path
+                                      id="Path_349"
+                                      data-name="Path 349"
+                                      d="M567.2,507.759c4.474,0,8.6,2.425,8.036,8.473-.67,7.171-4.534,11.164-10.613,11.18h-5.3c-.764,0-1.131.622-1.332,1.9l-1.023,6.526c-.154.985-.66,1.472-1.408,1.472H550.62c-.788,0-1.063-.5-.886-1.63l4.081-26.157c.2-1.287.692-1.765,1.564-1.765Zm-8.044,14h4.023c2.515-.094,4.185-1.835,4.354-4.977a3.035,3.035,0,0,0-3.293-3.319l-3.786.016-1.3,8.28Zm29.5,13.545c.451-.409.912-.624.846-.118l-.16,1.213c-.084.63.166.969.756.969h4.388c.738,0,1.1-.3,1.279-1.442l2.7-16.966c.136-.852-.07-1.269-.718-1.269h-4.823c-.435,0-.646.243-.76.909l-.178,1.043c-.092.545-.343.64-.574.092-.82-1.939-2.906-2.808-5.834-2.747-6.766.14-11.327,5.276-11.816,11.86a8.154,8.154,0,0,0,8.082,9.093,8.717,8.717,0,0,0,6.809-2.635Zm-3.67-2.607a4.406,4.406,0,0,1-4.518-5.17,6.3,6.3,0,0,1,6.057-5.172,4.4,4.4,0,0,1,4.518,5.172,6.3,6.3,0,0,1-6.057,5.17Zm20.233,4.7h-5.062a.6.6,0,0,1-.622-.7l4.454-28.18a.874.874,0,0,1,.84-.7h5.064a.6.6,0,0,1,.62.7l-4.452,28.18A.872.872,0,0,1,605.22,537.4Z"
+                                      fill="#009de2"
+                                      fill-rule="evenodd"
+                                    />
+                                    <path
+                                      id="Path_350"
+                                      data-name="Path 350"
+                                      d="M425.161,497.291h13.272c3.738,0,8.17.122,11.136,2.737a8.978,8.978,0,0,1,2.78,7.518c-.812,10.133-6.875,15.809-15,15.809H430.8c-1.113,0-1.851.738-2.166,2.737l-1.827,11.619c-.118.754-.445,1.2-1.041,1.251h-8.176c-.906,0-1.229-.694-.993-2.2l5.888-37.271A2.35,2.35,0,0,1,425.161,497.291Z"
+                                      fill="#113984"
+                                      fill-rule="evenodd"
+                                    />
+                                    <path
+                                      id="Path_351"
+                                      data-name="Path 351"
+                                      d="M428.825,524.921l2.316-14.668a2.028,2.028,0,0,1,2.308-1.9h13.258a12.946,12.946,0,0,1,5.359.975c-1.332,9.018-7.166,14.028-14.8,14.028h-6.546C429.854,523.355,429.212,523.8,428.825,524.921Z"
+                                      fill="#172c70"
+                                      fill-rule="evenodd"
+                                    />
+                                  </g>
+                                </svg>
+                              </ng-container>
+                            </div>
+                          </div>
+                          <div class="pt-4">
+                            <p
+                              class="truncate py-1 text-sm font-semibold"
+                              title="{{ transaction.description }}"
+                            >
+                              {{
+                                transaction.description
+                                  ? transaction.description
+                                  : "No description"
+                              }}
+                            </p>
+                            <p
+                              class="truncate py-1 text-xs"
+                              title="KES {{
+                                transaction.amount | number: '.2'
+                              }}"
+                            >
+                              KES {{ transaction.amount | number: ".2" }}
+                            </p>
+                            <mat-divider></mat-divider>
+                            <p
+                              class="truncate py-1 text-xs"
+                              title="{{
+                                transaction.date | date: 'dd/MM/yyyy'
+                              }}"
+                            >
+                              {{ transaction.date | date: "dd/MM/yyyy" }}
+                            </p>
+                            <ng-container [ngSwitch]="transaction.status">
+                              <p
+                                *ngSwitchCase="TransactionStatus.Pending"
+                                class="truncate mt-2 text-amber-500 text-sm"
+                                title="{{
+                                  transaction.date | date: 'dd/MM/yyyy'
+                                }}"
+                              >
+                                Pending
+                              </p>
+                              <p
+                                *ngSwitchCase="TransactionStatus.Completed"
+                                class="truncate mt-2 text-green-500 text-sm"
+                                title="{{
+                                  transaction.date | date: 'dd/MM/yyyy'
+                                }}"
+                              >
+                                Completed
+                              </p>
                             </ng-container>
-
-                            <ng-container *ngIf="transactions.length >  0">
-                                <div class="flex justify-end">
-                                    <pagination-template #p="paginationApi" [id]="transactionsConfig.id" (pageChange)="transactionsConfig.currentPage = $event">
-                                        <h1 class="flex gap-4 items-center">
-                                            <div>
-                                                <span class="text-md animate__animated animate__fadeIn">{{ p.getCurrent() }} of {{ p.getLastPage() }}</span>
-                                            </div>
-
-                                            <svg *ngIf="p.isFirstPage()" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 27.995 25.073">
-                                                <g id="icon-nav" transform="matrix(-1, 0, 0, -1, 357.582, -233.52)">
-                                                    <g id="Group_60" data-name="Group 60">
-                                                        <path id="Path_99" data-name="Path 99" d="M345.356-234.479l10.3-11.578-10.3-11.579" fill="none"
-                                                            stroke="#aaa" stroke-miterlimit="10" stroke-width="2.883"></path>
-                                                        <line id="Line_25" data-name="Line 25" x2="26.091" transform="translate(329.587 -246.057)" fill="none"
-                                                            stroke="#aaa" stroke-miterlimit="10" stroke-width="2.937"></line>
-                                                    </g>
-                                                </g>
-                                            </svg>
-                                        
-                                            <svg *ngIf="!p.isFirstPage()" (click)="p.previous()" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 27.995 25.073">
-                                                <g id="icon-nav" transform="translate(-5638.005 -312.963)">
-                                                    <g id="icon-nav-2" data-name="icon-nav" transform="matrix(-1, 0, 0, -1, 5995.587, 79.443)">
-                                                        <g id="Group_60" data-name="Group 60">
-                                                            <path id="Path_99" data-name="Path 99" d="M345.356-234.479l10.3-11.578-10.3-11.579" fill="none"
-                                                                stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.883"></path>
-                                                            <line id="Line_25" data-name="Line 25" x2="26.091" transform="translate(329.587 -246.057)"
-                                                                fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.937"></line>
-                                                        </g>
-                                                    </g>
-                                                </g>
-                                            </svg>
-
-                                            <svg *ngIf="!p.isLastPage()" (click)="p.next()" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 27.995 25.073">
-                                                <g id="icon-nav" transform="translate(-5695 -312.963)">
-                                                    <g id="icon-nav-2" data-name="icon-nav" transform="translate(5365.413 79.443)">
-                                                        <g id="Group_58" data-name="Group 58">
-                                                            <path id="Path_97" data-name="Path 97" d="M345.356,234.479l10.3,11.578-10.3,11.579" fill="none"
-                                                                stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.883"></path>
-                                                            <line id="Line_23" data-name="Line 23" x2="26.091" transform="translate(329.587 246.057)"
-                                                                fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.937"></line>
-                                                        </g>
-                                                    </g>
-                                                </g>
-                                            </svg>
-                                        
-                                            <svg *ngIf="p.isLastPage()" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 27.995 25.073">
-                                                <g id="icon-nav" transform="translate(-5695 -312.963)">
-                                                    <g id="icon-nav-2" data-name="icon-nav" transform="translate(5365.413 79.443)">
-                                                        <g id="Group_58" data-name="Group 58">
-                                                            <path id="Path_97" data-name="Path 97" d="M345.356,234.479l10.3,11.578-10.3,11.579" fill="none"
-                                                                stroke="#aaa" stroke-miterlimit="10" stroke-width="2.883"></path>
-                                                            <line id="Line_23" data-name="Line 23" x2="26.091" transform="translate(329.587 246.057)"
-                                                                fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="2.937"></line>
-                                                        </g>
-                                                    </g>
-                                                </g>
-                                            </svg>
-                                        </h1>
-                                    </pagination-template>
-                                </div>
-
-                                <div class="mx-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-10">
-                                    <div *ngFor="let transaction of transactions | paginate: transactionsConfig" class="max-w-xs h-60 py-4 px-4 bg-white shadow-lg rounded-lg mt-20 animate__animated animate__fadeIn">
-                                        <div class="flex justify-center -mt-16">
-                                            <div class="w-20 h-20 rounded-full border-2 border-gray-300 animate__animated animate__fadeIn">
-                                                <ng-container [ngSwitch]="transaction.platform">
-                                                <svg *ngSwitchCase="PaymentMethodPlatform.Mpesa" class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 167 83.999">
-                                                    <g id="Group_192" data-name="Group 192" transform="translate(-93.684 -378.718)">
-                                                    <path id="Path_338" data-name="Path 338" d="M141.188,394.525H154.01a7.45,7.45,0,0,1,7.415,7.439v21.389a7.449,7.449,0,0,1-7.415,7.438H141.188a7.448,7.448,0,0,1-7.415-7.438V401.965a7.449,7.449,0,0,1,7.415-7.439Z" fill="#fff" fill-rule="evenodd"/>
-                                                    <path id="Path_339" data-name="Path 339" d="M158.645,462.717H136.554a5.9,5.9,0,0,1-5.871-5.89V391.891a5.9,5.9,0,0,1,5.871-5.89h22.091a5.882,5.882,0,0,1,.772.051v-4.778a2.561,2.561,0,0,1,2.55-2.556h0a2.561,2.561,0,0,1,2.55,2.556v8.059a2.548,2.548,0,0,1-.208,1.008,5.872,5.872,0,0,1,.208,1.549v64.936a5.9,5.9,0,0,1-5.871,5.89Zm-17.457-68.192H154.01a7.45,7.45,0,0,1,7.415,7.439v21.389a7.449,7.449,0,0,1-7.415,7.438H141.188a7.448,7.448,0,0,1-7.415-7.438V401.965a7.449,7.449,0,0,1,7.415-7.439Z" fill="#d1e187" fill-rule="evenodd"/>
-                                                    <path id="Path_340" data-name="Path 340" d="M169.709,395.887l14.1-.054c5.14.654,7.515,4.514,7.3,10.129-.392,5.658-3.59,8.424-8.931,8.909l-5.118-.1.144,15.524h-7.492V395.887Zm7.571,3.53c3.48-.5,6.152.469,6.334,5.966-.116,4.907-2.716,6.149-6.334,5.89V399.416Z" fill="#8bc53f" fill-rule="evenodd"/>
-                                                    <path id="Path_341" data-name="Path 341" d="M204.2,395.461l8.925-.041-.067,3.843-6.991-.032c-4.034.752-3.131,5.069-3.326,8.188l9.405-.177.033,4.718-9.114-.1-.043,11.422c.357,2.962,1.911,4.452,4.535,4.624l5.005-.056,1.527.035-.048,3.564-1.563.06-9.515-.1c-3.279-.111-5.927-1.742-7.146-6.814l-.233-22.162c.135-4.543,3.125-6.771,8.614-6.975Z" fill="#8bc53f" fill-rule="evenodd"/>
-                                                    <path id="Path_342" data-name="Path 342" d="M216.4,405.185c-.563-7.423,3.561-9.1,8.575-9.685,5.868-.35,9.554,2.106,10.273,8.37l-6.927-.019c-.439-3.159-2.89-4.374-5.132-2.869-3.195,3.922,6.778,10.824,9.768,13.385,5.169,4.1,4.294,15.467-3.667,17.574l-4.855.173c-4.931.116-7.866-3.008-8.716-8.8l6.979-.122c.381,2.473,1.433,4.011,3.667,3.9,3.475-.663,4.432-3.733,1.96-7.649-5.175-4.409-11.3-8.545-11.925-14.258Z" fill="#8bc53f" fill-rule="evenodd"/>
-                                                    <path id="Path_343" data-name="Path 343" d="M93.684,394.338h7.338l.076,2.286c4.433-1.921,7.777-3.28,11.279-.116,6.261-2.966,11-2.629,13.345,2.877l.327,30.908h-7.4V400.81c-.549-2.523-2.54-2.955-4.944-2.788v32.271h-7.569V400.81c-.549-2.523-2.54-2.955-4.944-2.788v32.271H93.684V394.338Z" fill="#8bc53f" fill-rule="evenodd"/>
-                                                    <path id="Path_344" data-name="Path 344" d="M239.364,431.2h7.609V412.211h6.334V431.2h7.377V404.075c-.147-5.511-4.371-8.966-10.352-8.988-6.821-.06-10.712,3.184-10.969,8.678V431.2Zm7.609-29.058c.252-2.026.909-2.842,3.128-3.06,2.251.057,3.054,1.362,3.206,3.37v5.5h-6.334v-5.812Z" fill="#8bc53f" fill-rule="evenodd"/>
-                                                    <path id="Path_345" data-name="Path 345" d="M139.68,409c1.27,2.976,3,4.346,5.088,4.428A29.281,29.281,0,0,1,134.3,418.3a33.248,33.248,0,0,1-6.666-1.327c5.421-1.074,9.462-3.706,12.05-7.982Z" fill="#81211c" fill-rule="evenodd"/>
-                                                    <path id="Path_346" data-name="Path 346" d="M153.894,401.325l15.294,7.749c-7.79,10.28-20.924,10.55-34.915,9.221,9.353-2.313,15.828-8.045,19.621-16.97Z" fill="#eb2026" fill-rule="evenodd"/>
-                                                    </g>
-                                                </svg>
-
-                                                <svg *ngSwitchCase="PaymentMethodPlatform.Paypal" class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 194 47.001">
-                                                    <g id="Group_193" data-name="Group 193" transform="translate(-416.523 -497.291)">
-                                                    <path id="Path_347" data-name="Path 347" d="M433.45,508.352h13.258c7.118,0,9.8,3.6,9.384,8.9-.682,8.742-5.966,13.575-12.976,13.575h-3.54c-.961,0-1.606.634-1.869,2.36l-1.518,10.019c-.1.652-.441,1.035-.955,1.081h-8.313c-.782,0-1.061-.6-.856-1.9l5.076-32.143A2.028,2.028,0,0,1,433.45,508.352Z" fill="#009de2" fill-rule="evenodd"/>
-                                                    <path id="Path_348" data-name="Path 348" d="M491,507.759c4.474,0,8.6,2.425,8.036,8.473-.67,7.171-4.534,11.164-10.611,11.18h-5.3c-.764,0-1.131.622-1.332,1.9l-1.025,6.526c-.154.985-.658,1.472-1.408,1.472h-4.937c-.786,0-1.061-.5-.886-1.63l4.081-26.157c.2-1.287.694-1.765,1.566-1.765Zm-8.042,14h4.021c2.515-.094,4.187-1.835,4.356-4.977a3.037,3.037,0,0,0-3.293-3.319l-3.786.016-1.3,8.28Zm29.5,13.545c.451-.409.91-.624.844-.118l-.16,1.213c-.084.63.168.969.758.969h4.386c.738,0,1.1-.3,1.281-1.442l2.7-16.966c.134-.852-.072-1.269-.72-1.269h-4.821c-.435,0-.646.243-.76.909l-.179,1.043c-.094.545-.343.64-.576.092-.818-1.939-2.906-2.808-5.832-2.747-6.767.14-11.329,5.276-11.816,11.86a8.154,8.154,0,0,0,8.082,9.093,8.72,8.72,0,0,0,6.809-2.635Zm-3.67-2.607a4.406,4.406,0,0,1-4.52-5.17,6.3,6.3,0,0,1,6.059-5.172,4.407,4.407,0,0,1,4.518,5.172,6.3,6.3,0,0,1-6.057,5.17Zm22.072-15.063h-4.432c-.919,0-1.292.674-1,1.528l5.521,16.172-5.441,7.693c-.455.642-.1,1.229.537,1.229h5a1.53,1.53,0,0,0,1.486-.73l16.984-24.364c.523-.752.277-1.536-.58-1.536l-4.729-.006c-.81,0-1.137.321-1.6,1L535.525,528.9l-3.151-10.3A1.362,1.362,0,0,0,530.864,517.635Z" fill="#113984" fill-rule="evenodd"/>
-                                                    <path id="Path_349" data-name="Path 349" d="M567.2,507.759c4.474,0,8.6,2.425,8.036,8.473-.67,7.171-4.534,11.164-10.613,11.18h-5.3c-.764,0-1.131.622-1.332,1.9l-1.023,6.526c-.154.985-.66,1.472-1.408,1.472H550.62c-.788,0-1.063-.5-.886-1.63l4.081-26.157c.2-1.287.692-1.765,1.564-1.765Zm-8.044,14h4.023c2.515-.094,4.185-1.835,4.354-4.977a3.035,3.035,0,0,0-3.293-3.319l-3.786.016-1.3,8.28Zm29.5,13.545c.451-.409.912-.624.846-.118l-.16,1.213c-.084.63.166.969.756.969h4.388c.738,0,1.1-.3,1.279-1.442l2.7-16.966c.136-.852-.07-1.269-.718-1.269h-4.823c-.435,0-.646.243-.76.909l-.178,1.043c-.092.545-.343.64-.574.092-.82-1.939-2.906-2.808-5.834-2.747-6.766.14-11.327,5.276-11.816,11.86a8.154,8.154,0,0,0,8.082,9.093,8.717,8.717,0,0,0,6.809-2.635Zm-3.67-2.607a4.406,4.406,0,0,1-4.518-5.17,6.3,6.3,0,0,1,6.057-5.172,4.4,4.4,0,0,1,4.518,5.172,6.3,6.3,0,0,1-6.057,5.17Zm20.233,4.7h-5.062a.6.6,0,0,1-.622-.7l4.454-28.18a.874.874,0,0,1,.84-.7h5.064a.6.6,0,0,1,.62.7l-4.452,28.18A.872.872,0,0,1,605.22,537.4Z" fill="#009de2" fill-rule="evenodd"/>
-                                                    <path id="Path_350" data-name="Path 350" d="M425.161,497.291h13.272c3.738,0,8.17.122,11.136,2.737a8.978,8.978,0,0,1,2.78,7.518c-.812,10.133-6.875,15.809-15,15.809H430.8c-1.113,0-1.851.738-2.166,2.737l-1.827,11.619c-.118.754-.445,1.2-1.041,1.251h-8.176c-.906,0-1.229-.694-.993-2.2l5.888-37.271A2.35,2.35,0,0,1,425.161,497.291Z" fill="#113984" fill-rule="evenodd"/>
-                                                    <path id="Path_351" data-name="Path 351" d="M428.825,524.921l2.316-14.668a2.028,2.028,0,0,1,2.308-1.9h13.258a12.946,12.946,0,0,1,5.359.975c-1.332,9.018-7.166,14.028-14.8,14.028h-6.546C429.854,523.355,429.212,523.8,428.825,524.921Z" fill="#172c70" fill-rule="evenodd"/>
-                                                    </g>
-                                                </svg>
-                                                </ng-container>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p class="truncate mt-2 text-base" title="{{transaction.description}}">
-                                                {{transaction.description ? transaction.description : 'No description'}}
-                                            </p>
-                                            <p class="truncate mt-2 text-sm" title="KES {{transaction.amount | number: '.2'}}">
-                                                KES {{transaction.amount | number: '.2'}}
-                                            </p>
-                                            <mat-divider></mat-divider>
-                                            <p class="truncate mt-2 text-sm" title="{{transaction.date | date: 'dd/MM/yyyy'}}">
-                                                {{transaction.date | date: 'dd/MM/yyyy'}}
-                                            </p>
-                                            <ng-container [ngSwitch]="transaction.status">
-                                                <p *ngSwitchCase="TransactionStatus.Pending" class="truncate mt-2 text-amber-500 text-sm" title="{{transaction.date | date: 'dd/MM/yyyy'}}">
-                                                    Pending
-                                                </p>
-                                                <p *ngSwitchCase="TransactionStatus.Completed" class="truncate mt-2 text-green-500 text-sm" title="{{transaction.date | date: 'dd/MM/yyyy'}}">
-                                                    Completed
-                                                </p>
-                                            </ng-container>
-                                        </div>
-                                        <!-- <div class="flex justify-end mt-4">
-                                            <div class="flex items-center text-indigo-600 text-sm animate__animated animate__fadeIn">
+                          </div>
+                          <!-- <div class="flex justify-end mt-4">
+                                            <div class="flex items-center text-[#fc007e] text-sm animate__animated animate__fadeIn">
                                                 <a id="login" mat-button (click)="showPaymentDetails(transaction)">
                                                 See More
                                                 </a>
@@ -483,37 +1209,26 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 19.003 17.968">
                                                         <g id="icon-view" transform="translate(0 0.647)">
                                                             <g id="Group_32" data-name="Group 32" transform="translate(-223.648 -168.825)">
-                                                            <path id="Path_52" data-name="Path 52" d="M234.349,168.825l6.987,8.337-6.987,8.337" fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="2.016"/>
-                                                            <line id="Line_1" data-name="Line 1" x2="17.704" transform="translate(223.648 177.161)" fill="none" stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="1.993"/>
+                                                            <path id="Path_52" data-name="Path 52" d="M234.349,168.825l6.987,8.337-6.987,8.337" fill="none" stroke="#fc007e" stroke-miterlimit="10" stroke-width="2.016"/>
+                                                            <line id="Line_1" data-name="Line 1" x2="17.704" transform="translate(223.648 177.161)" fill="none" stroke="#fc007e" stroke-miterlimit="10" stroke-width="1.993"/>
                                                             </g>
                                                         </g>
                                                     </svg>
                                                 </span>
                                             </div>
                                         </div> -->
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </ng-container>
+                        </div>
+                      </div>
                     </ng-container>
-                  </main>
-              </div>
+                  </ng-container>
+                </ng-container>
+              </main>
+            </div>
           </div>
-          </div>
-          <footer class="bg-slate-100 grid text-center md:fixed inset-x-0 bottom-0 px-4">
-              <nav class="flex flex-col md:flex-row gap-3 lg:mx-auto lg:w-[calc(90%+2rem)]">
-                <mat-nav-list class="gap-3">
-                  <div>
-                    <a mat-button>© BugBountyBox</a>
-                    <span>|</span>
-                    <a mat-button href="#">Privacy Policy</a>
-                    <span>|</span>
-                    <a mat-button href="#">Terms of Sevice</a>
-                  </div>
-                </mat-nav-list>
-              </nav>
-            </footer>
-        </mat-sidenav-content>
-      </mat-sidenav-container>
-    </main>
-  </div>
+        </div>
+        <!-- footer -->
+        <app-footer></app-footer>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </main>
+</div>

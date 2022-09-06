@@ -21,7 +21,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ProjectReviewDialogComponent } from './projects/project-review-dialog/project-review-dialog.component';
 import { HackersComponent } from './hackers/hackers.component';
 import { CustomerRoutingModule } from './customer-routing.module';
-import { CustomerNavComponent } from '../components/customer-nav/customer-nav.component';
+import { CustomerNavComponent } from './customer-nav/customer-nav.component';
 import { HackersDetailComponent } from './hackers/hackers-detail.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { TransfersComponent } from './transfers/transfers.component';
@@ -41,6 +41,7 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { UpdateProjectDomainDialogComponent } from './projects/update-project-domain-dialog/update-project-domain-dialog.component';
+import { CustomerSideNavComponent } from './customer-side-nav/customer-side-nav.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { UpdateProjectDomainDialogComponent } from './projects/update-project-do
     PayoutsDialogComponent,
     FilterPipePipe,
     SearchFilterPipe,
-    UpdateProjectDomainDialogComponent
+    UpdateProjectDomainDialogComponent,
+    CustomerSideNavComponent
   ],
   imports: [
     CommonModule,

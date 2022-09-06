@@ -44,12 +44,6 @@ export class NewProjectComponent {
     requirementLevelId:0,
     testTypeId: 0
   };
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
   testTypeName!: string;
   user: any;
   authUser: any;

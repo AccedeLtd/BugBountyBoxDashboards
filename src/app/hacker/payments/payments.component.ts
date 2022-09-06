@@ -16,14 +16,6 @@ import { ExportService } from 'src/app/core/_services/export.service';
 export class PaymentsComponent {
   searchInput!: string;
   sideNavOpened = false;
-
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
-
   user: any;
   authUser: any;
   userName: any;

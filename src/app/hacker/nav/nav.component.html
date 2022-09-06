@@ -1,0 +1,220 @@
+<mat-toolbar
+  class="bg-white flex-col shadow-lg z-50 h-20 !px-0"
+  color="primary"
+>
+  <div
+    class="w-full mx-auto py-3 px-3 lg:px-10 flex items-center lg:justify-between"
+  >
+    <div class="lg:hidden">
+      <button mat-icon-button (click)="toggleSideNav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <a class="flex-shrink-0">
+      <img src="assets/images/white-logo.svg" alt="Logo" style="width: 10rem" />
+    </a>
+
+    <mat-nav-list class="gap-3 items-center" disableRipple>
+      <!-- <div *ngFor="let section of sections;let i = index">
+            <span *ngIf="i>0">|</span>
+            <a id="login" routerLink="/hacker{{ section.id }}" [class.active]="section.active" mat-button>
+                {{ section.title }}
+            </a>
+        </div> -->
+
+      <div *ngFor="let menu of sections; index as i">
+        <span *ngIf="i > 0" class="pr-5">|</span>
+        <ng-container
+          [ngTemplateOutlet]="menu.submenus ? childMenu : parentMenu"
+          [ngTemplateOutletContext]="{ menu: menu }"
+        >
+        </ng-container>
+      </div>
+
+      <ng-template #parentMenu let-menu="menu">
+        <a
+          id="login"
+          routerLink="/hacker{{ menu.id }}"
+          [class.active]="menu.active"
+          mat-button
+        >
+          {{ menu.title }}
+        </a>
+      </ng-template>
+
+      <ng-template #childMenu let-menu="menu">
+        <a
+          id="login"
+          [class.active]="menu.active"
+          mat-button
+          [matMenuTriggerFor]="subMenu"
+          style="pointer-events: all; cursor: pointer"
+        >
+          {{ menu.title }}
+        </a>
+
+        <mat-menu #subMenu="matMenu" [overlapTrigger]="false">
+          <mat-list>
+            <mat-list-item
+              *ngFor="let submenu of menu.submenus"
+              class="cursor-pointer"
+              routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="selectOption(submenu)"
+            >
+              {{ submenu.title }}
+            </mat-list-item>
+          </mat-list>
+        </mat-menu>
+      </ng-template>
+
+      <div>
+        <svg
+          [matMenuTriggerFor]="notificationMenu"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 47.001 46.999"
+        >
+          <g id="icon-notification" transform="translate(-2558 -2586)">
+            <g
+              id="icon-notification-2"
+              data-name="icon-notification"
+              transform="translate(2450.069 1995.443)"
+            >
+              <path
+                id="Path_211"
+                data-name="Path 211"
+                d="M154.931,628.421h-47c3.594-3.661,6.621-4.434,6.621-8.915v-9.186a16.83,16.83,0,0,1,12.841-16.182,3.83,3.83,0,0,1,4.038-3.582,3.954,3.954,0,0,1,4.038,3.689,16.739,16.739,0,0,1,12.893,16.075V619.8C148.361,624.292,151.337,624.76,154.931,628.421Zm-23.5,9.135c4.125,0,7.582-3.209,8.514-7.309H122.919C123.85,634.348,127.306,637.556,131.431,637.556Z"
+                fill="#c7c9cb"
+              />
+            </g>
+            <path
+              id="Color_Overlay"
+              data-name="Color Overlay"
+              d="M2572.989,2625.691h17.025c-.93,4.1-4.388,7.309-8.513,7.309S2573.92,2629.791,2572.989,2625.691ZM2558,2623.865c3.595-3.661,6.621-4.434,6.621-8.915v-9.186a16.83,16.83,0,0,1,12.841-16.181A3.829,3.829,0,0,1,2581.5,2586a3.954,3.954,0,0,1,4.037,3.689,16.738,16.738,0,0,1,12.893,16.074v9.482c0,4.489,2.976,4.957,6.57,8.618Z"
+              fill="#fff"
+            />
+          </g>
+        </svg>
+
+        <!-- "notificationMenu" menu -->
+        <mat-menu #notificationMenu="matMenu" [overlapTrigger]="false">
+          <div
+            class="overflow-y-auto z-20"
+            style="width: 18rem; max-height: 15rem"
+          >
+            <div class="divide-y divide-slate-500">
+              <mat-accordion (click)="$event.stopPropagation()">
+                <ng-template #emptyView>
+                  <p class="text-center">Nothing to show</p>
+                </ng-template>
+
+                <ng-container
+                  *ngIf="allHackersNotifications.length; else emptyView"
+                >
+                  <mat-expansion-panel
+                    *ngFor="let notification of allHackersNotifications"
+                  >
+                    <mat-expansion-panel-header>
+                      <a
+                        class="w-full flex gap-2 items-center py-3 hover:bg-gray-100"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="w-8 h-8"
+                          viewBox="0 0 102.001 117.003"
+                        >
+                          <path
+                            id="Path_1"
+                            data-name="Path 1"
+                            d="M356.726,966.056a25.045,25.045,0,0,1-22.018,24.885H291.314a5.85,5.85,0,0,1-5.866-5.83l0-.072V911.519a6.806,6.806,0,0,1,6.809-6.772h38.945a25.258,25.258,0,0,1,25.52,24.885,24.816,24.816,0,0,1-8.044,18.218,24.651,24.651,0,0,1,8.044,18.206"
+                            transform="translate(-285.448 -873.938)"
+                            fill="#3909d1"
+                          ></path>
+                          <path
+                            id="Path_2"
+                            data-name="Path 2"
+                            d="M371.238,951.388a25.035,25.035,0,0,1-22.018,24.885H305.808a5.843,5.843,0,0,1-5.862-5.83V896.856a6.809,6.809,0,0,1,6.809-6.777H345.7a25.263,25.263,0,0,1,25.537,24.852,24.828,24.828,0,0,1-8.04,18.222,24.626,24.626,0,0,1,8.04,18.235"
+                            transform="translate(-285.448 -873.938)"
+                            fill="#e2006b"
+                          ></path>
+                          <path
+                            id="Path_3"
+                            data-name="Path 3"
+                            d="M387.449,935.248a25.038,25.038,0,0,1-22.018,24.885H322.037a5.843,5.843,0,0,1-5.862-5.83V880.716a6.809,6.809,0,0,1,6.809-6.777h38.945a25.261,25.261,0,0,1,25.52,24.89,24.623,24.623,0,0,1-8.04,18.2,24.681,24.681,0,0,1,8.04,18.218"
+                            transform="translate(-285.448 -873.938)"
+                            fill="#3909d1"
+                          ></path>
+                          <path
+                            id="Path_4"
+                            data-name="Path 4"
+                            d="M363.181,933.153a24.831,24.831,0,0,0,8.057-18.222,25.258,25.258,0,0,0-25.52-24.885H316.175v64.186a5.843,5.843,0,0,0,5.862,5.83h43.394a23.587,23.587,0,0,0,4.538-.976,24.594,24.594,0,0,0-6.788-25.933"
+                            transform="translate(-285.448 -873.938)"
+                            fill="#3909d1"
+                          ></path>
+                        </svg>
+                        <p class="flex flex-col truncate text-gray-600 text-sm">
+                          <span class="truncate font-medium text-indigo-600">{{
+                            notification.title
+                          }}</span>
+                          <span class="truncate">{{
+                            notification.message
+                          }}</span>
+                        </p>
+                      </a>
+                    </mat-expansion-panel-header>
+                    <br />
+                    <div class="flex flex-col">
+                      <p>
+                        {{
+                          notification.message
+                            ? notification.message
+                            : "No message"
+                        }}
+                      </p>
+                      <span
+                        class="text-gray-600 font-medium text-sm justify-self-end"
+                        >{{ notification.createdAt | date }}</span
+                      >
+                    </div>
+                  </mat-expansion-panel>
+                </ng-container>
+              </mat-accordion>
+            </div>
+          </div>
+
+          <!-- <mat-list-item *ngFor="let notification of allHackersNotifications">
+              <div class="flex flex-col">
+                <h1 class="mb-[2px]">{{notification.subject}}</h1>
+                <p class="mb-[2px]">{{notification.message  === null ? 'no message':notification.message}}</p>
+                <span class="text-[8px]">{{notification.createdAt | date}}</span>  
+              </div>
+              <mat-divider></mat-divider>
+            </mat-list-item> -->
+        </mat-menu>
+      </div>
+
+      <div class="ml-4">
+        <img
+          [matMenuTriggerFor]="profileMenu"
+          class="mx-auto h-12 w-12 bg-gray-300 rounded-full"
+          [src]="user?.image ?? 'assets/default_profile.jpg'"
+          alt="Avatar"
+        />
+
+        <!-- "profileMenu" menu -->
+        <mat-menu #profileMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item routerLink="/hacker/settings">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Log out</span>
+          </button>
+        </mat-menu>
+      </div>
+    </mat-nav-list>
+  </div>
+</mat-toolbar>

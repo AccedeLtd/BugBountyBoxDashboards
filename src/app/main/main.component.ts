@@ -36,37 +36,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(includeAdmin) {
-      this.oidcSecurityService.checkAuth('', 'admin').subscribe(({ isAuthenticated, userData }) => {
-        if (isAuthenticated) {
-          this.handleAuth('admin', userData);
-        }
-        else {
-          this.oidcSecurityService.authorize('admin');
-        }
-      });
-    }
-    else if(includeHacker) {
-      this.oidcSecurityService.checkAuth('', 'hacker').subscribe(({ isAuthenticated, userData }) => {
-        if (isAuthenticated) {
-          this.handleHackerAuth(userData);
-        }
-        else {
-          this.oidcSecurityService.authorize('hacker');
-        }
-      });
-    }
-    else if(includeCustomer) {
-      this.oidcSecurityService.checkAuth('', 'customer').subscribe(({ isAuthenticated, userData }) => {
-        if (isAuthenticated) {
-          this.handleAuth('customer', userData);
-        }
-        else {
-          this.oidcSecurityService.authorize('customer');
-        }
-      });
-    }
-    else {
+    if(includeAdmin && includeHacker && includeCustomer) {
       this.loading = true;
       let configId = '';
       const hashedConfigId = sessionStorage.getItem(constants.CONFIGID);
@@ -122,18 +92,56 @@ export class MainComponent implements OnInit {
         this.loading = false;
       }
     }
+    else if(includeAdmin) {
+      this.oidcSecurityService.checkAuth('', 'admin').subscribe(({ isAuthenticated, userData }) => {
+        if (isAuthenticated) {
+          this.handleAuth('admin', userData);
+        }
+        else {
+          this.oidcSecurityService.authorize('admin');
+        }
+      });
+    }
+    else if(includeHacker) {
+      this.oidcSecurityService.checkAuth('', 'hacker').subscribe(({ isAuthenticated, userData }) => {
+        if (isAuthenticated) {
+          this.handleHackerAuth('hacker', userData);
+        }
+        else {
+          this.oidcSecurityService.authorize('hacker');
+        }
+      });
+    }
+    else if(includeCustomer) {
+      this.oidcSecurityService.checkAuth('', 'customer').subscribe(({ isAuthenticated, userData }) => {
+        if (isAuthenticated) {
+          this.handleAuth('customer', userData);
+        }
+        else {
+          this.oidcSecurityService.authorize('customer');
+        }
+      });
+    }
   }
 
   handleAuth(role: string, userData: any) {
-    if (userData.role != role)
-      this.oidcSecurityService.logoff();
+    if (userData.role != role) {
+      alert(
+        `ACCESS DENIED. Please login.`
+      );
+      this.oidcSecurityService.logoff(role);
+    }
     else
       this._router.navigateByUrl(role);
   }
 
-  handleHackerAuth(userData: any) {
-    if (userData.role != 'hacker')
-      this.oidcSecurityService.logoff();
+  handleHackerAuth(role: string, userData: any) {
+    if (userData.role != 'hacker') {
+      alert(
+        `ACCESS DENIED. Please login.`
+      );
+      this.oidcSecurityService.logoff(role);
+    }
     else
       this.getHacker();
   }

@@ -51,14 +51,6 @@ export class UpdateDraftProjectComponent implements OnInit {
     requirementLevelId:this.requirementId,
     testTypeId: this.detailedProject?.testType.id
   };
-
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
-
   showReportForm: boolean = false;
   user: any;
   authUser: any;
@@ -171,20 +163,17 @@ export class UpdateDraftProjectComponent implements OnInit {
     })
 
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(result);
-      this.actualDomains = result;
-      
+      if(result)
+        this.actualDomains = result;
     });
   }
 
-  saveForm(value: CreateProjectRequestJson) {
+  saveForm() {
     this.loading = true;
-    value.id = this.recordName;
-//    console.log(value);
 
-    this.customerService.UpdateProject(value).subscribe({
+    this.customerService.UpdateProject(this.createProject).subscribe({
       next:result => {
-    //    console.log(`${JSON.stringify(result)}`);
+        //console.log(`${JSON.stringify(result)}`);
         this.createProjectResponse = result;
         this.loading = false;
         result.success === true ? this.showToasterSuccess("Your project was updated and saved successfully") : this.showToasterError("Your project could not be updated successfully");
@@ -192,10 +181,6 @@ export class UpdateDraftProjectComponent implements OnInit {
       },
       error:() => {
         this.notifyService.showError("The form could not be saved successfully","sorry");
-        this.loading = false;
-      },
-      complete:() => {
-        this.notifyService.showError("The form was saved successfully","Congratulations");
         this.loading = false;
       }
   })
@@ -229,6 +214,8 @@ export class UpdateDraftProjectComponent implements OnInit {
     this.customerService.getCustomerProject(projectId).subscribe(
       result => {
         this.detailedProject = result;
+        this.createProject.id = this.detailedProject?.id;
+        this.createProject.projectLogoUrl = this.detailedProject?.projectLogoUrl;
         this.createProject.title = this.detailedProject?.title;
         this.createProject.description = this.detailedProject?.description;
         this.createProject.bounty = this.detailedProject?.bounty;
@@ -300,30 +287,23 @@ export class UpdateDraftProjectComponent implements OnInit {
     this.testTypeName = testType.name;
   }
 
-  onChange(event:any) {
-    this.file = event.target.files[0];
-    this.onUpload();
-  }
+  updateImage(inputElement: HTMLInputElement) {
+    if (!inputElement.files?.length) return;
 
-  onUpload() {
+    this.file = inputElement.files[0];
     this.uploading = true;
-//    console.log(this.file);
     this.customerService.getProjectLogoUrl(this.file).subscribe({
-       next: result => {
-         if(this.file.type.includes("image/")){
+      next: result => {
+        if (this.file.type.includes("image/")) {
           this.createProject.projectLogoUrl = result.result.url;
           this.uploading = false;
-         }
-        },
-        error:() => {
-          this.notifyService.showError("Image upload was not successful", "Error");
-          this.uploading = false;
-        },
-        complete:() => {
-          this.notifyService.showSuccess("Image was uploaded successfully","Congratulations")
-          this.uploading = false;
         }
-      });
+      },
+      error: () => {
+        this.notifyService.showError("Image upload was not successful", "Error");
+        this.uploading = false;
+      }
+    });
   }
 
 }

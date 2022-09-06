@@ -1,53 +1,74 @@
 <mat-toolbar class="bg-white flex-col shadow-lg z-50" color="primary">
-  <div class="w-full mx-auto py-3 flex items-center lg:justify-between xl:w-11/12">
+  <div
+    class="w-full mx-auto py-3 px-3 lg:px-10 flex items-center lg:justify-between"
+  >
     <div class="lg:hidden">
       <button mat-icon-button (click)="toggleSideNav()">
         <mat-icon>menu</mat-icon>
       </button>
     </div>
     <a class="flex-shrink-0">
-      <img src="assets/dashboar-logo.png" alt="Logo" style="width: 200px" />
+      <img src="assets/images/white-logo.svg" alt="Logo" style="width: 10rem" />
     </a>
 
-    <mat-nav-list class="gap-3">        
-        <div>
-          <a id="login" mat-button [matMenuTriggerFor]="searchMenu">  
-            <mat-icon>search</mat-icon>
-          </a>
-          
-          <mat-menu #searchMenu="matMenu" [overlapTrigger]="false">
-            <form (keydown.tab)="$event.stopPropagation()">
-              <mat-toolbar>
-                <mat-toolbar-row style="height: 85px;" (click)="$event.stopPropagation(); false;">
-                  <mat-form-field class="example-form-field">
-                    <input mat-menu-item matInput type="text" name="searchInput" [(ngModel)]="this.searchInput" />
-                    <button mat-button matSuffix mat-icon-button aria-label="Clear searchInput" tabindex="-1" (click)="this.searchInput=''" [style.visibility]="!this.searchInput ? 'hidden' : 'visible'">
-                      <mat-icon>close</mat-icon>
-                    </button>
-                  </mat-form-field>
-                </mat-toolbar-row>
-                <mat-toolbar-row style="padding: 0px; height: 48px;">
-                  <button class="mat-menu-item" (click)="search()">
-                    <mat-icon>search</mat-icon>Search
-                  </button>
-                </mat-toolbar-row>
-              </mat-toolbar>
-            </form>
-          </mat-menu>
-        </div>
+    <mat-nav-list class="gap-3">
+      <div>
+        <a id="login" mat-button [matMenuTriggerFor]="searchMenu">
+          <mat-icon>search</mat-icon>
+        </a>
 
-        <div>
-          <a id="login" mat-button [matMenuTriggerFor]="notificationMenu">
-            <mat-icon>notifications</mat-icon>
-            <!-- <mat-icon matBadge="4" matBadgeColor="warn">notifications</mat-icon> -->
-          </a>
-          
-          <!-- "notificationMenu" menu -->
-          <mat-menu #notificationMenu="matMenu" [overlapTrigger]="false">
-            <mat-list>
-              <mat-list-item>No notifications</mat-list-item>
-            </mat-list>
-            <!-- <mat-list>
+        <mat-menu #searchMenu="matMenu" [overlapTrigger]="false">
+          <form (keydown.tab)="$event.stopPropagation()">
+            <mat-toolbar>
+              <mat-toolbar-row
+                style="height: 85px"
+                (click)="$event.stopPropagation(); (false)"
+              >
+                <mat-form-field class="example-form-field">
+                  <input
+                    mat-menu-item
+                    matInput
+                    type="text"
+                    name="searchInput"
+                    [(ngModel)]="this.searchInput"
+                  />
+                  <button
+                    mat-button
+                    matSuffix
+                    mat-icon-button
+                    aria-label="Clear searchInput"
+                    tabindex="-1"
+                    (click)="this.searchInput = ''"
+                    [style.visibility]="
+                      !this.searchInput ? 'hidden' : 'visible'
+                    "
+                  >
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+              </mat-toolbar-row>
+              <mat-toolbar-row style="padding: 0px; height: 48px">
+                <button class="mat-menu-item" (click)="search()">
+                  <mat-icon>search</mat-icon>Search
+                </button>
+              </mat-toolbar-row>
+            </mat-toolbar>
+          </form>
+        </mat-menu>
+      </div>
+
+      <div>
+        <a id="login" mat-button [matMenuTriggerFor]="notificationMenu">
+          <mat-icon>notifications</mat-icon>
+          <!-- <mat-icon matBadge="4" matBadgeColor="warn">notifications</mat-icon> -->
+        </a>
+
+        <!-- "notificationMenu" menu -->
+        <mat-menu #notificationMenu="matMenu" [overlapTrigger]="false">
+          <mat-list>
+            <mat-list-item>No notifications</mat-list-item>
+          </mat-list>
+          <!-- <mat-list>
               <mat-list-item>New bounty</mat-list-item>
               <mat-divider></mat-divider>
               <mat-list-item>New bounty</mat-list-item>
@@ -56,29 +77,48 @@
               <mat-divider></mat-divider>
               <mat-list-item>New bounty</mat-list-item>
             </mat-list> -->
-          </mat-menu>
-        </div>
-        <div>
-          <a *ngIf="loading" id="login" mat-button [matMenuTriggerFor]="profileMenu" class="h-16 w-16">
-            <mat-spinner color="accent" [diameter]="30" class="mx-auto"></mat-spinner>
-          </a>
+        </mat-menu>
+      </div>
+      <div>
+        <a
+          *ngIf="loading"
+          id="login"
+          mat-button
+          [matMenuTriggerFor]="profileMenu"
+          class="h-16 w-16"
+        >
+          <mat-spinner
+            color="accent"
+            [diameter]="30"
+            class="mx-auto"
+          ></mat-spinner>
+        </a>
 
-          <a *ngIf="!loading" id="login" mat-button [matMenuTriggerFor]="profileMenu">
-            <img class="mx-auto h-12 w-auto rounded-full" [src]="user.image" alt="Avatar">
-          </a>
-          
-          <!-- "profileMenu" menu -->
-          <mat-menu #profileMenu="matMenu" [overlapTrigger]="false">
-            <button mat-menu-item routerLink="/hacker/settings">
-              <mat-icon>settings</mat-icon>
-              <span>Settings</span>
-            </button>
-            <button mat-menu-item (click)="logout()">
-              <mat-icon>logout</mat-icon>
-              <span>Log out</span>
-            </button>
-          </mat-menu>
-        </div>
+        <a
+          *ngIf="!loading"
+          id="login"
+          mat-button
+          [matMenuTriggerFor]="profileMenu"
+        >
+          <img
+            class="mx-auto h-12 w-auto rounded-full"
+            [src]="user.image"
+            alt="Avatar"
+          />
+        </a>
+
+        <!-- "profileMenu" menu -->
+        <mat-menu #profileMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item routerLink="/hacker/settings">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Log out</span>
+          </button>
+        </mat-menu>
+      </div>
     </mat-nav-list>
   </div>
 </mat-toolbar>

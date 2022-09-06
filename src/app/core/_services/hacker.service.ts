@@ -196,8 +196,11 @@ export class HackerService {
     return payload;  
   }
   
-  getProjects(): Observable<any>{
-    let response = this.http.get<HTTPResponseWrapper<any>>(`${environment.hackerPortalApiUrl}/v1/Projects`);
+  getProjects(input: any): Observable<any>{
+    const params: any = {};
+    if(input.requirementLevelId) params.RequirementLevelId = input.requirementLevelId;
+
+    let response = this.http.get<HTTPResponseWrapper<any>>(`${environment.hackerPortalApiUrl}/v1/Projects`, {params});
     let payload = response.pipe(map(response => response.result));
 
     return payload;
@@ -277,6 +280,13 @@ export class HackerService {
   createBugReport(body: CreateBugReportInput): Observable<HTTPResponseWrapper<any>>{
     let response = this.http.post<HTTPResponseWrapper<any>>(`${environment.hackerPortalApiUrl}/v1/Bugs`, body);
     let payload = response.pipe(map(response => response));
+
+    return payload;
+  }
+
+  getBug(bugId: any): Observable<any>{
+    let response = this.http.get<HTTPResponseWrapper<any>>(`${environment.hackerPortalApiUrl}/v1/Bugs/${bugId}`);
+    let payload = response.pipe(map(response => response.result));
 
     return payload;
   }

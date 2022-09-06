@@ -3,138 +3,258 @@
   <main>
     <mat-sidenav-container>
       <mat-sidenav [(opened)]="sideNavOpened">
-        <mat-nav-list class="gap-3">
-          <a *ngFor="let section of sections" mat-list-item routerLink="/admin{{ section.id }}" routerLinkActive="active" (click)="toggleSideNav()">
-            {{ section.title }}
-          </a>
-        </mat-nav-list>
+        <app-admin-side-nav></app-admin-side-nav>
         <div class="sm:hidden border-t border-gray-200 font-medium">
           <mat-nav-list>
-            <a mat-list-item routerLink="/admin/settings" routerLinkActive="active">Settings</a>
             <a mat-list-item (click)="logout()">Log out</a>
           </mat-nav-list>
         </div>
       </mat-sidenav>
-    
-      <mat-sidenav-content id="container" class="flex-1 overflow-auto relative" style="scroll-behavior: smooth">
+
+      <mat-sidenav-content
+        id="container"
+        class="flex-1 overflow-auto relative"
+        style="scroll-behavior: smooth"
+      >
         <div class="max-w-full mx-auto md:py-6 py-10 sm:px-6 lg:px-20">
           <div class="flex flex-row flex-wrap flex-1 flex-grow content-start">
             <div id="main-content" class="w-full flex-1">
-                <main class="w-full" [ngClass]="{'scroll':showReportForm}">
-                  <div class="flex flex-col md:flex-row justify-between">
-                    <div class="animate__animated animate__fadeIn animate__delay-1s">
-                      <h1 class="my-6 text-xl flex gap-8 items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 31.715 29.829" class="cursor-pointer" routerLink="/admin/projects">
-                            <g id="Vector_Smart_Object" data-name="Vector Smart Object" transform="translate(2.589 1.29)">
-                                <g id="Vector_Smart_Object-2" data-name="Vector Smart Object" transform="translate(0 0)">
-                                    <g id="Group_65" data-name="Group 65" transform="translate(0 0)">
-                                        <path id="Path_124" data-name="Path 124" d="M221.175,150.066,209.68,163.691l11.495,13.625"
-                                            transform="translate(-209.653 -150.066)" fill="none" stroke="#1f0fa3" stroke-miterlimit="10"
-                                            stroke-width="4" />
-                                        <line id="Line_27" data-name="Line 27" x1="29.126" transform="translate(0 13.625)" fill="none"
-                                            stroke="#1f0fa3" stroke-miterlimit="10" stroke-width="4" />
-                                    </g>
-                                </g>
+              <main class="w-full" [ngClass]="{ scroll: showReportForm }">
+                <div class="flex flex-col md:flex-row justify-between">
+                  <div
+                    class="animate__animated animate__fadeIn animate__delay-1s"
+                  >
+                    <h1 class="my-6 text-xl flex gap-8 items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 31.715 29.829"
+                        class="cursor-pointer"
+                        routerLink="/admin/projects"
+                      >
+                        <g
+                          id="Vector_Smart_Object"
+                          data-name="Vector Smart Object"
+                          transform="translate(2.589 1.29)"
+                        >
+                          <g
+                            id="Vector_Smart_Object-2"
+                            data-name="Vector Smart Object"
+                            transform="translate(0 0)"
+                          >
+                            <g
+                              id="Group_65"
+                              data-name="Group 65"
+                              transform="translate(0 0)"
+                            >
+                              <path
+                                id="Path_124"
+                                data-name="Path 124"
+                                d="M221.175,150.066,209.68,163.691l11.495,13.625"
+                                transform="translate(-209.653 -150.066)"
+                                fill="none"
+                                stroke="#fc007e"
+                                stroke-miterlimit="10"
+                                stroke-width="4"
+                              />
+                              <line
+                                id="Line_27"
+                                data-name="Line 27"
+                                x1="29.126"
+                                transform="translate(0 13.625)"
+                                fill="none"
+                                stroke="#fc007e"
+                                stroke-miterlimit="10"
+                                stroke-width="4"
+                              />
                             </g>
-                        </svg>
-                        <div>
-                          Projects<span class="text-sm animate__animated animate__fadeIn animate__delay-1s"> / {{detailedProject?.title}}</span>
-                        </div>
-                      </h1>
-                      <!-- <a class="text-indigo-600 animate__animated animate__fadeIn animate__delay-1s" routerLink="/admin/projects">←</a> Projects<span class="text-sm animate__animated animate__fadeIn animate__delay-1s">/ {{detailedProject?.title}}</span> -->
-                    </div>
-                    <br>
-                    <div>
-                      <button *ngIf="detailedProject?.projectStatus === 1 && !activeLoading" class="px-4 py-1 hover:bg-[#E9347D] text-sm text-white rounded-full animate__animated animate__fadeIn animate__delay-2s" (click)="markActiveByAdmin()">Mark as Active</button>
-                      <button *ngIf="detailedProject?.projectStatus === 1 && activeLoading" class="px-4 py-1 hover:bg-[#E9347D] text-sm text-white rounded-full animate__animated animate__fadeIn animate__delay-2s" (click)="markActiveByAdmin()">
-                        <span class="mr-[5px]">Making Changes</span>
-                        <svg role="status" class="inline w-[8px] h-[8px] text-[#F1F1F1] animate-spin dark:text-[#F1F1F1] fill-[#FFFFFF]"
-                          viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                            fill="currentColor" />
-                          <path
-                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                            fill="currentFill" />
-                        </svg>
-                      </button>
-                      <!-- <button *ngIf="detailedProject?.projectStatus === 2" class="ml-5 px-4 py-1 text-sm text-white rounded-full animate__animated animate__fadeIn animate__delay-3s">Add to Submitted Issues</button> -->
-                    </div>
+                          </g>
+                        </g>
+                      </svg>
+                      <div>
+                        Projects<span
+                          class="text-sm animate__animated animate__fadeIn animate__delay-1s"
+                        >
+                          / {{ detailedProject?.title }}</span
+                        >
+                      </div>
+                    </h1>
+                    <!-- <a class="text-indigo-600 animate__animated animate__fadeIn animate__delay-1s" routerLink="/admin/projects">←</a> Projects<span class="text-sm animate__animated animate__fadeIn animate__delay-1s">/ {{detailedProject?.title}}</span> -->
                   </div>
-                
-                  <div class="w-full pb-16" *ngIf="!showReportForm">
-                    <div class="bg-white shadow-xl rounded m-2 animate__animated animate__fadeIn animate__delay-2s">
-                      <div class="flex flex-col bg-white rounded w-full mx-auto p-2 animate__animated animate__fadeIn animate__delay-2s">
-                        <div class="grid lg:grid-cols-2 gap-10">
-                          <div class="p-3">
-                            <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
-                              <div class="flex gap-3 items-center text-gray-800 rounded-md">
-                                <div class="flex flex-col">
-                                  <div class="text-gray-400 animate__animated animate__fadeIn animate__delay-3s">
-                                    {{detailedProject?.title}}
-                                  </div>
-                                  <div class="text-indigo-600 text-sm animate__animated animate__fadeIn animate__delay-4s">
-                                    {{detailedProject?.testType?.name}}
-                                  </div>
+                  <br />
+                  <div>
+                    <button
+                      *ngIf="detailedProject?.projectStatus === 1"
+                      class="px-4 py-1 hover:bg-[#E9347D] text-sm text-white rounded-full animate__animated animate__fadeIn animate__delay-2s"
+                      (click)="markActiveByAdmin()"
+                    >
+                      {{ activeLoading ? "Making Changes" : "Approve" }}
+                    </button>
+
+                    <!-- <button *ngIf="detailedProject?.projectStatus === 2" class="ml-5 px-4 py-1 text-sm text-white rounded-full animate__animated animate__fadeIn animate__delay-3s">Add to Submitted Issues</button> -->
+                  </div>
+                </div>
+
+                <div class="w-full pb-16" *ngIf="!showReportForm">
+                  <div
+                    class="bg-white shadow-md rounded m-2 animate__animated animate__fadeIn animate__delay-2s"
+                  >
+                    <div
+                      class="flex flex-col bg-white rounded w-full mx-auto p-2 animate__animated animate__fadeIn animate__delay-2s"
+                    >
+                      <div class="grid lg:grid-cols-2 gap-10">
+                        <div class="p-3">
+                          <div
+                            class="flex gap-3 items-center text-gray-800 p-3 justify-between"
+                          >
+                            <div
+                              class="flex gap-3 items-center text-gray-800 rounded-md"
+                            >
+                              <div class="flex flex-col">
+                                <div
+                                  class="text-gray-400 animate__animated animate__fadeIn animate__delay-3s"
+                                >
+                                  {{ detailedProject?.title }}
+                                </div>
+                                <div
+                                  class="text-indigo-600 text-sm animate__animated animate__fadeIn animate__delay-4s"
+                                >
+                                  {{ detailedProject?.testType?.name }}
                                 </div>
                               </div>
                             </div>
-                            <mat-divider></mat-divider>
-                            <br>
-                            <p class="animate__animated animate__fadeIn animate__delay-4s">
-                             {{detailedProject?.description}}
-                            </p>
-                            <br>
-                            <br>
-                            <mat-divider></mat-divider>
-                            <br>
-                            <p class="text-base animate__animated animate__fadeIn animate__delay-4s">Scopes</p>
-                            <br>
-                            <p class="animate__animated animate__fadeIn animate__delay-3s">In Scope</p>
-                            <div *ngFor="let domain of domainsofProject">
+                          </div>
+                          <mat-divider></mat-divider>
+                          <br />
+                          <p
+                            class="animate__animated animate__fadeIn animate__delay-4s"
+                          >
+                            {{ detailedProject?.description }}
+                          </p>
+                          <br />
+                          <br />
+                          <mat-divider></mat-divider>
+                          <br />
+                          <p
+                            class="text-base animate__animated animate__fadeIn animate__delay-4s"
+                          >
+                            Scopes
+                          </p>
+                          <br />
+                          <p
+                            class="animate__animated animate__fadeIn animate__delay-3s"
+                          >
+                            In Scope
+                          </p>
+                          <div *ngFor="let domain of domainsofProject">
                             <div class="max-w-full w-full py-2">
                               <div class="grid grid-cols-4 gap-2">
                                 <div>
-                                  <p class="animate__animated animate__fadeIn animate__delay-1s">Domain</p>
+                                  <p
+                                    class="animate__animated animate__fadeIn animate__delay-1s"
+                                  >
+                                    Domain
+                                  </p>
                                 </div>
                                 <div>
-                                  <p class="truncate animate__animated animate__fadeIn animate__delay-2s mr-[8px]" title="{{domain.name}}">{{domain.name}}</p>
+                                  <p
+                                    class="truncate animate__animated animate__fadeIn animate__delay-2s mr-[8px]"
+                                    title="{{ domain.name }}"
+                                  >
+                                    {{ domain.name }}
+                                  </p>
                                 </div>
                                 <div>
-                                  <p class="text-red-500 animate__animated animate__fadeIn animate__delay-3s">● Critical</p>
+                                  <p
+                                    class="text-red-500 animate__animated animate__fadeIn animate__delay-3s"
+                                  >
+                                    ● Critical
+                                  </p>
                                 </div>
-                                <div class="ml-3 overflow-hidden justify-self-end">
-                                  <p class="text-red-500 animate__animated animate__fadeIn animate__delay-4s">Ineligible</p>
+                                <div
+                                  class="ml-3 overflow-hidden justify-self-end"
+                                >
+                                  <p
+                                    class="text-red-500 animate__animated animate__fadeIn animate__delay-4s"
+                                  >
+                                    Ineligible
+                                  </p>
                                 </div>
                               </div>
                             </div>
                             <mat-divider></mat-divider>
-      
                           </div>
-                            
-                            <mat-divider></mat-divider>
-                            <br>
-                            <div *ngIf="detailedProject?.projectStatus === 1">
-                              <p class="text-lg font-semibold animate__animated animate__fadeIn animate__delay-4s">
-                                Please Add A Review</p>
+
+                          <mat-divider></mat-divider>
+                          <br />
+                          <div *ngIf="detailedProject?.projectStatus === 1">
+                            <p
+                              class="text-lg font-semibold animate__animated animate__fadeIn animate__delay-4s"
+                            >
+                              Please Add A Review
+                            </p>
                             <div class="w-full flex flex-wrap">
-                              <nav class="w-auto flex-1 border-b-1 border-gray-300 order-1 lg:order-2">
-                                <div class="flex h-full justify-between items-center">
+                              <nav
+                                class="w-auto flex-1 border-b-1 border-gray-300 order-1 lg:order-2"
+                              >
+                                <div
+                                  class="flex h-full justify-between items-center"
+                                >
                                   <!--Title-->
                                   <div class="relative w-full">
-                                    <div class="mt-1 relative rounded-md shadow-sm">
-                                      <textarea name="description"  rows="8" [(ngModel)]="reviewComment"
-                                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
+                                    <div
+                                      class="mt-1 relative rounded-md shadow-sm"
+                                    >
+                                      <textarea
+                                        name="description"
+                                        rows="8"
+                                        [(ngModel)]="reviewComment"
+                                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-2"
+                                      ></textarea>
                                     </div>
-                                    <br>
+                                    <br />
                                     <div>
-                                      <button *ngIf="this.reviewLoading === false" (click) = 'addReviewToProject({projectId:this.recordName,comment:reviewComment})'>Add Review</button>
-                                      <button class="flex items-center" *ngIf="this.reviewLoading === true" (click) = 'addReviewToProject({projectId:this.recordName,comment:reviewComment})'>
-                                        <span class="mr-[5px]">Adding Review</span>
-                                        <svg role="status" class="inline w-[8px] h-[8px] text-[#F1F1F1] animate-spin dark:text-[#F1F1F1] fill-[#FFFFFF]" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                                          <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-                                      </svg>
+                                      <button
+                                        *ngIf="this.reviewLoading === false"
+                                        (click)="
+                                          addReviewToProject({
+                                            projectId: this.recordName,
+                                            comment: reviewComment
+                                          })
+                                        "
+                                      >
+                                        Add Review
+                                      </button>
+                                      <button
+                                        class="flex items-center"
+                                        *ngIf="this.reviewLoading === true"
+                                        (click)="
+                                          addReviewToProject({
+                                            projectId: this.recordName,
+                                            comment: reviewComment
+                                          })
+                                        "
+                                      >
+                                        <span class="mr-[5px]"
+                                          >Adding Review</span
+                                        >
+                                        <svg
+                                          role="status"
+                                          class="inline w-[8px] h-[8px] text-[#F1F1F1] animate-spin dark:text-[#F1F1F1] fill-[#FFFFFF]"
+                                          viewBox="0 0 100 101"
+                                          fill="none"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                            fill="currentColor"
+                                          />
+                                          <path
+                                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                            fill="currentFill"
+                                          />
+                                        </svg>
                                       </button>
                                     </div>
                                   </div>
@@ -142,9 +262,9 @@
                                 </div>
                               </nav>
                             </div>
-                            </div>
-                  
-                            <!-- <p class="animate__animated animate__fadeIn animate__delay-4s">Out of Scope</p>
+                          </div>
+
+                          <!-- <p class="animate__animated animate__fadeIn animate__delay-4s">Out of Scope</p>
                             <div class="max-w-full w-full py-2">
                               <div class="grid grid-cols-5 gap-2">
                                 <div>
@@ -160,113 +280,272 @@
                                 </div>
                               </div>
                             </div> -->
-                            <!-- <mat-divider></mat-divider>
+                          <!-- <mat-divider></mat-divider>
                             <br>
                             <p class="text-base">Domain</p>
                             <p>www.loremipsum.com</p>
                             <p>www.loremipsum.io</p> -->
-                          </div>
+                        </div>
 
-                          <div class="p-3">
-                            <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
-                              <div class="flex gap-3 items-center text-gray-800 rounded-md">
-                                <div class="flex flex-col">
-                                  <div *ngIf="detailedProject?.projectStatus === 2" class="text-gray-400 animate__animated animate__fadeIn animate__delay-2s">
-                                    Submissions
-                                  </div>
-                                  <div *ngIf="detailedProject?.projectStatus === 1" class="text-gray-400 animate__animated animate__fadeIn animate__delay-2s">
-                                    Reviews
-                                  </div>
-                                  <div class="text-indigo-600 text-sm">
-                                    &nbsp;
-                                  </div>
+                        <div class="p-3">
+                          <ng-template #emptyView>
+                            <p class="text-center">
+                              Items added will display here.
+                            </p>
+                          </ng-template>
+
+                          <div
+                            class="flex gap-3 items-center text-gray-800 p-3 justify-between"
+                          >
+                            <div
+                              class="flex gap-3 items-center text-gray-800 rounded-md"
+                            >
+                              <div class="flex flex-col">
+                                <div
+                                  *ngIf="detailedProject?.projectStatus === 2"
+                                  class="text-gray-400 animate__animated animate__fadeIn animate__delay-2s"
+                                >
+                                  Submissions
+                                </div>
+                                <div
+                                  *ngIf="detailedProject?.projectStatus === 1"
+                                  class="text-gray-400 animate__animated animate__fadeIn animate__delay-2s"
+                                >
+                                  Reviews
+                                </div>
+                                <div class="text-indigo-600 text-sm">
+                                  &nbsp;
                                 </div>
                               </div>
                             </div>
-                            <mat-divider></mat-divider>
-                            <br>
-                            <ul *ngIf="detailedProject?.projectStatus === 2" role="list" class="p-6 divide-y divide-slate-200 relative grid gap-2">
-                              <li *ngFor="let submissions of bugreviewsByHacker" class="flex pt-4 first:pt-0 last:pb-0 hover:bg-gray-100">
-                                <img class="h-10 w-10 rounded-full animate__animated animate__fadeIn animate__delay-1s" [src]="submissions.hacker.image ? submissions.hacker.image : 'https://ui-avatars.com/api/?name='+ submissions.hacker.userName" alt="Avatar" />
-                                <div class="ml-3 overflow-hidden text-left space-y-1 mx-auto">
-                                  <p class="text-sm text-slate-900 animate__animated animate__fadeIn animate__delay-2s">{{submissions.hacker.fullName}}</p>
-                                  <p class="text-xs text-slate-500 truncate animate__animated animate__fadeIn animate__delay-3s">Completed on {{submissions.dateOfSubmission | date}}</p>
-                                </div>
-                                <div class="ml-3 overflow-hidden"> 
-                                  <button class="px-4 py-1 text-sm text-white rounded-full animate__animated animate__fadeIn animate__delay-4s" (click)="toggleReportForm(submissions.id)">Review Submission</button>
-                                </div>
-                              </li>
-                            </ul>
-                            <ul *ngIf="detailedProject?.projectStatus === 1" role="list" class="p-6 divide-y divide-slate-200 relative grid gap-2">
-                              <li *ngFor="let review of detailedProject?.reviews" class="pt-4 first:pt-0 last:pb-0 hover:bg-gray-100">
-                                <div class="flex">
-                                  <img class="h-10 w-10 rounded-full animate__animated animate__fadeIn animate__delay-1s" [src]="'https://ui-avatars.com/api/?name='+ review.userName" alt="Avatar" />
-                                  <div class="ml-3 overflow-hidden text-left space-y-1 mx-auto">
-                                    <p class="text-sm text-slate-900 animate__animated animate__fadeIn animate__delay-2s">{{review.userName}}</p>
-                                    <p class="text-xs text-slate-500 truncate animate__animated animate__fadeIn animate__delay-3s">Completed on {{review.date | date}}</p>
-                                    <p class="text-sm text-slate-500 mt-2 w-[40%]">{{review.comment}}</p>
-                                  </div>
-                                  <div class="ml-3 overflow-hidden">
-                                    <button class="px-4 py-1 text-sm text-white rounded-full animate__animated animate__fadeIn animate__delay-4s">see more</button>
-                                  </div>
-                                </div>
-                              </li>
-                            </ul>
-                            
                           </div>
+                          <mat-divider></mat-divider>
+
+                          <br />
+
+                          <ul
+                            *ngIf="detailedProject?.projectStatus === 2"
+                            role="list"
+                            class="p-6 divide-y divide-slate-200 relative grid gap-2"
+                          >
+                            <ng-container
+                              *ngIf="bugreviewsByHacker.length; else emptyView"
+                            >
+                              <li
+                                *ngFor="let submissions of bugreviewsByHacker"
+                                class="pt-4 first:pt-0 last:pb-0 hover:bg-gray-100"
+                              >
+                                <div class="flex justify-between p-2">
+                                  <div class="flex gap-4">
+                                    <img
+                                      class="h-10 w-10 rounded-full animate__animated animate__fadeIn animate__delay-1s"
+                                      [src]="
+                                        submissions.hacker.image
+                                          ? submissions.hacker.image
+                                          : 'https://ui-avatars.com/api/?name=' +
+                                            submissions.hacker.userName
+                                      "
+                                      alt="Avatar"
+                                    />
+                                    <div
+                                      class="ml-3 overflow-hidden text-left space-y-1"
+                                    >
+                                      <p
+                                        class="text-sm text-gray-900 animate__animated animate__fadeIn animate__delay-2s"
+                                      >
+                                        {{ submissions.hacker.fullName }}
+                                      </p>
+                                      <p
+                                        class="text-xs text-gray-500 truncate animate__animated animate__fadeIn animate__delay-3s"
+                                      >
+                                        Added on
+                                        {{
+                                          submissions.dateOfSubmission | date
+                                        }}
+                                      </p>
+                                    </div>
+                                  </div>
+
+                                  <div class="ml-3 overflow-hidden">
+                                    <button
+                                      class="px-4 py-1 text-sm text-white rounded-full animate__animated animate__fadeIn animate__delay-4s"
+                                      (click)="toggleReportForm(submissions.id)"
+                                    >
+                                      Review Submission
+                                    </button>
+                                  </div>
+                                </div>
+                              </li>
+                            </ng-container>
+                          </ul>
+
+                          <ul
+                            *ngIf="detailedProject?.projectStatus === 1"
+                            role="list"
+                            class="p-6 divide-y divide-slate-200 relative grid gap-2"
+                          >
+                            <ng-container
+                              *ngIf="
+                                detailedProject?.reviews?.length;
+                                else emptyView
+                              "
+                            >
+                              <li
+                                *ngFor="let review of detailedProject?.reviews"
+                                class="pt-4 first:pt-0 last:pb-0 hover:bg-gray-100"
+                              >
+                                <div class="flex gap-4">
+                                  <img
+                                    class="h-10 w-10 rounded-full animate__animated animate__fadeIn animate__delay-1s"
+                                    [src]="
+                                      'https://ui-avatars.com/api/?name=' +
+                                      review.userName
+                                    "
+                                    alt="Avatar"
+                                  />
+                                  <div class="text-left space-y-1">
+                                    <p
+                                      class="text-sm text-gray-900 animate__animated animate__fadeIn animate__delay-2s"
+                                    >
+                                      {{ review.userName }}
+                                    </p>
+                                    <p
+                                      class="text-xs text-gray-500 truncate animate__animated animate__fadeIn animate__delay-3s"
+                                    >
+                                      Added on {{ review.date | date }}
+                                    </p>
+                                    <p
+                                      class="text-sm text-gray-500 mt-2 w-full"
+                                    >
+                                      {{ review.comment }}
+                                    </p>
+                                  </div>
+                                </div>
+                              </li>
+                            </ng-container>
+                          </ul>
                         </div>
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  <div class="w-full pb-16" *ngIf="showReportForm">
-                    <div class="bg-white shadow-xl rounded m-2">
-                      <div class="flex flex-col bg-white rounded w-full mx-auto p-2">
-                        <div class="grid lg:grid-cols-2 gap-10">
-                          <div class="p-3">
-                            <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
-                              <div class="flex gap-3 items-center text-gray-800 rounded-md">
-                                <div class="flex flex-col">
-                                  <div class="text-gray-400 animate__animated animate__fadeIn animate__delay-1s">
-                                    {{bugreview?.hacker?.fullName}}
-                                  </div>
-                                  <div class="text-indigo-600 text-sm animate__animated animate__fadeIn animate__delay-2s">
-                                    {{bugreview?.vulnerability?.type}}
-                                  </div>
+                <div class="w-full pb-16" *ngIf="showReportForm">
+                  <div class="bg-white shadow-md rounded">
+                    <div
+                      class="flex flex-col bg-white rounded w-full mx-auto p-2"
+                    >
+                      <div class="grid lg:grid-cols-2 gap-10">
+                        <div class="p-3">
+                          <div
+                            class="flex gap-3 items-center text-gray-800 p-3 justify-between"
+                          >
+                            <div
+                              class="flex gap-3 items-center text-gray-800 rounded-md"
+                            >
+                              <div class="flex flex-col">
+                                <div
+                                  class="text-gray-400 animate__animated animate__fadeIn animate__delay-1s"
+                                >
+                                  {{ bugreview?.hacker?.fullName }}
+                                </div>
+                                <div
+                                  class="text-indigo-600 text-sm animate__animated animate__fadeIn animate__delay-2s"
+                                >
+                                  {{ bugreview?.vulnerability?.type }}
                                 </div>
                               </div>
                             </div>
-                            <mat-divider></mat-divider>
-                            <br>
-                            <p class="text-base animate__animated animate__fadeIn animate__delay-5s">Targeted Domain</p>
-                            <p *ngFor="let domain of detailedProject?.domains">
-                            <span class="animate__animated animate__fadeIn animate__delay-6s" 
-                              *ngIf="domain.id == bugreview?.projectDomainId">
-                              {{domain.name}} 
+                          </div>
+                          <mat-divider></mat-divider>
+                          <br />
+                          <p
+                            class="text-base animate__animated animate__fadeIn animate__delay-5s"
+                          >
+                            Targeted Domain
+                          </p>
+                          <p *ngFor="let domain of detailedProject?.domains">
+                            <span
+                              class="animate__animated animate__fadeIn animate__delay-6s"
+                              *ngIf="domain.id == bugreview?.projectDomainId"
+                            >
+                              {{ domain.name }}
                             </span>
+                          </p>
+                          <br />
+                          <div *ngIf="detailedProject?.projectStatus === 2">
+                            <p
+                              class="text-lg font-semibold animate__animated animate__fadeIn animate__delay-4s"
+                            >
+                              Please Add Review on Active Project
                             </p>
-                            <br>
-                            <div *ngIf="detailedProject?.projectStatus === 2">    
-                              <p class="text-lg font-semibold animate__animated animate__fadeIn animate__delay-4s">
-                                Please Add Review on Active Project</p>
                             <div class="w-full flex flex-wrap">
-                              <nav class="w-auto flex-1 border-b-1 border-gray-300 order-1 lg:order-2">
-                                <div class="flex h-full justify-between items-center">
+                              <nav
+                                class="w-auto flex-1 border-b-1 border-gray-300 order-1 lg:order-2"
+                              >
+                                <div
+                                  class="flex h-full justify-between items-center"
+                                >
                                   <!--Title-->
                                   <div class="relative w-full">
-                                    <div class="mt-1 relative rounded-md shadow-sm">
-                                      <textarea name="description"  rows="8" [(ngModel)]="activeReviewComment"
-                                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
+                                    <div
+                                      class="mt-1 relative rounded-md shadow-sm"
+                                    >
+                                      <textarea
+                                        name="description"
+                                        rows="8"
+                                        [(ngModel)]="activeReviewComment"
+                                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-2"
+                                      ></textarea>
                                     </div>
-                                    <br>
+                                    <br />
                                     <div>
-                                      <button *ngIf="this.activeReviewLoading === false" (click) = 'addActiveReviewToProject({bugReportId:this.bugReportId,comment:activeReviewComment,status:bugreview?.status})'>Add Review</button>
-                                      <button class="flex items-center" *ngIf="this.activeReviewLoading === true" (click) = 'addActiveReviewToProject({bugReportId:this.bugreview?.id,comment:activeReviewComment,status:bugreview?.status})'>
-                                        <span class="mr-[5px]">Adding Review</span>
-                                        <svg role="status" class="inline w-[8px] h-[8px] text-[#F1F1F1] animate-spin dark:text-[#F1F1F1] fill-[#FFFFFF]" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                                          <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-                                      </svg>
+                                      <button
+                                        *ngIf="
+                                          this.activeReviewLoading === false
+                                        "
+                                        (click)="
+                                          addActiveReviewToProject({
+                                            bugReportId: this.bugReportId,
+                                            comment: activeReviewComment,
+                                            status: bugreview?.status
+                                          })
+                                        "
+                                      >
+                                        Add Review
+                                      </button>
+                                      <button
+                                        class="flex items-center"
+                                        *ngIf="
+                                          this.activeReviewLoading === true
+                                        "
+                                        (click)="
+                                          addActiveReviewToProject({
+                                            bugReportId: this.bugreview?.id,
+                                            comment: activeReviewComment,
+                                            status: bugreview?.status
+                                          })
+                                        "
+                                      >
+                                        <span class="mr-[5px]"
+                                          >Adding Review</span
+                                        >
+                                        <svg
+                                          role="status"
+                                          class="inline w-[8px] h-[8px] text-[#F1F1F1] animate-spin dark:text-[#F1F1F1] fill-[#FFFFFF]"
+                                          viewBox="0 0 100 101"
+                                          fill="none"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                            fill="currentColor"
+                                          />
+                                          <path
+                                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                            fill="currentFill"
+                                          />
+                                        </svg>
                                       </button>
                                     </div>
                                   </div>
@@ -274,90 +553,126 @@
                                 </div>
                               </nav>
                             </div>
-                            </div>
                           </div>
+                        </div>
 
-                          <div class="p-3">
-                            <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
-                              <div class="flex gap-3 items-center text-gray-800 rounded-md">
-                                <div class="flex flex-col">
-                                  <div class="text-gray-400 animate__animated animate__fadeIn animate__delay-1s">
-                                    Reproducible Steps
-                                  </div>
-                                  <div class="text-indigo-600 text-sm">
-                                    &nbsp;
-                                  </div>
+                        <div class="p-3">
+                          <div
+                            class="flex gap-3 items-center text-gray-800 p-3 justify-between"
+                          >
+                            <div
+                              class="flex gap-3 items-center text-gray-800 rounded-md"
+                            >
+                              <div class="flex flex-col">
+                                <div
+                                  class="text-gray-400 animate__animated animate__fadeIn animate__delay-1s"
+                                >
+                                  Reproducible Steps
+                                </div>
+                                <div class="text-indigo-600 text-sm">
+                                  &nbsp;
                                 </div>
                               </div>
                             </div>
-                            <mat-divider></mat-divider>
-                            <br>
-                            <ejs-richtexteditor [toolbarSettings]='tools' [height]='250' [value]="bugreview?.description" readonly="true"></ejs-richtexteditor>
-                            <br>
-                            <div class="flex gap-3 items-center text-gray-800 p-3 rounded-md justify-between">
-                              <div class="flex gap-3 items-center text-gray-800 rounded-md">
-                                <div class="flex flex-col">
-                                  <div class="text-gray-400 animate__animated animate__fadeIn animate__delay-1s">
-                                    Bug Reviews
-                                  </div>
-                                  <div class="text-indigo-600 text-sm">
-                                    &nbsp;
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <mat-divider></mat-divider>
-                            <ul *ngIf="bugreview?.reviews" role="list" class="overflow-y-scroll h-32 p-6 divide-y divide-slate-200 relative grid gap-2">
-                              <li *ngFor="let review of projectBugReviews" class=" flex flex-col p-2 hover:bg-gray-100">
-                                <div class="flex">
-                                    <img class="h-10 w-10 rounded-full" [src]="'https://ui-avatars.com/api/?name='+ review.username" alt="" />
-                                    <div class="flex-col w-full">
-                                      <div class="flex">
-                                        <div class="ml-3 overflow-hidden text-left space-y-1 mx-auto"> 
-                                          <p class="text-sm text-slate-900">{{review.username}}</p>
-                                          <p class="text-xs text-slate-500 truncate">Completed on {{review.date | date}}</p>  
-                                        </div>  
-                                        <div class="ml-3 overflow-hidden">
-                                          <button class="px-4 py-1 text-sm text-white rounded-full">See more</button>
-                                        </div>
-                                      </div> 
-                                      <div *ngIf="this.showReportForm" class="pl-2">
-                                        <p class="text-sm text-slate-500 mt-4">{{review.comment}}</p>
-                                      </div> 
-                                       
-                                      
-                                    </div>
-                                  
-                                </div>
-                                
-                                
-                              </li>
-                            </ul>
                           </div>
+                          <mat-divider></mat-divider>
+                          <br />
+                          <ejs-richtexteditor
+                            [toolbarSettings]="tools"
+                            [height]="250"
+                            [value]="bugreview?.description"
+                            readonly="true"
+                          ></ejs-richtexteditor>
+                          <br />
+
+                          <ng-template #emptyView>
+                            <p class="text-center">
+                              Items added will display here.
+                            </p>
+                          </ng-template>
+
+                          <div
+                            class="flex gap-3 items-center text-gray-800 p-3 justify-between"
+                          >
+                            <div
+                              class="flex gap-3 items-center text-gray-800 rounded-md"
+                            >
+                              <div class="flex flex-col">
+                                <div
+                                  class="text-gray-400 animate__animated animate__fadeIn animate__delay-1s"
+                                >
+                                  Bug Reviews
+                                </div>
+                                <div class="text-indigo-600 text-sm">
+                                  &nbsp;
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <mat-divider></mat-divider>
+                          <ul
+                            *ngIf="bugreview?.reviews"
+                            role="list"
+                            class="overflow-y-scroll h-32 p-6 divide-y divide-slate-200 relative grid gap-2"
+                          >
+                            <ng-container
+                              *ngIf="projectBugReviews.length; else emptyView"
+                            >
+                              <li
+                                *ngFor="let review of projectBugReviews"
+                                class="flex flex-col p-2 hover:bg-gray-100"
+                              >
+                                <div class="flex">
+                                  <img
+                                    class="h-10 w-10 rounded-full"
+                                    [src]="
+                                      'https://ui-avatars.com/api/?name=' +
+                                      review.username
+                                    "
+                                    alt=""
+                                  />
+                                  <div class="flex-col w-full">
+                                    <div class="flex">
+                                      <div
+                                        class="ml-3 overflow-hidden text-left space-y-1 mx-auto"
+                                      >
+                                        <p class="text-sm text-gray-900">
+                                          {{ review.username }}
+                                        </p>
+                                        <p
+                                          class="text-xs text-gray-500 truncate"
+                                        >
+                                          Completed on {{ review.date | date }}
+                                        </p>
+                                      </div>
+                                      <!-- <div class="ml-3 overflow-hidden">
+                                            <button class="px-4 py-1 text-sm text-white rounded-full">See more</button>
+                                          </div> -->
+                                    </div>
+                                    <div
+                                      *ngIf="this.showReportForm"
+                                      class="pl-2"
+                                    >
+                                      <p class="text-sm text-gray-500 mt-4">
+                                        {{ review.comment }}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            </ng-container>
+                          </ul>
                         </div>
                       </div>
                     </div>
                   </div>
-                </main>
+                </div>
+              </main>
             </div>
-    
-        </div>
+          </div>
           <!-- /End replace -->
         </div>
-        <!-- <footer class="bg-slate-100 grid text-center md:fixed inset-x-0 bottom-0 px-4"> -->
-        <footer class="bg-slate-100 grid text-center fixed inset-x-0 bottom-0 px-4">
-            <nav class="flex flex-col md:flex-row gap-3 lg:mx-auto lg:w-[calc(90%+2rem)]">
-              <mat-nav-list class="gap-3">
-                <div>
-                  <a mat-button>© BugBountyBox</a>
-                  <span>|</span>
-                  <a mat-button href="#">Privacy Policy</a>
-                  <span>|</span>
-                  <a mat-button href="#">Terms of Sevice</a>
-                </div>
-              </mat-nav-list>
-            </nav>
-          </footer>
+        <app-footer></app-footer>
       </mat-sidenav-content>
     </mat-sidenav-container>
   </main>

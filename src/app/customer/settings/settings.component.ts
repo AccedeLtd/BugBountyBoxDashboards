@@ -31,13 +31,6 @@ export class SettingsComponent implements OnInit {
   bounties: any;
   showUserInfo = true;
   PaymentMethodPlatform = PaymentMethodPlatform;
-
-  sections = [
-    { id: '', title: 'Dashboard', active: false },
-    { id: '/projects', child: '/projects/details', title: 'Projects', active: false },
-    { id: '/bounty-activity', child: '/bounty-activity/details', title: 'Bounty Activity', active: false },
-    { id: '/payments', child: '/payments/details', title: 'Payments', active: false },
-  ];
   showPaymentMethod!: boolean;
   loadingPaymentMethods: boolean = true;
   paymentMethods: any[] = [];
